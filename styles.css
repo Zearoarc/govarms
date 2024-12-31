@@ -114,13 +114,22 @@
 }
 
 
-
+.row > * {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * 0.5);
+    padding-left: calc(var(--bs-gutter-x) * 0.5);
+}
 @media (min-width: 1200px) {
     .col-xl-6s {
         flex: 0 0 auto;
         width: 50%;
     }
 }
+
 
 body {
     min-height: 100vh;
