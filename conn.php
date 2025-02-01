@@ -11,7 +11,7 @@ class connec
 
     function __construct()
     {
-        $conn=new mysqli($this->server_name,$this->username,$this->password,$this->db_name);
+        $this->conn=new mysqli($this->server_name,$this->username,$this->password,$this->db_name);
         if($this->conn->connect_error)
         {
             die("Connection Failed");

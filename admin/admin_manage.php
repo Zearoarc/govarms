@@ -84,15 +84,46 @@ include("admin_sidenavbar.php");
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+
+                <?php 
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $database = "arms_db";
+
+                $connection = new mysqli($servername, $username, $password, $database);
+                if ($connection->connect_error) {
+                    die("Connection failed: " . $connection->connect_error);
+                }
+
+                $sql = "SELECT * FROM manage";
+                $result = $connection->query($sql);
+
+                if (!$result) {
+                    die("Invalid query: " . $connection->error);
+                }
+
+                while($row = $result->fetch_assoc()) {
+                    echo "
+                    <tr>
+                    <td>$row[id]</td>
+                    <td>$row[name]</td>
+                    <td>$row[contact]</td>
+                    <td>$row[email]</td>
+                    <td>$row[department]</td>
+                    <td>$row[date]</td>
+                    <td>
+                        <a class='btn btn-primary btn-sm' href='/admin/editmanage.php?id=$row[id]'>Edit</a>
+                        <a class='btn btn-primary btn-sm' href='/admin/deletemanage.php?id=$row[id]'>Delete</a>
+                    </td>
                 </tr>
+
+                    ";
+                }
+                ?>
+
+
+                
             </tbody>
         </table>
     </div>
