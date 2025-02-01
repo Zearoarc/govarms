@@ -49,14 +49,14 @@
             </button>
             <ul class="sub-menu">
                 <div>
-                    <li><a href="#">Asset Requests</a></li>
-                    <li><a href="#">Maintainance Requests</a></li>
-                    <li><a href="#">Disposal Requests</a></li>
+                    <li><a href="admin_assetreq.php">Asset Requests</a></li>
+                    <li><a href="admin_maintainancereq.php">Maintainance Requests</a></li>
+                    <li><a href="admin_disposalreq.php">Disposal Requests</a></li>
                 </div>
             </ul>
         </li>
         <li>
-            <a href="">
+            <a href="admin_reports.php">
                 <i class='bx bxs-report' style='color:#ffffff' ></i>
                 <span>Generate Reports</span>
             </a>
