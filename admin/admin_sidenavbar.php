@@ -30,7 +30,7 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="admin_assets.php">
                 <i class='bx bx-desktop' style='color:#ffffff'></i>
                 <span>Assets</span>
             </a>
