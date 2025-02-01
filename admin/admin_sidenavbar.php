@@ -24,7 +24,7 @@
             </a>
         </li>
         <li>
-            <a href="dashboard.php">
+            <a href="admin_index.php">
                 <i class='bx bxs-dashboard' style='color:#ffffff'></i>
                 <span>Dashboard</span>
             </a>
@@ -36,7 +36,7 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="admin_manage.php">
                 <i class='bx bxs-user' style='color:#ffffff' ></i>
                 <span>Manage</span>
             </a>
