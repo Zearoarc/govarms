@@ -35,12 +35,11 @@ $result = $conn->query($sql);
 
     <body>
         <div class="container-fluid">
-
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-
-
+                    <a class="btn btn-primary" href="admin_assets_add.php" role="button">Add</a>
                 </div>
+
                 <table class="table table-bordered">
                     <thead class="table-blue">
                         <tr>
@@ -81,33 +80,6 @@ $result = $conn->query($sql);
                         ?>
                     </tbody>
                 </table>
-
-            </div>
-            <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
-                    data-bs-display="static" aria-expanded="false">
-                    Add
-                </button>
-
-                <form class="dropdown-menu dropdown-menu-end p-4" style="position: absolute; z-index: 1050; width: 300px;">
-                    <div class="mb-3">
-                        <label for="type" class="form-label">Type</label>
-                        <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                            <label class="form-check-label" for="dropdownCheck2">
-                                Remember me
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Sign in</button>
-                </form>
             </div>
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -116,5 +88,6 @@ $result = $conn->query($sql);
     </html>
 
     <?php
+
     include("admin_footer.php");
     ?>
