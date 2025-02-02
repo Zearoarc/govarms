@@ -10,7 +10,19 @@ $conn = new mysqli($server_name, $username, $password, $db_name);
 if ($conn->connect_error) {
     die("Connection Failed");
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $type = $_POST['type'];
+    $supplier = $_POST['supplier'];
+    $assetModel = $_POST['assetModel'];
+    $department = $_POST['department'];
 
+    $sql = "INSERT INTO assets(type,supplier,assetModel,department)
+    VALUES('$type','$supplier','$assetModel','$department')";
+
+    $conn->query($sql);
+    header("Location: admin_assets.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +37,7 @@ if ($conn->connect_error) {
 <body>
     <div class="container-fluid">
 
-        <form id="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+        <form id="form" action="admin_assets_add.php" method="POST">
             <div class="mb-3">
                 <label for="type" class="form-label">Type</label>
                 <input type="text" name="type" class="form-control" id="type" placeholder="e.g. Phone">
@@ -52,20 +64,3 @@ if ($conn->connect_error) {
 </body>
 
 </html>
-
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $type = $_POST['type'];
-    $supplier = $_POST['supplier'];
-    $assetModel = $_POST['assetModel'];
-    $department = $_POST['department'];
-
-    $sql = "INSERT INTO assets(type,supplier,assetModel,department)
-    VALUES('$type','$supplier','$assetModel','$department')";
-
-    $conn->query($sql);
-
-    header("Location: admin_assets.php");
-}
-
-?>
