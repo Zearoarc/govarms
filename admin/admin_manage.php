@@ -21,8 +21,9 @@ include("admin_sidenavbar.php");
 <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary"> EMPLOYEES
-            <button type="button" class="btn btn-primary" href="addemployee.php"> Add</button>
+            <a class="btn btn-primary" href="addemployee.php" role="button">Add</a>
             </h6>
+            
         </div>
 <div class="card-body">
 
