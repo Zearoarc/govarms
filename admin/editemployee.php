@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("admin_header.php");
-include("admin_sidenavbar.php");
+
 
 
 $id = "";
@@ -16,13 +16,13 @@ $id = "";
 
  if ( $_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    if ( !isset($_GET["pin"])){
-        header("Location: /admin/admin_manage.php");
+    if ( !isset($_GET["id"])){
+        header("Location: admin_manage.php");
         exit;
     }
-    $pin = $_GET["pin"];
+    $pin = $_GET["id"];
 
-    $sql ="SELECT * FROM manage WHERE pin=$pin";
+    $sql ="SELECT * FROM manage WHERE id=$id";
     $result = $connection->query($sql);
     $row = $result->fetch_assoc();
 
@@ -40,7 +40,7 @@ $id = "";
 
  }
 else {
-    $pin = $_POST['pin'];
+ 
     $id = $_POST['id'];
     $name = $_POST['name'];
     $contact = $_POST['contact'];
@@ -49,12 +49,12 @@ else {
     $date = $_POST['date'];
 
     do {
-        if ( empty ($pin) || empty($id) || empty($name) || empty($contact) || empty($email) || empty($department) || empty($date) ) {
+        if (  empty($id) || empty($name) || empty($contact) || empty($email) || empty($department) || empty($date) ) {
             $errorMessage = "All the fields are required";
             break;
             }
             $sql = "UPDATE manage SET name = '$name', contact = '$contact', email = '$email', department = '$department', date = '$date' " .
-            "WHERE pin = '$pin'";
+            "WHERE id = '$id'";
 
             $result = $connection->query($sql);
 
@@ -95,7 +95,7 @@ else {
         }
         ?>
         <form method="post">
-            <input type="hidden" name="pin" value="<?php echo $pin; ?>">
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">ID</label>
                 <div class="col-sm-6">

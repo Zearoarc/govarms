@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("admin_header.php");
-include("admin_sidenavbar.php");
+
 
 $servername = "localhost";
 $username = "root";
@@ -52,7 +52,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST') {
         $date = "";
 
         $successMessage = "Employee added"; 
-        header("location: admin_manage.php");
+
+
+        header("Location: admin_manage.php");
         exit;
 
 
