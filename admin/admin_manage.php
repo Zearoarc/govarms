@@ -28,7 +28,7 @@ include("admin_sidenavbar.php");
 <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary"> EMPLOYEES
-            <button type="button" class="btn btn-primary" href="addemployee.php"> Add</button>
+            <a type="button" class="btn btn-primary" href="addemployee.php"> Add</a>
             </h6>
             
         </div>
@@ -79,8 +79,8 @@ include("admin_sidenavbar.php");
                     <td>$row[department]</td>
                     <td>$row[date]</td>
                     <td>
-                        <a class='btn btn-primary btn-sm' href='/admin/editmanage.php?id=$row[id]'>Edit</a>
-                        <a class='btn btn-primary btn-sm' href='/admin/deletemanage.php?id=$row[id]'>Delete</a>
+                        <a class='btn btn-primary btn-sm' href='editemployee.php?id=$row[id]'>Edit</a>
+                        <a class='btn btn-primary btn-sm' href='deleteemployee.php?id=$row[id]'>Delete</a>
                     </td>
                 </tr>
 
