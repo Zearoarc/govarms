@@ -4,6 +4,15 @@ include("admin_header.php");
 include("admin_sidenavbar.php");
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Manage</title>
+
+</head>
+<body>
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -21,7 +30,7 @@ include("admin_sidenavbar.php");
 <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary"> EMPLOYEES
-            <button type="button" class="btn btn-primary" href="addemployee.php"> Add</button>
+            <button type="button" class="btn btn-primary" href="addemployee.php">ADD</button>
             </h6>
         </div>
 <div class="card-body">
@@ -96,6 +105,8 @@ include("admin_sidenavbar.php");
 </div>
         
 </div>
+</body>
+</html>
 
 <?php
 include("admin_footer.php");
