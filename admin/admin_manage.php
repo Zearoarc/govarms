@@ -4,33 +4,40 @@ include("admin_header.php");
 include("admin_sidenavbar.php");
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Manage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel ="Stylesheet" href="../admin_manage.css">
+</head>
+<body>
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"> MANAGE EMPLOYEES</h6>
-            
+            <h6 class="m-0 font-weight-bold text-primary"> MANAGE EMPLOYEES</h6>   
         </div>
        
     </div>
-    </div>
 </div>
 
-
-<div class="container-fluid">
+<div class="container-fluid2">
 
 <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary"> EMPLOYEES
-            <a class="btn btn-primary" href="addemployee.php" role="button">Add</a>
+            <button type="button" class="btn btn-primary" href="addemployee.php"> Add</button>
             </h6>
             
         </div>
 <div class="card-body">
 
-
+<div>
 
     <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table " id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -88,7 +95,7 @@ include("admin_sidenavbar.php");
     </div>
 </div>
 </div>
-</div>
+
 
 
 
@@ -97,6 +104,8 @@ include("admin_sidenavbar.php");
 </div>
         
 </div>
+</body>
+</html>
 
 <?php
 include("admin_footer.php");
