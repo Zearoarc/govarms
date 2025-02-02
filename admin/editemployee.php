@@ -3,15 +3,8 @@ session_start();
 include("admin_header.php");
 include("admin_sidenavbar.php");
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "arms_db";
 
-    $connection = new mysqli($servername, $username, $password, $database);
-              
-
- $id = "";
+$id = "";
  $name = "";
  $contact = "";
  $email = "";
@@ -21,7 +14,33 @@ $database = "arms_db";
  $errorMessage = "";
  $successMessage = "";  
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST') {
+ if ( $_SERVER['REQUEST_METHOD'] == 'GET') {
+
+    if ( !isset($_GET["pin"])){
+        header("Location: /admin/admin_manage.php");
+        exit;
+    }
+    $pin = $_GET["pin"];
+
+    $sql ="SELECT * FROM manage WHERE pin=$pin";
+    $result = $connection->query($sql);
+    $row = $result->fetch_assoc();
+
+    if (!$row) {
+        header("location: admin_manage.php");
+        exit;
+    }
+
+    $id = $row['id'];
+    $name = $row['name'];
+    $contact = $row['contact'];
+    $email = $row['email'];
+    $department = $row['department'];
+    $date = $row['date'];
+
+ }
+else {
+    $pin = $_POST['pin'];
     $id = $_POST['id'];
     $name = $_POST['name'];
     $contact = $_POST['contact'];
@@ -30,40 +49,28 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST') {
     $date = $_POST['date'];
 
     do {
-        if ( empty($id) || empty($name) || empty($contact) || empty($email) || empty($department) || empty($date) ) {
+        if ( empty ($pin) || empty($id) || empty($name) || empty($contact) || empty($email) || empty($department) || empty($date) ) {
             $errorMessage = "All the fields are required";
             break;
-        }
+            }
+            $sql = "UPDATE manage SET name = '$name', contact = '$contact', email = '$email', department = '$department', date = '$date' " .
+            "WHERE pin = '$pin'";
 
-        $sql = "INSERT INTO manage (id, name, contact, email, department, date)" .
-        "VALUES ('$id', '$name', '$contact', '$email', '$department', '$date')";
-        $result = $connection->query($sql);
+            $result = $connection->query($sql);
 
-        if (!$result) {
-            $errorMessage = "Error: " . $connection->error;
-            break;
-        }
+            if (!$result) {
+                $errorMessage = "Invalid query: " . $connection->error;
+                break;
+            }
+            $successMessage = "Record updated successfully";
+            header("location: /admin/admin_manage.php");
+            exit;
 
-        $id = "";
-        $name = "";
-        $contact = "";
-        $email = "";
-        $department = "";
-        $date = "";
-
-        $successMessage = "Employee added"; 
-        header("location: admin_manage.php");
-        exit;
-
-
-    } while (false);
+    
+    }while (true);
 
 }
-
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -88,6 +95,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         ?>
         <form method="post">
+            <input type="hidden" name="pin" value="<?php echo $pin; ?>">
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">ID</label>
                 <div class="col-sm-6">
