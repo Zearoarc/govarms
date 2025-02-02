@@ -6,71 +6,73 @@ include("admin_sidenavbar.php");
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Manage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel ="Stylesheet" href="../admin_manage.css">
+    <link rel="Stylesheet" href="../admin_manage.css">
 </head>
+
 <body>
-<div class="container-fluid">
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"> MANAGE EMPLOYEES</h6>   
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary"> MANAGE EMPLOYEES</h6>
+            </div>
+
         </div>
-       
     </div>
-</div>
 
-<div class="container-fluid2">
+    <div class="container-fluid2">
 
-<div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"> EMPLOYEES
-            <a type="button" class="btn btn-primary" href="addemployee.php"> Add</a>
-            </h6>
-            
-        </div>
-<div class="card-body">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary"> EMPLOYEES
+                    <a type="button" class="btn btn-primary" href="addemployee.php"> Add</a>
+                </h6>
 
-<div>
+            </div>
+            <div class="card-body">
 
-    <div class="table-responsive">
-        <table class="table " id="dataTable" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Contact</th>
-                    <th>Email</th>
-                    <th>Department</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
+                <div>
 
-                <?php 
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $database = "arms_db";
+                    <div class="table-responsive">
+                        <table class="table " id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Contact</th>
+                                    <th>Email</th>
+                                    <th>Department</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                $connection = new mysqli($servername, $username, $password, $database);
-                if ($connection->connect_error) {
-                    die("Connection failed: " . $connection->connect_error);
-                }
+                                <?php
+                                $servername = "localhost";
+                                $username = "root";
+                                $password = "";
+                                $database = "arms_db";
 
-                $sql = "SELECT * FROM manage";
-                $result = $connection->query($sql);
+                                $connection = new mysqli($servername, $username, $password, $database);
+                                if ($connection->connect_error) {
+                                    die("Connection failed: " . $connection->connect_error);
+                                }
 
-                if (!$result) {
-                    die("Invalid query: " . $connection->error);
-                }
+                                $sql = "SELECT * FROM manage";
+                                $result = $connection->query($sql);
 
-                while($row = $result->fetch_assoc()) {
-                    echo "
+                                if (!$result) {
+                                    die("Invalid query: " . $connection->error);
+                                }
+
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "
                     <tr>
                     <td>$row[id]</td>
                     <td>$row[name]</td>
@@ -85,26 +87,27 @@ include("admin_sidenavbar.php");
                 </tr>
 
                     ";
-                }
-                ?>
+                                }
+                                ?>
 
 
-                
-            </tbody>
-        </table>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+
     </div>
-</div>
-</div>
-
-
-
-
-
-
-</div>
-        
-</div>
 </body>
+
 </html>
 
 <?php

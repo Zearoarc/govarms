@@ -2,10 +2,10 @@
     <ul>
         <li>
             <button onclick=toggleSidebar() id="toggle-btn">
-                <i class='bx bx-chevrons-left' style='color:#ffffff' ></i>
+                <i class='bx bx-chevrons-left' style='color:#ffffff'></i>
             </button>
         </li>
-        
+
         <!-- Active Page Check -->
 
         <?php
@@ -18,10 +18,10 @@
             echo '<li>';
         }
         ?>
-            <a href="index.php">
+        <a href="index.php">
             <i class='bx bx-home-alt'></i>
-                <span>Home</span>
-            </a>
+            <span>Home</span>
+        </a>
         </li>
         <li>
             <a href="admin_index.php">
@@ -37,15 +37,15 @@
         </li>
         <li>
             <a href="admin_manage.php">
-                <i class='bx bxs-user' style='color:#ffffff' ></i>
+                <i class='bx bxs-user' style='color:#ffffff'></i>
                 <span>Manage</span>
             </a>
         </li>
         <li>
             <button onclick=toggleSubMenu(this) class="dropdown-btn">
-                <i class='bx bx-user-voice' style='color:#ffffff' ></i>
+                <i class='bx bx-user-voice' style='color:#ffffff'></i>
                 <span>Requests</span>
-                <i class='bx bx-chevron-down' style='color:#ffffff' ></i>
+                <i class='bx bx-chevron-down' style='color:#ffffff'></i>
             </button>
             <ul class="sub-menu">
                 <div>
@@ -57,7 +57,7 @@
         </li>
         <li>
             <a href="admin_reports.php">
-                <i class='bx bxs-report' style='color:#ffffff' ></i>
+                <i class='bx bxs-report' style='color:#ffffff'></i>
                 <span>Generate Reports</span>
             </a>
         </li>

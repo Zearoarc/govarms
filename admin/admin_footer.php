@@ -8,5 +8,6 @@
     <script src="pieChart.js"></script>
     <script src="chart-bar-demo.js"></script>
     <script type="text/javascript" src="app.js"></script>
-  </body>
-</html>
+    </body>
+
+    </html>

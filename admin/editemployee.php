@@ -5,24 +5,24 @@ include("admin_header.php");
 
 
 $id = "";
- $name = "";
- $contact = "";
- $email = "";
- $department = "";
- $date = "";
+$name = "";
+$contact = "";
+$email = "";
+$department = "";
+$date = "";
 
- $errorMessage = "";
- $successMessage = "";  
+$errorMessage = "";
+$successMessage = "";
 
- if ( $_SERVER['REQUEST_METHOD'] == 'GET') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    if ( !isset($_GET["id"])){
+    if (!isset($_GET["id"])) {
         header("Location: admin_manage.php");
         exit;
     }
     $pin = $_GET["id"];
 
-    $sql ="SELECT * FROM manage WHERE id=$id";
+    $sql = "SELECT * FROM manage WHERE id=$id";
     $result = $connection->query($sql);
     $row = $result->fetch_assoc();
 
@@ -37,10 +37,8 @@ $id = "";
     $email = $row['email'];
     $department = $row['department'];
     $date = $row['date'];
+} else {
 
- }
-else {
- 
     $id = $_POST['id'];
     $name = $_POST['name'];
     $contact = $_POST['contact'];
@@ -49,31 +47,29 @@ else {
     $date = $_POST['date'];
 
     do {
-        if (  empty($id) || empty($name) || empty($contact) || empty($email) || empty($department) || empty($date) ) {
+        if (empty($id) || empty($name) || empty($contact) || empty($email) || empty($department) || empty($date)) {
             $errorMessage = "All the fields are required";
             break;
-            }
-            $sql = "UPDATE manage SET name = '$name', contact = '$contact', email = '$email', department = '$department', date = '$date' " .
+        }
+        $sql = "UPDATE manage SET name = '$name', contact = '$contact', email = '$email', department = '$department', date = '$date' " .
             "WHERE id = '$id'";
 
-            $result = $connection->query($sql);
+        $result = $connection->query($sql);
 
-            if (!$result) {
-                $errorMessage = "Invalid query: " . $connection->error;
-                break;
-            }
-            $successMessage = "Record updated successfully";
-            header("location: /admin/admin_manage.php");
-            exit;
-
-    
-    }while (true);
-
+        if (!$result) {
+            $errorMessage = "Invalid query: " . $connection->error;
+            break;
+        }
+        $successMessage = "Record updated successfully";
+        header("location: /admin/admin_manage.php");
+        exit;
+    } while (true);
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,12 +77,13 @@ else {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+
 <body>
     <div class="container my-5">
         <h2>New Employee</h2>
 
         <?php
-        if ( !empty($errorMessage)){
+        if (!empty($errorMessage)) {
             echo "<div class='alert alert-warning alert-dismissible fade show role='alert'>
             <strong>$errorMessage</strong>
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
@@ -134,8 +131,8 @@ else {
             </div>
 
             <?php
-            if ( !empty($successMessage)) {
-                echo"
+            if (!empty($successMessage)) {
+                echo "
                 <div class='row mb-3'>
                 <div class='offeset-sm-3 col-sm-6'>
                 <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -144,14 +141,13 @@ else {
                 </div>
                 </div>
                 </div>";
-                
             }
 
             ?>
 
             <div class="row mb-3">
                 <div class="offset-sm-3 d-grid">
-                    <button type="submit" class="btn btn-primary" href="admin_manage.php" >Add</button>
+                    <button type="submit" class="btn btn-primary" href="admin_manage.php">Add</button>
                 </div>
                 <div class="col-sm-3 d-grid">
                     <a class="btn btn-outline-primary" href="admin_manage.php" role="button">Cancel</a>
@@ -159,8 +155,9 @@ else {
             </div>
         </form>
     </div>
-    
+
 </body>
+
 </html>
 
 <?php

@@ -10,7 +10,7 @@ include("admin_sidenavbar.php");
             <h6 class="m-0 font-weight-bold text-primary"> DISPOSAL REQUESTS
             </h6>
         </div>
-       
+
     </div>
 </div>
 
