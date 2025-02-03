@@ -1,0 +1,14 @@
+#form{
+    padding-top:130px;
+    padding-left: 100px;
+    width: 40em;
+    font-size: 2em;
+}
+.form-control{
+    width: 30em;
+    height: 3em;
+}
+#cancel{
+    background-color: red;
+    color: white;
+}

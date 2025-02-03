@@ -1,0 +1,4 @@
+{
+    "liveshare.allowGuestDebugControl": true,
+    "php.debug.executablePath": "C:\\Xampp\\php\\php.exe"
+}
