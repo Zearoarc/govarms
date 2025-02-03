@@ -1,3 +1,6 @@
 .container-fluid {
   overflow: visible;
 }
+#supplier{
+  display: flex;
+}
