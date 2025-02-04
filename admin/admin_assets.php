@@ -48,6 +48,7 @@ $result = $conn->query($sql);
                                             <th scope="col">Asset Model</th>
                                             <th scope="col">Department</th>
                                             <th scope="col">Status</th>
+                                            
                                             <th>Action</th>
                                         </tr>
                                     </thead>
