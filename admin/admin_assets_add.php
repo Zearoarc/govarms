@@ -1,51 +1,44 @@
 <?php
 include("admin_header.php");
-
+ 
 $username = "root";
 $password = "";
 $server_name = "localhost";
 $db_name = "arms_db";
-
+ 
 $conn = new mysqli($server_name, $username, $password, $db_name);
 if ($conn->connect_error) {
     die("Connection Failed");
 }
-<<<<<<< HEAD
-
-=======
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $type = $_POST['type'];
     $supplier = $_POST['supplier'];
     $assetModel = $_POST['assetModel'];
     $department = $_POST['department'];
-
-    $sql = "INSERT INTO assets(type,supplier,assetModel,department)
-    VALUES('$type','$supplier','$assetModel','$department')";
-
+    $status = $_POST['status'];
+ 
+    $sql = "INSERT INTO assets(type,supplier,assetModel,department,status)
+    VALUES('$type','$supplier','$assetModel','$department','$status')";
+ 
     $conn->query($sql);
+ 
     header("Location: admin_assets.php");
-    exit();
 }
->>>>>>> a838262168d5fc9cb994ed4df2f448f01fd29e12
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Assets</title>
     <link rel="stylesheet" href="../assets_add.css">
 </head>
-
+ 
 <body>
     <div class="container-fluid">
-
-<<<<<<< HEAD
+ 
         <form id="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-=======
-        <form id="form" action="admin_assets_add.php" method="POST">
->>>>>>> a838262168d5fc9cb994ed4df2f448f01fd29e12
             <div class="mb-3">
                 <label for="type" class="form-label">Type</label>
                 <input type="text" name="type" class="form-control" id="type" placeholder="e.g. Phone">
@@ -62,34 +55,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="department" class="form-label">Department</label>
                 <input type="text" name="department" class="form-control" id="department" placeholder="e.g. IOS">
             </div>
-
+            <div class="form-check">
+                <h6>Status</h6>
+                <input class="form-check-input" value="available" type="radio" name="status" id="status">
+                <label class="form-check-label" for="status">
+                    Available
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" value="unavailable" type="radio" name="status" id="status" checked>
+                <label class="form-check-label" for="status">
+                    Unavailable
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" value="maintenance" type="radio" name="status" id="status" checked>
+                <label class="form-check-label" for="status">
+                    Maintenance
+                </label>
+            </div>
+ 
             <a class="btn" href="admin_assets.php" role="button" id="cancel">Cancel</a>
-
+ 
             <input class="btn btn-primary" type="submit" value="Submit" id="submit">
         </form>
-
+ 
     </div>
 </body>
-
-<<<<<<< HEAD
+ 
 </html>
-
+ 
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $type = $_POST['type'];
-    $supplier = $_POST['supplier'];
-    $assetModel = $_POST['assetModel'];
-    $department = $_POST['department'];
-
-    $sql = "INSERT INTO assets(type,supplier,assetModel,department)
-    VALUES('$type','$supplier','$assetModel','$department')";
-
-    $conn->query($sql);
-
-    header("Location: admin_assets.php");//not working - aji
-}              
-
+ 
 ?>
-=======
-</html>
->>>>>>> a838262168d5fc9cb994ed4df2f448f01fd29e12

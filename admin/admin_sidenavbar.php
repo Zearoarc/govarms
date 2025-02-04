@@ -18,12 +18,6 @@
             echo '<li>';
         }
         ?>
-        <a href="index.php">
-            <i class='bx bx-home-alt'></i>
-            <span>Home</span>
-        </a>
-        </li>
-        <li>
             <a href="admin_index.php">
                 <i class='bx bxs-dashboard' style='color:#ffffff'></i>
                 <span>Dashboard</span>

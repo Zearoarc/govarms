@@ -1,30 +1,15 @@
 <?php
 session_start();
 include("admin_header.php");
-include("admin_sidenavbar.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Manage</title>
-    <link rel="Stylesheet" href="../admin_manage.css">
+    <link rel="stylesheet" href="../admin_manage.css">
 </head>
 
-<body>
-    <div class="container-fluid">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary"> MANAGE EMPLOYEES</h6>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="container-fluid2">
+<main>
+    <div class="container-fluid px-4">
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -34,8 +19,6 @@ include("admin_sidenavbar.php");
 
             </div>
             <div class="card-body">
-
-                <div>
 
                     <div class="table-responsive">
                         <table class="table " id="dataTable" width="100%" cellspacing="0">
@@ -83,7 +66,7 @@ include("admin_sidenavbar.php");
                         <a class='btn btn-primary btn-sm' href='editemployee.php?id=$row[id]'>Edit</a>
                         <a class='btn btn-primary btn-sm' href='deleteemployee.php?id=$row[id]'>Delete</a>
                     </td>
-                </tr>
+                    </tr>
 
                     ";
                                 }
@@ -94,7 +77,6 @@ include("admin_sidenavbar.php");
                             </tbody>
                         </table>
                     </div>
-                </div>
             </div>
 
 
@@ -104,6 +86,7 @@ include("admin_sidenavbar.php");
 
         </div>
 
+        </div>
     </div>
 </body>
 
