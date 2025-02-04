@@ -38,6 +38,7 @@ $result = $conn->query($sql);
                                 <div class="card-body">
 
                                 <div class="table-responsive">
+                                    
  
                                 <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
                                     <thead class="table-blue">
@@ -48,7 +49,7 @@ $result = $conn->query($sql);
                                             <th scope="col">Asset Model</th>
                                             <th scope="col">Department</th>
                                             <th scope="col">Status</th>
-                                            
+
                                             <th>Action</th>
                                         </tr>
                                     </thead>
