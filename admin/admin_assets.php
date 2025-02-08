@@ -66,8 +66,8 @@ $result = $conn->query($sql);
                                 <td>{$row['department']}</td>
                                 <td>{$row['status']}</td>
                                 <td>
-    <button class ='btn btn-success'><a href='edit.php?updateid='..'' class='text-light'>Edit</a></button>
-    <button class ='btn btn-danger'><a href='delete.php?deleteid='..'' class='text-light'>Delete</a></button>
+    <a href='admin_assets_edit.php?id={$row['id']}' class='btn btn-primary'>edit</a>
+    <a href='admin_assets_delete.php?id={$row['id']}' class='btn btn-primary'>Delete</a>
   </td>
                               </tr>";
                                             }
