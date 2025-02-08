@@ -2,7 +2,7 @@
 session_start();
 include("admin_header.php");
 include("admin_sidenavbar.php");
-?>
+?> 
 
 <div class="container-fluid">
     <div class="card shadow mb-4">
@@ -11,7 +11,7 @@ include("admin_sidenavbar.php");
             </h6>
         </div>
 
-    </div>
+    </div> 
     <div class="row">
             <div class="col-xl-3 col-md-6">
                 <div class="card bg-white text-white mb-4">
