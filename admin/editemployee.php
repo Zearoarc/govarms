@@ -3,8 +3,6 @@ session_start();
 include("admin_header.php");
 
 
-
-$id = "";
 $name = "";
 $contact = "";
 $email = "";

@@ -22,7 +22,6 @@ $errorMessage = "";
 $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
     $name = $_POST['name'];
     $contact = $_POST['contact'];
     $email = $_POST['email'];
@@ -44,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
         }
 
-        $id = "";
         $name = "";
         $contact = "";
         $email = "";
