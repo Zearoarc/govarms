@@ -11,7 +11,7 @@ $database = "arms_db";
 $connection = new mysqli($servername, $username, $password, $database);
 
 
-$id = "";
+
 $name = "";
 $contact = "";
 $email = "";
@@ -22,7 +22,6 @@ $errorMessage = "";
 $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
     $name = $_POST['name'];
     $contact = $_POST['contact'];
     $email = $_POST['email'];
@@ -30,13 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $date = $_POST['date'];
 
     do {
-        if (empty($id) || empty($name) || empty($contact) || empty($email) || empty($department) || empty($date)) {
+        if (empty($name) || empty($contact) || empty($email) || empty($department) || empty($date)) {
             $errorMessage = "All the fields are required";
             break;
         }
 
-        $sql = "INSERT INTO manage (id, name, contact, email, department, date)" .
-            "VALUES ('$id', '$name', '$contact', '$email', '$department', '$date')";
+        $sql = "INSERT INTO manage (name, contact, email, department, date)" .
+            "VALUES ('$name', '$contact', '$email', '$department', '$date')";
         $result = $connection->query($sql);
 
         if (!$result) {
@@ -44,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
         }
 
-        $id = "";
         $name = "";
         $contact = "";
         $email = "";
@@ -89,12 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         ?>
         <form method="post">
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">ID</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" name="id" value="<?php echo $id; ?>">
-                </div>
-            </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Name</label>
                 <div class="col-sm-6">
