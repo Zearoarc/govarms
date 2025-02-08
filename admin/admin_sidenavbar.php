@@ -19,27 +19,47 @@
         }
         ?>
             <a href="admin_index.php">
-                <i class='bx bxs-dashboard' style='color:#ffffff'></i>
+                <i class='bx bxs-dashboard'></i>
                 <span>Dashboard</span>
             </a>
         </li>
-        <li>
+        <?php
+        if (strpos($url, 'assets') !== false) {
+            echo '<li class="active">';
+        } else {
+            echo '<li>';
+        }
+        ?>
             <a href="admin_assets.php">
-                <i class='bx bx-desktop' style='color:#ffffff'></i>
+                <i class='bx bx-desktop'></i>
                 <span>Assets</span>
             </a>
         </li>
-        <li>
+        <?php
+        if (strpos($url, 'manage') !== false) {
+            echo '<li class="active">';
+        } else {
+            echo '<li>';
+        }
+        ?>
             <a href="admin_manage.php">
-                <i class='bx bxs-user' style='color:#ffffff'></i>
+                <i class='bx bxs-user'></i>
                 <span>Manage</span>
             </a>
         </li>
-        <li>
-            <button onclick=toggleSubMenu(this) class="dropdown-btn">
-                <i class='bx bx-user-voice' style='color:#ffffff'></i>
+        <li >
+            <button onclick=toggleSubMenu(this) class="dropdown-btn 
+            <?php
+            if (strpos($url, 'req') !== false) {
+                echo 'active"';
+            } else {
+                echo '';
+            }
+            ?>
+            ">
+                <i class='bx bx-user-voice'></i>
                 <span>Requests</span>
-                <i class='bx bx-chevron-down' style='color:#ffffff'></i>
+                <i class='bx bx-chevron-down'></i>
             </button>
             <ul class="sub-menu">
                 <div>
