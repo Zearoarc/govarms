@@ -218,7 +218,7 @@ footer {
   margin-bottom: 16px;
 }
 
-#sidebar ul li.active a {
+#sidebar ul li.active a, #sidebar ul li button.active span, #sidebar ul li button.active{
   color: #26208a;
 
   i {
