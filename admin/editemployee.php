@@ -18,10 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         header("Location: admin_manage.php");
         exit;
     }
-    $pin = $_GET["id"];
+    $id = $_GET["id"];
 
     $sql = "SELECT * FROM manage WHERE id=$id";
-    $result = $connection->query($sql);
+    $result = $conn->query($sql);
     $row = $result->fetch_assoc();
 
     if (!$row) {
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         exit;
     }
 
-    $id = $row['id'];
+    
     $name = $row['name'];
     $contact = $row['contact'];
     $email = $row['email'];
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $date = $row['date'];
 } else {
 
-    $id = $_POST['id'];
+    
     $name = $_POST['name'];
     $contact = $_POST['contact'];
     $email = $_POST['email'];
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $date = $_POST['date'];
 
     do {
-        if (empty($id) || empty($name) || empty($contact) || empty($email) || empty($department) || empty($date)) {
+        if (empty($name) || empty($contact) || empty($email) || empty($department) || empty($date)) {
             $errorMessage = "All the fields are required";
             break;
         }
