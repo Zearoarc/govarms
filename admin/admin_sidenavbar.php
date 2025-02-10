@@ -12,7 +12,7 @@
         // Change to Server Name on Deployment
         $url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-        if (strpos($url, 'index') !== false) {
+        if (strpos($url, 'admin_index.php') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
@@ -24,7 +24,7 @@
             </a>
         </li>
         <?php
-        if (strpos($url, 'assets') !== false) {
+        if ($url == 'http://' . $_SERVER['HTTP_HOST'] . '/govarms/admin/admin_assets.php') {
             echo '<li class="active">';
         } else {
             echo '<li>';
@@ -36,7 +36,7 @@
             </a>
         </li>
         <?php
-        if (strpos($url, 'manage') !== false) {
+        if (strpos($url, 'admin_manage.php') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
@@ -47,31 +47,50 @@
                 <span>Manage</span>
             </a>
         </li>
-        <li >
-            <button onclick=toggleSubMenu(this) class="dropdown-btn 
-            <?php
-            if (strpos($url, 'req') !== false) {
-                echo 'active"';
-            } else {
-                echo '';
-            }
-            ?>
-            ">
+        <?php
+        if (strpos($url, 'req') !== false || $url !== 'http://' . $_SERVER['HTTP_HOST'] . '/govarms/admin/admin_assets.php') {
+            echo '<li class="active">';
+        } else {
+            echo '<li>';
+        }
+        ?>
+            <button onclick=toggleSubMenu(this) class="dropdown-btn">
                 <i class='bx bx-user-voice'></i>
                 <span>Requests</span>
                 <i class='bx bx-chevron-down'></i>
             </button>
             <ul class="sub-menu">
                 <div>
-                    <li><a href="admin_assetreq.php">Asset Requests</a></li>
-                    <li><a href="admin_maintainancereq.php">Maintainance Requests</a></li>
-                    <li><a href="admin_disposalreq.php">Disposal Requests</a></li>
+                    <li><a href="admin_assetreq.php"
+                    <?php
+                    if ($url == 'http://' . $_SERVER['HTTP_HOST'] . '/govarms/admin/admin_assetreq.php') {
+                        echo '';
+                    } else {
+                        echo 'style="color: #ffffff"';
+                    }
+                    ?>
+                    >Asset Requests</a></li>
+                    <li><a href="admin_maintainancereq.php"
+                    <?php
+                    if ($url == 'http://' . $_SERVER['HTTP_HOST'] . '/govarms/admin/admin_maintainancereq.php') {
+                        echo '';
+                    } else {
+                        echo 'style="color: #ffffff"';
+                    }
+                    ?>
+                    >Maintainance Requests</a></li>
                 </div>
             </ul>
         </li>
-        <li>
+        <?php
+        if (strpos($url, 'admin_reports.php') !== false) {
+            echo '<li class="active">';
+        } else {
+            echo '<li>';
+        }
+        ?>
             <a href="admin_reports.php">
-                <i class='bx bxs-report' style='color:#ffffff'></i>
+                <i class='bx bxs-report'></i>
                 <span>Generate Reports</span>
             </a>
         </li>

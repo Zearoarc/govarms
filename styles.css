@@ -218,12 +218,17 @@ footer {
   margin-bottom: 16px;
 }
 
-#sidebar ul li.active a, #sidebar ul li button.active span, #sidebar ul li button.active{
+#sidebar ul li.active a, #sidebar ul li.active button {
   color: #26208a;
 
   i {
     color: #26208a;
   }
+}
+
+#sidebar ul li.active .sub-menu {
+  display: grid;
+  grid-template-rows: 1fr;
 }
 
 #sidebar a,

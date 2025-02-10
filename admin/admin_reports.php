@@ -1,7 +1,6 @@
 <?php
 session_start();
 include("admin_header.php");
-include("admin_sidenavbar.php");
 ?> 
 
 <div class="container-fluid">

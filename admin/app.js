@@ -16,7 +16,10 @@ function toggleSubMenu(button) {
   }
 
   button.nextElementSibling.classList.toggle("show");
-  button.classList.toggle("rotate");
+  if (!button.classList.contains("active")) {
+    button.classList.toggle("rotate");
+    button.classList.toggle("active");
+  }
 
   if (sidebar.classList.contains("minimize")) {
     sidebar.classList.toggle("minimize");
@@ -26,8 +29,10 @@ function toggleSubMenu(button) {
 
 function closeAllSubMenus() {
   Array.from(sidebar.getElementsByClassName("show")).forEach((ul) => {
-    ul.classList.remove("show");
-    ul.previousElementSibling.classList.remove("rotate");
+    if (!ul.previousElementSibling.classList.contains("active")) {
+      ul.classList.remove("show");
+      ul.previousElementSibling.classList.remove("rotate");
+    }
   });
 }
 
