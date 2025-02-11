@@ -1,6 +1,4 @@
 <?php
-
-session_start();
 include("admin_header.php");
  
 $username = "root";
@@ -16,7 +14,11 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM assets";
 $result = $conn->query($sql);
 ?>
-
+ 
+    </div>
+    <!DOCTYPE html>
+    <html lang="en">
+ 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,17 +26,9 @@ $result = $conn->query($sql);
         <link rel="stylesheet" href="../assets.css">
  
     </head>
-
-    <div class="container-fluid">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">ASSETS</h6>
-        </div>
-    </div>
- 
-    
     <main>
     <div class="container-fluid px-4">
+
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary"> ASSETS
@@ -44,7 +38,6 @@ $result = $conn->query($sql);
                                 <div class="card-body">
 
                                 <div class="table-responsive">
-                                    
  
                                 <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
                                     <thead class="table-blue">
@@ -55,7 +48,6 @@ $result = $conn->query($sql);
                                             <th scope="col">Asset Model</th>
                                             <th scope="col">Department</th>
                                             <th scope="col">Status</th>
-
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -72,8 +64,8 @@ $result = $conn->query($sql);
                                 <td>{$row['department']}</td>
                                 <td>{$row['status']}</td>
                                 <td>
-    <a href='admin_assets_edit.php?id={$row['id']}' class='btn btn-primary'>edit</a>
-    <a href='admin_assets_delete.php?id={$row['id']}' class='btn btn-primary'>Delete</a>
+    <button class ='btn btn-success'><a href='edit.php?updateid='..'' class='text-light'>Edit</a></button>
+    <button class ='btn btn-danger'><a href='delete.php?deleteid='..'' class='text-light'>Delete    </a></button>
   </td>
                               </tr>";
                                             }
@@ -87,7 +79,9 @@ $result = $conn->query($sql);
                                 </div>
         </div>
                             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
                             </main>
+ 
     <?php
  
     include("admin_footer.php");
