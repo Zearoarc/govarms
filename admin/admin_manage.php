@@ -10,20 +10,10 @@ include("admin_header.php");
 
 <main>
     <div class="container-fluid px-4">
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"> MANAGE EMPLOYEES
-            </h6>
-        </div>
-
-    </div>
-
+        <h1 class="mt-4">Manage Employees</h1>
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary"> EMPLOYEES
-                    <a type="button" class="btn btn-primary" href="addemployee.php"> Add</a>
-                </h6>
-
+                <a type="button" class="btn btn-primary" href="addemployee.php"> Add</a>
             </div>
             <div class="card-body">
 

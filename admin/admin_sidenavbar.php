@@ -24,7 +24,7 @@
             </a>
         </li>
         <?php
-        if ($url == 'http://' . $_SERVER['HTTP_HOST'] . '/govarms/admin/admin_assets.php') {
+        if (strpos($url, 'admin_assets.php') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
@@ -48,7 +48,7 @@
             </a>
         </li>
         <?php
-        if (strpos($url, 'req') !== false || $url !== 'http://' . $_SERVER['HTTP_HOST'] . '/govarms/admin/admin_assets.php') {
+        if (strpos($url, 'req') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
@@ -63,7 +63,7 @@
                 <div>
                     <li><a href="admin_assetreq.php"
                     <?php
-                    if ($url == 'http://' . $_SERVER['HTTP_HOST'] . '/govarms/admin/admin_assetreq.php') {
+                    if (strpos($url, 'admin_assetreq.php') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff"';
@@ -72,7 +72,7 @@
                     >Asset Requests</a></li>
                     <li><a href="admin_maintainancereq.php"
                     <?php
-                    if ($url == 'http://' . $_SERVER['HTTP_HOST'] . '/govarms/admin/admin_maintainancereq.php') {
+                    if (strpos($url, 'admin_maintainancereq.php') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff"';

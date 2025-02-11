@@ -65,7 +65,7 @@ include("admin_header.php");
             <div class="col-xl-6s">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <i class="bx bxs-pie-chart'"></i>
+                        <i class='bx bx-bar-chart-alt'></i>
                         Request Trends
                     </div>
                     <div class="card-body">

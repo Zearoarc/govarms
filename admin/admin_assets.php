@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("admin_header.php");
  
 $username = "root";
@@ -13,25 +14,17 @@ if ($conn->connect_error) {
 // Fetch id, type, asset_model, and department from database
 $sql = "SELECT * FROM assets";
 $result = $conn->query($sql);
-?>
- 
-    </div>
-    <!DOCTYPE html>
-    <html lang="en">
+?>  
  
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Assets</title>
         <link rel="stylesheet" href="../assets.css">
- 
     </head>
     <main>
     <div class="container-fluid px-4">
-
+        <h1 class="mt-4">Assets</h1>
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary"> ASSETS
                                     <a class="btn btn-primary" href="admin_assets_add.php" role="button">Add</a>
                                 </div>
 
