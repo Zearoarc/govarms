@@ -16,7 +16,7 @@ include("admin_header.php");
                 <div class="card bg-white text-white mb-4">
                     <div class="card-body" style="color: black;" >Export Products</div>
                     <div class="card-footer align-items-right justify-content" >
-                        <a class="btn btn-primary" href="#">Exel</a>
+                        <a class="btn btn-primary" href="#">Excel</a>
                         <a class="btn btn-primary" href="#">PDF</a>
                         
                     </div>
@@ -26,7 +26,7 @@ include("admin_header.php");
                 <div class="card bg-white text-white mb-4">
                     <div class="card-body"style="color: black;">Export Employees</div>
                     <div class="card-footer alignRight justify-content">
-                    <a class="btn btn-primary" href="#">Exel</a>
+                    <a class="btn btn-primary" href="#">Excel</a>
                     <a class="btn btn-primary" href="#">PDF</a>
                     </div>
                 </div>
@@ -35,7 +35,7 @@ include("admin_header.php");
                 <div class="card bg-white text-white mb-4">
                     <div class="card-body" style="color: black;">Export Requests</div>
                     <div class="card-footer align-right justify-content">
-                    <a class="btn btn-primary" href="#">Exel</a>
+                    <a class="btn btn-primary" href="#">Excel</a>
                     <a class="btn btn-primary" href="#">PDF</a>
                     </div>
                 </div>
