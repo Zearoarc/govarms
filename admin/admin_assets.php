@@ -1,20 +1,15 @@
 <?php
 session_start();
-include("admin_header.php");
- 
-$username = "root";
-$password = "";
-$server_name = "localhost";
-$db_name = "arms_db";
- 
-$conn = new mysqli($server_name, $username, $password, $db_name);
-if ($conn->connect_error) {
-    die("Connection Failed");
+if(empty($_SESSION["username"])){
+    header("location:../login.php");
 }
-// Fetch id, type, asset_model, and department from database
-$sql = "SELECT * FROM assets";
-$result = $conn->query($sql);
-?>  
+else {
+    include("admin_header.php");
+
+    $con=new connec();
+    $tbl="assets";
+    $result=$con->select_all($tbl);
+    ?> 
  
     <head>
         <title>Assets</title>
@@ -39,6 +34,7 @@ $result = $conn->query($sql);
                                             <th scope="col">Type</th>
                                             <th scope="col">Supplier</th>
                                             <th scope="col">Asset Model</th>
+                                            <th scope="col">Division</th>
                                             <th scope="col">Department</th>
                                             <th scope="col">Status</th>
                                             <th>Action</th>
@@ -46,24 +42,24 @@ $result = $conn->query($sql);
                                     </thead>
                                     <tbody>
                                         <?php
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
- 
-                                                echo "<tr>
-                                <td>{$row['id']}</td>
-                                <td>{$row['type']}</td>
-                                <td>{$row['supplier']}</td>
-                                <td>{$row['assetModel']}</td>
-                                <td>{$row['department']}</td>
-                                <td>{$row['status']}</td>
-                                <td>
-    <button class ='btn btn-success'><a href='edit.php?updateid='..'' class='text-light'>Edit</a></button>
-    <button class ='btn btn-danger'><a href='delete.php?deleteid='..'' class='text-light'>Delete    </a></button>
-  </td>
-                              </tr>";
+                                            if($result->num_rows>0){
+                                                while($row=$result->fetch_assoc()){
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $row["id"]; ?></td>
+                                                    <td><?php echo $row["type"]; ?></td>
+                                                    <td><?php echo $row["supplier"]; ?></td>
+                                                    <td><?php echo $row["model"]; ?></td>
+                                                    <td><?php echo $row["division"]; ?></td>
+                                                    <td><?php echo $row["dept"]; ?></td>
+                                                    <td><?php echo $row["status"]; ?></td>
+                                                    <td>
+                                                    <a class='btn btn-primary btn-sm' href='editasset.php?id=<?php echo $row["id"]; ?>'>Edit</a>
+                                                    <a class='btn btn-sm btn-danger' href='deleteasset.php?id=<?php echo $row["id"]; ?>'>Delete</a>
+                                                    </td>
+                                                </tr>
+                                                <?php
                                             }
-                                        } else {
-                                            echo "<tr><td colspan='4' class='text-center'>No records found</td></tr>";
                                         }
                                         ?>
                                     </tbody>
@@ -78,4 +74,5 @@ $result = $conn->query($sql);
     <?php
  
     include("admin_footer.php");
+    }
     ?>
