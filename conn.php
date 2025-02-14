@@ -27,10 +27,26 @@ class connec
         die();
     }
 
+    function select_all($table_name)
+    {      
+        $sql = "SELECT * FROM $table_name";
+        $result=$this->conn->query($sql);
+       
+        
+        return $result;
+    }
+
     function select_login($table_name, $email)
     {
         $sql = "SELECT * FROM $table_name where email='$email'";
         $result = $this->conn->query($sql);
         return  $result;
     }
-}
+
+    function select_by_query($query)
+    {
+        $result=$this->conn->query($query);
+        return $result;
+    }
+}   
+?>

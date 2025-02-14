@@ -1,95 +1,82 @@
 <?php
 session_start();
-include("admin_header.php");
-?>
+if(empty($_SESSION["username"])){
+    header("location:../login.php");
+}
+else {
+    include("admin_header.php");
 
-<head>
-    <title>Admin Manage</title>
-    <link rel="stylesheet" href="../admin_manage.css">
-</head>
+    $con=new connec();
+    $tbl="manage";
+    $result=$con->select_all($tbl);
+    ?>
+    <head>
+        <title>Admin Manage</title>
+        <link rel="stylesheet" href="../admin_manage.css">
+    </head>
 
-<main>
-    <div class="container-fluid px-4">
-        <h1 class="mt-4">Manage Employees</h1>
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <a type="button" class="btn btn-primary" href="addemployee.php"> Add</a>
-            </div>
-            <div class="card-body">
+    <main>
+        <div class="container-fluid px-4">
+            <h2 class="mt-4">Manage Employees</h2>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <a type="button" class="btn btn-primary" href="addemployee.php"> Add</a>
+                </div>
+                <div class="card-body">
 
-                    <div class="table-responsive">
-                        <table class="table " id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Contact</th>
-                                    <th>Email</th>
-                                    <th>Department</th>
-                                    <th>Date</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <?php
-                                $servername = "localhost";
-                                $username = "root";
-                                $password = "";
-                                $database = "arms_db";
-
-                                $connection = new mysqli($servername, $username, $password, $database);
-                                if ($connection->connect_error) {
-                                    die("Connection failed: " . $connection->connect_error);
-                                }
-
-                                $sql = "SELECT * FROM manage";
-                                $result = $connection->query($sql);
-
-                                if (!$result) {
-                                    die("Invalid query: " . $connection->error);
-                                }
-
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "
-                    <tr>
-                    <td>$row[id]</td>
-                    <td>$row[name]</td>
-                    <td>$row[contact]</td>
-                    <td>$row[email]</td>
-                    <td>$row[department]</td>
-                    <td>$row[date]</td>
-                    <td>
-                        <a class='btn btn-primary btn-sm' href='editemployee.php?id=$row[id]'>Edit</a>
-                        <a class='btn btn-primary btn-sm' href='deleteemployee.php?id=$row[id]'>Delete</a>
-                    </td>
-                    </tr>
-
-                    ";
-                                }
-                                ?>
+                        <div class="table-responsive">
+                            <table class="table " id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Contact</th>
+                                        <th>Email</th>
+                                        <th>Department</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        if($result->num_rows>0){
+                                            while($row=$result->fetch_assoc()){
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $row["id"]; ?></td>
+                                                    <td><?php echo $row["name"]; ?></td>
+                                                    <td><?php echo $row["contact"]; ?></td>
+                                                    <td><?php echo $row["email"]; ?></td>
+                                                    <td><?php echo $row["dept"]; ?></td>
+                                                    <td><?php echo $row["dateadd"]; ?></td>
+                                                    <td>
+                                                        <a class='btn btn-primary btn-sm' href='editemployee.php?id=<?php echo $row["id"]; ?>'>Edit</a>
+                                                        <a class='btn btn-primary btn-sm' href='deleteemployee.php?id=<?php echo $row["id"]; ?>'>Delete</a>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
 
 
 
-                            </tbody>
-                        </table>
-                    </div>
+
+
+
             </div>
 
-
-
-
-
-
+            </div>
         </div>
+    </body>
 
-        </div>
-    </div>
-</body>
-
-</html>
+    </html>
 
 <?php
 include("admin_footer.php");
-
+}
 ?>
