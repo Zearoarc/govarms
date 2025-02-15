@@ -48,5 +48,25 @@ class connec
         $result=$this->conn->query($query);
         return $result;
     }
+
+    function select($table_name,$id)
+    {      
+        $sql = "SELECT * FROM $table_name where id=$id";
+        $result=$this->conn->query($sql);
+        return  $result;
+    }
+
+    function delete($table_name,$id)
+    { 
+        $query="DELETE FROM $table_name WHERE id=$id";
+        if($this->conn->query($query)===TRUE)
+        {
+             echo '<script> alert("Data Removed Successfully");</script>' ;
+        }
+        else
+        {
+             echo '<script> alert("'.$this->conn->error.'");</script>' ;
+        }
+    }
 }   
 ?>

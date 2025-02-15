@@ -31,7 +31,7 @@ if (isset($_POST["btn_login"])) {
         if ($row["email"] == $email_id && $row["password"] == $psw_log) {
             $_SESSION["username"] = $row["name"];
             $_SESSION["employee_id"] = $row["id"];
-            $_SESSION["user_role"] = $row["role"];
+            $_SESSION["user_role"] = $row["user_role"];
 
             error_log("User role: " . $_SESSION["user_role"]);
 
@@ -50,7 +50,7 @@ if (isset($_POST["btn_login"])) {
 
                     <ul class="navbar-nav">
                         <li class="nav-item"> <a class="nav-link" href="edit_profile.php"> ' . $_SESSION["username"] . '</a></li><li class="nav-item"><a class="nav-link" href="login.php?action=logout">Logout</a></li>';
-            if ($_SESSION["user_role"] === 'admin') {
+            if ($_SESSION["user_role"] === 'Admin') {
                 header("Location: admin/admin_index.php");
             } else {
                 header("Location: index.php");

@@ -20,7 +20,7 @@ else {
         <h1 class="mt-4">Assets</h1>
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                                    <a class="btn btn-primary" href="admin_assets_add.php" role="button">Add</a>
+                                    <a class="btn btn-primary" href="add_assets.php" role="button">Add</a>
                                 </div>
 
                                 <div class="card-body">
@@ -72,7 +72,6 @@ else {
                             </main>
  
     <?php
- 
     include("admin_footer.php");
     }
     ?>

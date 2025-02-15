@@ -7,7 +7,7 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $tbl="manage";
+    $tbl="users";
     $result=$con->select_all($tbl);
     ?>
     <head>
@@ -48,10 +48,10 @@ else {
                                                     <td><?php echo $row["contact"]; ?></td>
                                                     <td><?php echo $row["email"]; ?></td>
                                                     <td><?php echo $row["dept"]; ?></td>
-                                                    <td><?php echo $row["dateadd"]; ?></td>
+                                                    <td><?php echo $row["date_add"]; ?></td>
                                                     <td>
-                                                        <a class='btn btn-primary btn-sm' href='editemployee.php?id=<?php echo $row["id"]; ?>'>Edit</a>
-                                                        <a class='btn btn-primary btn-sm' href='deleteemployee.php?id=<?php echo $row["id"]; ?>'>Delete</a>
+                                                        <a class='btn btn-primary btn-sm' href='edit_user.php?id=<?php echo $row["id"]; ?>'>Edit</a>
+                                                        <a class='btn btn-primary btn-sm' href='delete_user.php?id=<?php echo $row["id"]; ?>'>Delete</a>
                                                     </td>
                                                 </tr>
                                                 <?php
@@ -62,12 +62,6 @@ else {
                             </table>
                         </div>
                 </div>
-
-
-
-
-
-
             </div>
 
             </div>
