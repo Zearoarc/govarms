@@ -17,7 +17,7 @@ if(isset($_POST["btn_update"])){
     $dept=$_POST["number_new"];
     $division=$_POST["division_new"];
     $contact=$_POST["contact_new"];
-    $user_role=$POST["user_role_new"];
+    $user_role=$_POST["user_role_new"];
 
     $id=$_GET['id'];
     $con=new connec();
