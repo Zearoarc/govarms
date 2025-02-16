@@ -82,7 +82,7 @@ else{
                                     if($result->num_rows>0){
                                         while($row=$result->fetch_assoc()){
                                             ?>
-                                            <div class="container">
+                                            <div class="container" style ="padding-bottom: 50px">
                                                 <label for="id"><b>ID</b></label>
                                                 <input type="text" name="id" id="id" class="form-control" value="<?php echo $row["id"]; ?>" readonly>
 
@@ -119,10 +119,10 @@ else{
                                                 </select><br>
 
                                                 <label for="model_new<?php echo $row["id"]; ?>"><b>Model</b></label>
-                                                <input type="text" name="model_new<?php echo $row["id"]; ?>" id="model_new<?php echo $row["id"]; ?>" class="form-control" value="<?php echo $row["model"]; ?>" required><br>
+                                                <input type="text" name="model_new<?php echo $row["id"]; ?>" id="model_new<?php echo $row["id"]; ?>" class="form-control" required><br>
 
                                                 <label for="dept_new<?php echo $row["id"]; ?>"><b>Department</b></label>
-                                                <select name="dept_new<?php echo $row["id"]; ?>" id="dept_new<?php echo $row["id"]; ?>" class="form-control" required>
+                                                <select name="dept_new<?php echo $row["id"]; ?>" id="dept_new<?php echo $row["id"]; ?>" class="form-control" data-row-id="<?php echo $row["id"]; ?>" required>
                                                     <?php
                                                         // Retrieve department data from the database
                                                         $sql_dept = "SELECT id, department FROM department";
@@ -139,30 +139,20 @@ else{
 
                                                 <label for="division_new<?php echo $row["id"]; ?>"><b>Division</b></label>
                                                 <select name="division_new<?php echo $row["id"]; ?>" id="division_new<?php echo $row["id"]; ?>" class="form-control" required>
-                                                    <?php
-                                                        // Retrieve division data from the database
-                                                        $sql_division = "SELECT id, division FROM division";
-                                                        $result_division = $con->select_by_query($sql_division);
-                                                        if($result_division->num_rows > 0){
-                                                            while($row_division = $result_division->fetch_assoc()){
-                                                                ?>
-                                                                <option value="<?php echo $row_division["id"]; ?>" <?php if($row["division"] == $row_division["division"]) echo "selected"; ?>><?php echo $row_division["division"]; ?></option>
-                                                                <?php
-                                                            }
-                                                        }
-                                                    ?>
+                                                    <option value="" disabled selected>Select Department First</option>
                                                 </select><br>
 
                                                 <label for="serial_new<?php echo $row["id"]; ?>"><b>Serial</b></label>
                                                 <input type="text" name="serial_new<?php echo $row["id"]; ?>" id="serial_new<?php echo $row["id"]; ?>" class="form-control" value="<?php echo $row["serial"] ?>" required><br>
-
-                                                <a href="admin_manage.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
-                                                <button type="submit" class="btn" name="btn_update" style="background-color:#3741c9; color:white">Update</button><br><br><br>
                                             </div>
                                             <?php
                                         }
                                     }
                                 ?>
+                                <div class="container">
+                                    <a href="admin_assets.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
+                                    <button type="submit" class="btn" name="btn_update" style="background-color:#3741c9; color:white">Update</button><br><br><br>
+                                </div>
                             </form>
                         </div>
                     </div>

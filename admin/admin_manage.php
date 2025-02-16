@@ -51,7 +51,7 @@ else {
                                                     <td><?php echo $row["date_add"]; ?></td>
                                                     <td>
                                                         <a class='btn btn-primary btn-sm' href='edit_user.php?id=<?php echo $row["id"]; ?>'>Edit</a>
-                                                        <a class='btn btn-primary btn-sm' href='delete_user.php?id=<?php echo $row["id"]; ?>'>Delete</a>
+                                                        <a class='btn btn-sm btn-danger' href='delete_user.php?id=<?php echo $row["id"]; ?>'>Delete</a>
                                                     </td>
                                                 </tr>
                                                 <?php

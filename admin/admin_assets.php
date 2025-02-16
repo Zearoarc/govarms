@@ -46,7 +46,7 @@ else {
         <h2 class="mt-4">Assets</h2>
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                                    <a class="btn btn-primary" href="add_assets.php" role="button">Add</a>
+                                    <a class="btn btn-primary" href="add_asset.php" role="button">Add</a>
                                 </div>
 
                                 <div class="card-body">
