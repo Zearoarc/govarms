@@ -23,7 +23,7 @@ else {
             <h2 class="mt-4">Manage Employees</h2>
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <a type="button" class="btn btn-primary" href="addemployee.php"> Add</a>
+                    <a type="button" class="btn btn-primary" href="add_user.php"> Add</a>
                 </div>
                 <div class="card-body">
 
