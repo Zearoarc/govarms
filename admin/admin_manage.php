@@ -7,8 +7,11 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $tbl="users";
-    $result=$con->select_all($tbl);
+    $sql="SELECT u.id, u.name, u.email, u.contact, u.date_add, dept.department, d.division
+    FROM users u
+    INNER JOIN department dept ON u.dept_id = dept.id
+    INNER JOIN division d ON u.division_id = d.id";
+    $result=$con->select_by_query($sql);
     ?>
     <head>
         <title>Admin Manage</title>
@@ -47,7 +50,7 @@ else {
                                                     <td><?php echo $row["name"]; ?></td>
                                                     <td><?php echo $row["contact"]; ?></td>
                                                     <td><?php echo $row["email"]; ?></td>
-                                                    <td><?php echo $row["dept"]; ?></td>
+                                                    <td><?php echo $row["department"]; ?></td>
                                                     <td><?php echo $row["date_add"]; ?></td>
                                                     <td>
                                                         <a class='btn btn-primary btn-sm' href='edit_user.php?id=<?php echo $row["id"]; ?>'>Edit</a>

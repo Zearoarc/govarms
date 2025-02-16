@@ -31,15 +31,23 @@ else{
         $id=$_GET['id'];    
 
         $con=new connec();
-        $tbl="users";
-        $result=$con->select($tbl, $id);
+        $sql="SELECT u.id, u.name, u.email, u.password, u.contact, u.date_add, u.user_role, dept.department, d.division
+        FROM users u
+        INNER JOIN department dept ON u.dept_id = dept.id
+        INNER JOIN division d ON u.division_id = d.id
+        WHERE u.id='$id'";
+        $result=$con->select_by_query($sql);
 
         if($result->num_rows>0){
             $row=$result->fetch_assoc();
             $name_edit=$row["name"];
             $email_edit=$row["email"];
-            $password_edit=password_hash($row["password"], PASSWORD_DEFAULT);
-            $dept_edit=$row["dept"];
+            if($_SESSION["username"] == $name_edit){
+                $password_edit=$row["password"];
+            } else {
+                $password_edit=password_hash($row["password"], PASSWORD_DEFAULT);
+            }
+            $dept_edit=$row["department"];
             $division_edit=$row["division"];
             $contact_edit=$row["contact"];
             $user_role_edit=$row["user_role"];

@@ -119,7 +119,7 @@ else{
                                                 </select><br>
 
                                                 <label for="model_new<?php echo $row["id"]; ?>"><b>Model</b></label>
-                                                <input type="text" name="model_new<?php echo $row["id"]; ?>" id="model_new<?php echo $row["id"]; ?>" class="form-control" required><br>
+                                                <input type="text" name="model_new<?php echo $row["id"]; ?>" id="model_new<?php echo $row["id"]; ?>" class="form-control" value="<?php echo $row["model"] ?>" required><br>
 
                                                 <label for="dept_new<?php echo $row["id"]; ?>"><b>Department</b></label>
                                                 <select name="dept_new<?php echo $row["id"]; ?>" id="dept_new<?php echo $row["id"]; ?>" class="form-control" data-row-id="<?php echo $row["id"]; ?>" required>

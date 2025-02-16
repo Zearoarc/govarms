@@ -38,15 +38,23 @@ else{
         $id=$_GET['id'];
 
         $con=new connec();
-        $tbl="users";
-        $result=$con->select($tbl, $id);
+        $sql="SELECT u.id, u.name, u.email, u.password, u.contact, u.date_add, u.user_role, dept.department, d.division
+        FROM users u
+        INNER JOIN department dept ON u.dept_id = dept.id
+        INNER JOIN division d ON u.division_id = d.id
+        WHERE u.id='$id'";
+        $result=$con->select_by_query($sql);
 
         if($result->num_rows>0){
             $row=$result->fetch_assoc();
             $name_edit=$row["name"];
             $email_edit=$row["email"];
-            $password_edit=password_hash($row["password"], PASSWORD_DEFAULT);
-            $dept_edit=$row["dept"];
+            if($_SESSION["username"] == $name_edit){
+                $password_edit=$row["password"];
+            } else {
+                $password_edit=password_hash($row["password"], PASSWORD_DEFAULT);
+            }
+            $dept_edit=$row["department"];
             $division_edit=$row["division"];
             $contact_edit=$row["contact"];
             $user_role_edit=$row["user_role"];
@@ -72,11 +80,26 @@ else{
                                     <label for="psw_new"><b>Password</b></label>
 						            <input type="text" name="psw_new" id="psw_new" class="form-control" value="<?php echo $password_edit ?>" required><br>
 
-                                    <label for="dept_new"><b>Department</b></label>
-						            <input type="text" name="dept_new" id="dept_new" class="form-control" value="<?php echo $dept_edit ?>" required><br>
+                                    <label for="dept_new<?php echo $row["id"]; ?>"><b>Department</b></label>
+                                    <select name="dept_new<?php echo $row["id"]; ?>" id="dept_new<?php echo $row["id"]; ?>" class="form-control" data-row-id="<?php echo $row["id"]; ?>" required>
+                                        <?php
+                                            // Retrieve department data from the database
+                                            $sql_dept = "SELECT id, department FROM department";
+                                            $result_dept = $con->select_by_query($sql_dept);
+                                            if($result_dept->num_rows > 0){
+                                                while($row_dept = $result_dept->fetch_assoc()){
+                                                    ?>
+                                                    <option value="<?php echo $row_dept["id"]; ?>" <?php if($row["department"] == $row_dept["department"]) echo "selected"; ?>><?php echo $row_dept["department"]; ?></option>
+                                                    <?php
+                                                }
+                                            }
+                                        ?>
+                                    </select><br>
 
-                                    <label for="division_new"><b>Division</b></label>
-                                    <input type="text" name="division_new" id="division_new" class="form-control" value="<?php echo $division_edit ?>" required><br>
+                                    <label for="division_new<?php echo $row["id"]; ?>"><b>Division</b></label>
+                                    <select name="division_new<?php echo $row["id"]; ?>" id="division_new<?php echo $row["id"]; ?>" class="form-control" required>
+                                        <option value="" disabled selected>Select Department First</option>
+                                    </select><br>
 
                                     <label for="contact_new"><b>Contact</b></label>
                                     <input type="text" name="contact_new" id="contact_new" class="form-control" value="<?php echo $contact_edit ?>" required><br>
