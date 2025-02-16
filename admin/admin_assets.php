@@ -7,7 +7,7 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $sql="SELECT t.type, s.supplier, a.model, a.serial, dept.department, d.division
+    $sql="SELECT t.type, s.supplier, a.model, a.serial, a.cost, a.useful_life, dept.department, d.division
     FROM assets a
     INNER JOIN asset_type t ON a.type_id = t.id
     INNER JOIN supplier s ON a.supplier_id = s.id
@@ -17,6 +17,8 @@ else {
     $assets = array();
     while ($row = $result->fetch_assoc()) {
         $model = $row["model"];
+        $cost = $row["cost"];
+        $useful_life = $row["useful_life"];
         $type = $row["type"];
         $supplier = $row["supplier"];
         $dept = $row["department"];
@@ -25,6 +27,8 @@ else {
         if (!isset($assets[$key])) {
             $assets[$key] = array(
                 "model" => $model,
+                "cost" => $cost,
+                "useful_life" => $useful_life,
                 "amount" => 1,
                 "type" => $type,
                 "supplier" => $supplier,
@@ -56,12 +60,14 @@ else {
                                 <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Supplier</th>
-                                            <th scope="col">Asset Model</th>
-                                            <th scope="col">Department</th>
-                                            <th scope="col">Division</th>
-                                            <th scope="col">Amount</th>
+                                            <th>Type</th>
+                                            <th>Supplier</th>
+                                            <th>Asset Model</th>
+                                            <th>Department</th>
+                                            <th>Division</th>
+                                            <th>Cost</th>
+                                            <th>Useful Life</th>
+                                            <th>Amount</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -75,6 +81,8 @@ else {
                                                 <td><?php echo $asset["model"]; ?></td>
                                                 <td><?php echo $asset["dept"]; ?></td>
                                                 <td><?php echo $asset["division"]; ?></td>
+                                                <td>₱ <?php echo number_format($asset["cost"]); ?></td>
+                                                <td><?php echo $asset["useful_life"]; ?> years</td>
                                                 <td><?php echo $asset["amount"]; ?></td>
                                                 <td>
                                                 <a class='btn btn-primary btn-sm' href='edit_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>&dept=<?php echo $asset["dept"]; ?>&division=<?php echo $asset["division"]; ?>'>Edit</a>
