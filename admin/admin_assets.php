@@ -46,7 +46,7 @@ else {
         <h2 class="mt-4">Assets</h2>
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                                    <a class="btn btn-primary" href="add_asset.php" role="button">Add</a>
+                                    <a class="btn btn-primary" href="add_assets.php" role="button">Add</a>
                                 </div>
 
                                 <div class="card-body">
@@ -77,8 +77,8 @@ else {
                                                 <td><?php echo $asset["division"]; ?></td>
                                                 <td><?php echo $asset["amount"]; ?></td>
                                                 <td>
-                                                <a class='btn btn-primary btn-sm' href='edit_asset.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>&dept=<?php echo $asset["dept"]; ?>&division=<?php echo $asset["division"]; ?>'>Edit</a>
-                                                <a class='btn btn-sm btn-danger' href='delete_asset.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>&dept=<?php echo $asset["dept"]; ?>&division=<?php echo $asset["division"]; ?>'>Delete</a>
+                                                <a class='btn btn-primary btn-sm' href='edit_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>&dept=<?php echo $asset["dept"]; ?>&division=<?php echo $asset["division"]; ?>'>Edit</a>
+                                                <a class='btn btn-sm btn-danger' href='delete_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>&dept=<?php echo $asset["dept"]; ?>&division=<?php echo $asset["division"]; ?>'>Delete</a>
                                                 </td>
                                             </tr>
                                             <?php

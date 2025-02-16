@@ -12,7 +12,7 @@
         // Change to Server Name on Deployment
         $url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-        if (strpos($url, 'admin_index.php') !== false) {
+        if (strpos($url, 'index') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
@@ -24,7 +24,7 @@
             </a>
         </li>
         <?php
-        if (strpos($url, 'admin_assets.php') !== false) {
+        if (strpos($url, 'assets') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
@@ -36,7 +36,7 @@
             </a>
         </li>
         <?php
-        if (strpos($url, 'admin_manage.php') !== false) {
+        if (strpos($url, 'manage') !== false || strpos($url, 'user') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
@@ -63,7 +63,7 @@
                 <div>
                     <li><a href="admin_assetreq.php"
                     <?php
-                    if (strpos($url, 'admin_assetreq.php') !== false) {
+                    if (strpos($url, 'assetreq') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff"';
@@ -72,7 +72,7 @@
                     >Asset Requests</a></li>
                     <li><a href="admin_maintainancereq.php"
                     <?php
-                    if (strpos($url, 'admin_maintainancereq.php') !== false) {
+                    if (strpos($url, 'maintainancereq') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff"';
