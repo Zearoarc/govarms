@@ -78,7 +78,7 @@ else {
                                                 <td><?php echo $asset["amount"]; ?></td>
                                                 <td>
                                                 <a class='btn btn-primary btn-sm' href='edit_asset.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>&dept=<?php echo $asset["dept"]; ?>&division=<?php echo $asset["division"]; ?>'>Edit</a>
-                                                <a class='btn btn-sm btn-danger' href='delete_asset.php?model=<?php echo $asset["model"]; ?>'>Delete</a>
+                                                <a class='btn btn-sm btn-danger' href='delete_asset.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>&dept=<?php echo $asset["dept"]; ?>&division=<?php echo $asset["division"]; ?>'>Delete</a>
                                                 </td>
                                             </tr>
                                             <?php
