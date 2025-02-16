@@ -13,13 +13,15 @@
         $('[id^="dept_new"]').on('change', function() {
             var departmentId = $(this).val();
             var rowId = $(this).attr('data-row-id') || ""; // Get the row ID
+            var divisionId = $(this).attr('data-division-id') || "";
             console.log('Department ID:', departmentId); // Add this line
             console.log('Row ID:', rowId); // Add this line
+            console.log('Division ID:', divisionId); // Add this line
             if (departmentId != '') { // Check if a department is selected
                 $.ajax({
                 type: 'POST',
                 url: 'fetch_divisions.php',
-                data: { departmentId: departmentId, rowId: rowId },
+                data: { departmentId: departmentId, rowId: rowId, divisionId: divisionId },
                 success: function(data) {
                     console.log(data); // Log the response data to the console
                     $('#division_new' + rowId).html(data);

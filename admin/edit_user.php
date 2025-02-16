@@ -38,7 +38,7 @@ else{
         $id=$_GET['id'];
 
         $con=new connec();
-        $sql="SELECT u.id, u.name, u.email, u.password, u.contact, u.date_add, u.user_role, dept.department, d.division
+        $sql="SELECT u.id, u.name, u.email, u.password, u.contact, u.date_add, u.user_role, u.division_id, dept.department, d.division
         FROM users u
         INNER JOIN department dept ON u.dept_id = dept.id
         INNER JOIN division d ON u.division_id = d.id
@@ -81,7 +81,7 @@ else{
 						            <input type="text" name="psw_new" id="psw_new" class="form-control" value="<?php echo $password_edit ?>" required><br>
 
                                     <label for="dept_new<?php echo $row["id"]; ?>"><b>Department</b></label>
-                                    <select name="dept_new<?php echo $row["id"]; ?>" id="dept_new<?php echo $row["id"]; ?>" class="form-control" data-row-id="<?php echo $row["id"]; ?>" required>
+                                    <select name="dept_new<?php echo $row["id"]; ?>" id="dept_new<?php echo $row["id"]; ?>" class="form-control" data-row-id="<?php echo $row["id"]; ?>" data-division-id="<?php echo $row["division_id"]; ?>" required>
                                         <?php
                                             // Retrieve department data from the database
                                             $sql_dept = "SELECT id, department FROM department";

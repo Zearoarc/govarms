@@ -55,7 +55,7 @@ else{
         $division=$_GET['division'];
 
         $con=new connec();
-        $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, dept.department, d.division
+        $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, a.division_id, dept.department, d.division
         FROM assets a
         INNER JOIN asset_type t ON a.type_id = t.id
         INNER JOIN supplier s ON a.supplier_id = s.id
@@ -122,7 +122,7 @@ else{
                                                 <input type="text" name="model_new<?php echo $row["id"]; ?>" id="model_new<?php echo $row["id"]; ?>" class="form-control" value="<?php echo $row["model"] ?>" required><br>
 
                                                 <label for="dept_new<?php echo $row["id"]; ?>"><b>Department</b></label>
-                                                <select name="dept_new<?php echo $row["id"]; ?>" id="dept_new<?php echo $row["id"]; ?>" class="form-control" data-row-id="<?php echo $row["id"]; ?>" required>
+                                                <select name="dept_new<?php echo $row["id"]; ?>" id="dept_new<?php echo $row["id"]; ?>" class="form-control" data-row-id="<?php echo $row["id"]; ?>" data-division-id="<?php echo $row["division_id"]; ?>" required>
                                                     <?php
                                                         // Retrieve department data from the database
                                                         $sql_dept = "SELECT id, department FROM department";
