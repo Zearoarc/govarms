@@ -11,16 +11,16 @@ if (isset($_POST["btn_delete"])) {
 
     $con = new connec();
     $sql = "SELECT a.id
-        FROM assets a
-        INNER JOIN asset_type t ON a.type_id = t.id
-        INNER JOIN supplier s ON a.supplier_id = s.id
-        INNER JOIN department dept ON a.department_id = dept.id
-        INNER JOIN division d ON a.division_id = d.id
-        WHERE a.model='$model'
-        AND t.type='$type'
-        AND s.supplier='$supplier'
-        AND dept.department='$dept'
-        AND d.division='$division'";
+    FROM assets a
+    INNER JOIN asset_type t ON a.type_id = t.id
+    INNER JOIN supplier s ON a.supplier_id = s.id
+    INNER JOIN department dept ON a.department_id = dept.id
+    INNER JOIN division d ON a.division_id = d.id
+    WHERE a.model='$model'
+    AND t.type='$type'
+    AND s.supplier='$supplier'
+    AND dept.department='$dept'
+    AND d.division='$division'";
     $result = $con->select_by_query($sql);
 
     if ($result->num_rows > 0) {
