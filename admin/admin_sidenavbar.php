@@ -79,6 +79,15 @@
                     }
                     ?>
                     >Maintenance Requests</a></li>
+                    <li><a href="admin_completedreq.php"
+                    <?php
+                    if (strpos($url, 'completedreq') !== false) {
+                        echo '';
+                    } else {
+                        echo 'style="color: #ffffff"';
+                    }
+                    ?>
+                    >Completed Requests</a></li>
                 </div>
             </ul>
         </li>

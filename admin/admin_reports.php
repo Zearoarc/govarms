@@ -20,7 +20,7 @@ include("admin_header.php");
                 <div class="card shadow bg-white text-white mb-4">
                     <div class="card-body"style="color: black;">Export Employees</div>
                     <div class="card-footer alignRight justify-content">
-                    <a class="btn btn-primary" href="#">Excel</a>
+                    <a class="btn btn-primary" href="excel_users.php">Excel</a>
                     <a class="btn btn-primary" href="#">PDF</a>
                     </div>
                 </div>

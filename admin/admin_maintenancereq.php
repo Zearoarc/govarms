@@ -12,7 +12,7 @@ else {
     JOIN users u ON r.user_id = u.id
     JOIN assets a ON r.asset_id = a.id
     JOIN supplier s ON a.supplier_id = s.id
-    WHERE req_type='Maintenance' AND r.req_level='admin';";
+    WHERE req_type='Maintenance' AND r.req_level='admin' AND r.req_status IN ('Incomplete', 'Pending');;";
     $result=$con->select_by_query($sql);
 
     // Group orders by order ID
@@ -43,14 +43,14 @@ else {
     }
     ?>
     <head>
-        <title>Asset Request</title>
+        <title>Maintenance Requests</title>
     </head>
     <main>
         <?php
         if (empty($orders)) {
             ?>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Asset Requests</h2>
+                <h2 class="mt-4">Maintenance Requests</h2>
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <p>No maintenance requests found.</p>

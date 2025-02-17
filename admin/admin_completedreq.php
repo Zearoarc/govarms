@@ -7,14 +7,14 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $sql="SELECT r.req_type, r.order_id, u.name, a.model, a.serial, s.supplier, d.department, dv.division, r.req_status, r.req_level
+    $sql="SELECT r.req_type, r.order_id, u.name, a.model, a.serial, s.supplier, d.department, dv.division, r.req_status, r.req_level, r.action
     FROM req r
     JOIN users u ON r.user_id = u.id
     JOIN assets a ON r.asset_id = a.id
     JOIN supplier s ON a.supplier_id = s.id
     JOIN department d ON a.department_id = d.id
     JOIN division dv ON a.division_id = dv.id
-    WHERE req_type='Asset' AND r.req_level='admin' AND r.req_status IN ('Incomplete', 'Pending');";
+    WHERE r.req_level='admin' AND r.req_status = 'Complete';";
     $result=$con->select_by_query($sql);
 
     // Group orders by order ID
@@ -34,22 +34,24 @@ else {
             "serial" => $row["serial"],
             "department" => $row["department"],
             "division" => $row["division"],
-            "req_status" => $row["req_status"]
+            "req_status" => $row["req_status"],
+            "req_level" => $row["req_level"],
+            "action" => $row["action"]
         );
     }
     ?>
     <head>
-        <title>Asset Request</title>
+        <title>Completed Requests</title>
     </head>
     <main>
         <?php
         if (empty($orders)) {
             ?>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Asset Requests</h2>
+                <h2 class="mt-4">Completed Requests</h2>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <p>No asset requests found.</p>
+                        <p>No completed requests found.</p>
                     </div>
                 </div>
             </div>
@@ -57,14 +59,19 @@ else {
         } else {
             ?>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Asset Requests</h2>
+                <h2 class="mt-4">Completed Requests</h2>
                 <?php
                 foreach ($orders as $order_id => $order_data) {
                     ?>
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <h4>Order ID: <?php echo $order_id; ?> (<?php echo $order_data["user_name"]; ?>)</h4>
+                                <h4>Order ID: <?php echo $order_id; ?> (<?php echo $order_data["user_name"];
+                                if ($order_data["order_data"][0]["action"] == 'repair') {
+                                    echo ' - For Repair';
+                                } elseif ($order_data["order_data"][0]["action"] == 'dispose') {
+                                    echo ' - For Disposal';
+                                }?>)</h4>
                                 <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
@@ -88,14 +95,9 @@ else {
                                             <td><?php echo $row["division"]; ?></td>
                                             <td style="height: 40px;">
                                                 <?php
-                                                if ($row["req_status"] == "Incomplete") {
+                                                if ($row["req_status"] == "Complete") {
                                                     ?>
-                                                    <i class='bx bxs-info-circle large-icon' style='color:#ffa83e;' title="<?php echo $row["req_status"]; ?>"></i>
-                                                    <?php
-                                                }
-                                                else if ($row["req_status"] == "Pending") {
-                                                    ?>
-                                                    <i class='bx bxs-time-five large-icon' style='color:#00b2f1' title="<?php echo $row["req_status"]; ?>"></i>
+                                                    <i class='bx bxs-check-circle large-icon' style='color:#93b858' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
                                                 }
                                                 ?>
