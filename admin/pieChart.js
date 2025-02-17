@@ -34,7 +34,7 @@ function createPie(chartData, type) {
       datasets: [
         {
           data: dataValues,
-          backgroundColor: ["#00ff00", "#ffff00", "#ff0000"],
+          backgroundColor: ["#93b858", "#ffa83e", "#00b2f1"],
         },
       ],
     },

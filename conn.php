@@ -69,6 +69,19 @@ class connec
         }
     }
 
+    function delete_order($table_name,$order)
+    { 
+        $query="DELETE FROM $table_name WHERE order_id=$order";
+        if($this->conn->query($query)===TRUE)
+        {
+             echo '<script> alert("Data Removed Successfully");</script>' ;
+        }
+        else
+        {
+             echo '<script> alert("'.$this->conn->error.'");</script>' ;
+        }
+    }
+
     function update($query,$msg)
     { 
         if($this->conn->query($query)===TRUE)

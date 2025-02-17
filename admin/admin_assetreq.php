@@ -72,7 +72,20 @@ else {
                                         <td><?php echo $row["serial"]; ?></td>
                                         <td><?php echo $row["department"]; ?></td>
                                         <td><?php echo $row["division"]; ?></td>
-                                        <td><?php echo $row["req_status"]; ?></td>
+                                        <td style="height: 40px;">
+                                            <?php
+                                            if ($row["req_status"] == "Incomplete") {
+                                                ?>
+                                                <i class='bx bxs-info-circle large-icon' style='color:#ffa83e;' title="<?php echo $row["req_status"]; ?>"></i>
+                                                <?php
+                                            }
+                                            if ($row["req_status"] == "Pending") {
+                                                ?>
+                                                <i class='bx bxs-time-five large-icon' style='color:#00b2f1' title="<?php echo $row["req_status"]; ?>"></i>
+                                                <?php
+                                            }
+                                            ?>
+                                        </td>
                                     </tr>
                                     <?php
                                     }
@@ -80,10 +93,24 @@ else {
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="9">
-                                            <a class="btn btn-primary" style="color: #ffffff" href="approve_assetreq.php">Approve</a>
-                                            <a class="btn btn-danger" style="color: #ffffff" href="cancel_assetreq.php">Cancel</a>
-                                        </td>
+                                        <?php
+                                        if ($row["req_status"] == 'Pending'){
+                                            $serials = array_column($order_data["order_data"], "serial");
+                                            ?>
+                                            <td colspan="9">
+                                                <a class="btn btn-primary" style="color: #ffffff" href='approve_assetreq.php?order=<?php echo $order_id; ?>'>Approve</a>
+                                                <a class="btn btn-danger" style="color: #ffffff" href='cancel_assetreq.php?order=<?php echo $order_id; ?>&serial=<?php echo json_encode($serials); ?>'>Cancel</a>
+                                            </td>
+                                            <?php
+                                        }
+                                        else if ($row["req_status"] == 'Incomplete') {
+                                            ?>
+                                            <td colspan="9">
+                                                <a class="btn btn-primary" style="color: #ffffff" href='complete_assetreq.php?order=<?php echo $order_id; ?>'>Complete</a>
+                                            </td>
+                                            <?php
+                                        }
+                                        ?>
                                     </tr>
                                 </tfoot>
                             </table>
