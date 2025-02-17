@@ -70,15 +70,15 @@
                     }
                     ?>
                     >Asset Requests</a></li>
-                    <li><a href="admin_maintainancereq.php"
+                    <li><a href="admin_maintenancereq.php"
                     <?php
-                    if (strpos($url, 'maintainancereq') !== false) {
+                    if (strpos($url, 'maintenancereq') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff"';
                     }
                     ?>
-                    >Maintainance Requests</a></li>
+                    >Maintenance Requests</a></li>
                 </div>
             </ul>
         </li>

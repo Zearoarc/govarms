@@ -10,11 +10,11 @@ function filterData(&$str){
 
 $fileName = "assets-data_" . date('Y-m-d') . ".xls";
 
-$fields = array('ID', 'TYPE', 'SUPPLIER', 'MODEL', 'SERIAL', 'DEPARTMENT', 'DIVISION');
+$fields = array('ID', 'TYPE', 'SUPPLIER', 'MODEL', 'SERIAL', 'DEPARTMENT', 'DIVISION', 'DATE ADDED', 'COST', 'SALVAGE', 'USEFUL LIFE(YEARS)', 'REPAIR', 'TIMES REPAIRED', 'STATUS');
 
 $excelData = implode("\t", array_values($fields)) . "\n";
 
-$sql = "SELECT a.id, t.type, s.supplier, a.model, a.serial, dept.department, d.division
+$sql = "SELECT a.id, t.type, s.supplier, a.model, a.serial, dept.department, d.division, a.date_add, a.cost, a.salvage, a.useful_life, a.repair, a.repair_times, a.status
     FROM assets a
     INNER JOIN asset_type t ON a.type_id = t.id
     INNER JOIN supplier s ON a.supplier_id = s.id
@@ -23,7 +23,7 @@ $sql = "SELECT a.id, t.type, s.supplier, a.model, a.serial, dept.department, d.d
     $result=$con->select_by_query($sql);
 if($result->num_rows>0){
     while($row = $result->fetch_assoc()) {
-        $lineData = array($row['id'], $row['type'], $row['supplier'], $row['model'], $row['serial'], $row['department'], $row['division']);
+        $lineData = array($row['id'], $row['type'], $row['supplier'], $row['model'], $row['serial'], $row['department'], $row['division'], $row['date_add'], $row['cost'], $row['salvage'], $row['useful_life'], $row['repair'], $row['repair_times'], $row['status'],);
         $excelData .= implode("\t", array_values($lineData)) . "\n";
     }
 }

@@ -1,4 +1,4 @@
-const stats = ["Completed", "Incomplete", "Pending"];
+const stats = ["Complete", "Incomplete", "Pending"];
 
 fetch("scriptPie.php")
   .then((response) => {
@@ -14,13 +14,17 @@ function createPie(chartData, type) {
     console.error("Invalid chart data");
     return;
   }
-  const counts = {};
+  const counts = {
+    Complete: 0,
+    Incomplete: 0,
+    Pending: 0,
+  };
 
-  for (const num of chartData.map((row) => row.stat)) {
+  for (const num of chartData.map((row) => row.req_status)) {
     counts[num] = counts[num] ? counts[num] + 1 : 1;
   }
   const dataValues = [
-    counts["Completed"],
+    counts["Complete"],
     counts["Incomplete"],
     counts["Pending"],
   ];
