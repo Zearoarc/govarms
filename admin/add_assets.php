@@ -90,7 +90,6 @@ else{
 
                                     <label for="division_new"><b>Division</b></label>
                                     <select name="division_new" id="division_new" class="form-control" required>
-                                        <option value="" disabled selected>Select Department First</option>
                                     </select><br>
 
                                     <label for="serial_new"><b>Serial</b></label>

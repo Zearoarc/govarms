@@ -7,12 +7,13 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $sql="SELECT t.type, s.supplier, a.model, a.serial, a.cost, a.useful_life, dept.department, d.division
+    $sql="SELECT t.type, s.supplier, a.model, a.cost, a.useful_life, a.status, dept.department, d.division
     FROM assets a
     INNER JOIN asset_type t ON a.type_id = t.id
     INNER JOIN supplier s ON a.supplier_id = s.id
     INNER JOIN department dept ON a.department_id = dept.id
-    INNER JOIN division d ON a.division_id = d.id";
+    INNER JOIN division d ON a.division_id = d.id
+    WHERE a.status='Available'";
     $result=$con->select_by_query($sql);
     $assets = array();
     while ($row = $result->fetch_assoc()) {
@@ -21,6 +22,7 @@ else {
         $useful_life = $row["useful_life"];
         $type = $row["type"];
         $supplier = $row["supplier"];
+        $status = $row["status"];
         $dept = $row["department"];
         $division = $row["division"];
         $key = $model . "_" . $type . "_" . $supplier . "_" . $dept . "_" . $division;
@@ -32,6 +34,7 @@ else {
                 "amount" => 1,
                 "type" => $type,
                 "supplier" => $supplier,
+                "status" => $status,
                 "dept" => $dept,
                 "division" => $division
             );

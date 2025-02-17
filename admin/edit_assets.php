@@ -139,7 +139,6 @@ else{
 
                                                 <label for="division_new<?php echo $row["id"]; ?>"><b>Division</b></label>
                                                 <select name="division_new<?php echo $row["id"]; ?>" id="division_new<?php echo $row["id"]; ?>" class="form-control" required>
-                                                    <option value="" disabled selected>Select Department First</option>
                                                 </select><br>
 
                                                 <label for="serial_new<?php echo $row["id"]; ?>"><b>Serial</b></label>
