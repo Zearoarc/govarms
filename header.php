@@ -37,19 +37,18 @@ if (isset($_POST["btn_login"])) {
 
             $_SESSION["ul"] = '
 
-            <nav class="navbar navbar-expand-md navbar-dark govblue">
-                <a class="navbar-brand" href="index.php"><img src="images/logocity.webp" style="width:50px;"/></a>
-                <a class="navbar-brand" href="index.php">Asset Request and Management System</a>
-                <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    </ul>
-
-                    <ul class="navbar-nav">
-                        <li class="nav-item"> <a class="nav-link" href="edit_profile.php"> ' . $_SESSION["username"] . '</a></li><li class="nav-item"><a class="nav-link" href="login.php?action=logout">Logout</a></li>';
+            <nav class="govblue">
+                <ul class="side">
+                    <li onclick=toggleNavSidebar()><a href="#"><i class="bx bx-x" style="color:#ffffff; font-size: 1.75rem"></i></a></li>
+                    <li><a href="index.php">Asset Request and Reservation System</a></li>
+                    <li><a href="login.php?action=logout">Logout</a></li>
+                </ul>
+                <ul>
+                    <li><a href="index.php"><img src="images/logocity.webp" alt="GovLogo" style="width:50px; margin:5px; margin-right:15px;"><span class="hideOnMobile">Asset Request and Reservation System</span></a></li>
+                    <li class="hideOnMobile"><a href="login.php?action=logout">Logout</a></li>
+                    <li class="menu-button" onclick=toggleNavSidebar()><a href="#"><i class="bx bx-menu" style="color:#ffffff; font-size: 1.75rem"></i></a></li>
+                </ul>
+            </nav>';
             if ($_SESSION["user_role"] === 'Admin') {
                 header("Location: admin/admin_index.php");
             } else {
@@ -107,6 +106,7 @@ if (empty($_SESSION["username"])) {
 
 <body>
     <?php echo $_SESSION["ul"]; ?>
+    <?php if (!empty($_SESSION["username"])) { include("sidenavbar.php"); } ?>
     </ul>
     </div>
     </nav>
