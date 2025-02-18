@@ -55,7 +55,7 @@ include("admin_header.php");
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class='bx bxs-pie-chart'></i>
-                        February Requests
+                        <?php echo date('F'); ?> Requests
                     </div>
                     <div class="card-body">
                         <canvas id="statusChart" width="100%" height="40"></canvas>
@@ -69,7 +69,7 @@ include("admin_header.php");
                         Request Trends
                     </div>
                     <div class="card-body">
-                        <canvas id="myBarChart" width="100%" height="40"></canvas>
+                        <canvas id="trendsChart" width="100%" height="40"></canvas>
                     </div>
                 </div>
             </div>
