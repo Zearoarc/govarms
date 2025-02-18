@@ -48,7 +48,7 @@
             </a>
         </li>
         <?php
-        if (strpos($url, 'req') !== false) {
+        if (strpos($url, 'req') !== false || strpos($url, 'res') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
@@ -70,6 +70,15 @@
                     }
                     ?>
                     >Asset Requests</a></li>
+                    <li><a href="admin_assetres.php"
+                    <?php
+                    if (strpos($url, 'assetres') !== false) {
+                        echo '';
+                    } else {
+                        echo 'style="color: #ffffff"';
+                    }
+                    ?>
+                    >Asset Reservations</a></li>
                     <li><a href="admin_maintenancereq.php"
                     <?php
                     if (strpos($url, 'maintenancereq') !== false) {
@@ -78,7 +87,7 @@
                         echo 'style="color: #ffffff"';
                     }
                     ?>
-                    >Maintenance Requests</a></li>
+                    >Maintenance</a></li>
                     <li><a href="admin_completedreq.php"
                     <?php
                     if (strpos($url, 'completedreq') !== false) {
@@ -87,7 +96,7 @@
                         echo 'style="color: #ffffff"';
                     }
                     ?>
-                    >Completed Requests</a></li>
+                    >Completed</a></li>
                 </div>
             </ul>
         </li>

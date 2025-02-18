@@ -55,7 +55,7 @@ else{
         $division=$_GET['division'];
 
         $con=new connec();
-        $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, a.division_id, dept.department, d.division
+        $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, a.division_id, dept.department, d.division, a.status
         FROM assets a
         INNER JOIN asset_type t ON a.type_id = t.id
         INNER JOIN supplier s ON a.supplier_id = s.id
@@ -65,7 +65,8 @@ else{
         AND t.type='$type'
         AND s.supplier='$supplier'
         AND dept.department='$dept'
-        AND d.division='$division'";
+        AND d.division='$division'
+        AND a.status='Available'";
         $result=$con->select_by_query($sql);
     }
 

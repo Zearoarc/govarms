@@ -69,9 +69,22 @@ class connec
         }
     }
 
-    function delete_order($table_name,$order)
+    function delete_order($order)
     { 
-        $query="DELETE FROM $table_name WHERE order_id=$order";
+        $query="DELETE FROM req WHERE order_id=$order";
+        if($this->conn->query($query)===TRUE)
+        {
+             echo '<script> alert("Data Removed Successfully");</script>' ;
+        }
+        else
+        {
+             echo '<script> alert("'.$this->conn->error.'");</script>' ;
+        }
+    }
+
+    function delete_reserve($reserve)
+    { 
+        $query="DELETE FROM res WHERE reserve_id=$reserve";
         if($this->conn->query($query)===TRUE)
         {
              echo '<script> alert("Data Removed Successfully");</script>' ;

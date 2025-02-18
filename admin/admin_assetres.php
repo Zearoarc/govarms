@@ -7,49 +7,50 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $sql="SELECT r.req_type, r.order_id, u.name, a.model, a.serial, s.supplier, d.department, dv.division, r.req_status, r.req_level
-    FROM req r
+    $sql="SELECT r.reserve_id, u.name, a.model, a.serial, s.supplier, d.department, dv.division, r.date_start, r.date_end, r.req_status, r.req_level
+    FROM res r
     JOIN users u ON r.user_id = u.id
     JOIN assets a ON r.asset_id = a.id
     JOIN supplier s ON a.supplier_id = s.id
     JOIN department d ON a.department_id = d.id
     JOIN division dv ON a.division_id = dv.id
-    WHERE req_type='Asset' AND r.req_level='admin' AND r.req_status IN ('Incomplete', 'Pending');";
+    WHERE r.req_level='admin' AND r.req_status IN ('Incomplete', 'Pending');";
     $result=$con->select_by_query($sql);
 
-    // Group orders by order ID
-    $orders = array();
+    // Group reservations by reserve ID
+    $reserves = array();
     while ($row = $result->fetch_assoc()) {
-        $order_id = $row["order_id"];
-        if (!isset($orders[$order_id])) {
-            $orders[$order_id] = array(
+        $reserve_id = $row["reserve_id"];
+        if (!isset($reserves[$reserve_id])) {
+            $reserves[$reserve_id] = array(
                 "user_name" => $row["name"],
-                "order_data" => array()
+                "reserve_data" => array()
             );
         }
-        $orders[$order_id]["order_data"][] = array(
-            "req_type" => $row["req_type"],
+        $reserves[$reserve_id]["reserve_data"][] = array(
             "model" => $row["model"],
             "supplier" => $row["supplier"],
             "serial" => $row["serial"],
             "department" => $row["department"],
             "division" => $row["division"],
+            "date_start" => $row["date_start"],
+            "date_end" => $row["date_end"],
             "req_status" => $row["req_status"]
         );
     }
     ?>
     <head>
-        <title>Asset Requests</title>
+        <title>Asset Reservation Requests</title>
     </head>
     <main>
         <?php
-        if (empty($orders)) {
+        if (empty($reserves)) {
             ?>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Asset Requests</h2>
+                <h2 class="mt-4">Asset Reservation Requests</h2>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <p>No asset requests found.</p>
+                        <p>No asset reservation requests found.</p>
                     </div>
                 </div>
             </div>
@@ -57,14 +58,14 @@ else {
         } else {
             ?>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Asset Requests</h2>
+                <h2 class="mt-4">Asset Reservation Requests</h2>
                 <?php
-                foreach ($orders as $order_id => $order_data) {
+                foreach ($reserves as $reserve_id => $reserve_data) {
                     ?>
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <h4>Order ID: <?php echo $order_id; ?> (<?php echo $order_data["user_name"]; ?>)</h4>
+                                <h4>Reservation ID: <?php echo $reserve_id; ?> (<?php echo $reserve_data["user_name"]; ?>)</h4>
                                 <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
@@ -73,12 +74,14 @@ else {
                                             <th>Asset Serial</th>
                                             <th>Department</th>
                                             <th>Division</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
                                             <th>Request Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                    foreach ($order_data["order_data"] as $row) {
+                                    foreach ($reserve_data["reserve_data"] as $row) {
                                         ?>
                                         <tr>
                                             <td><?php echo $row["supplier"]; ?></td>
@@ -86,6 +89,8 @@ else {
                                             <td><?php echo $row["serial"]; ?></td>
                                             <td><?php echo $row["department"]; ?></td>
                                             <td><?php echo $row["division"]; ?></td>
+                                            <td><?php echo $row["date_start"]; ?></td>
+                                            <td><?php echo $row["date_end"]; ?></td>
                                             <td style="height: 40px;">
                                                 <?php
                                                 if ($row["req_status"] == "Incomplete") {
@@ -109,18 +114,18 @@ else {
                                         <tr>
                                             <?php
                                             if ($row["req_status"] == 'Pending'){
-                                                $serials = array_column($order_data["order_data"], "serial");
+                                                $serials = array_column($reserve_data["reserve_data"], "serial");
                                                 ?>
                                                 <td colspan="9">
-                                                    <a class="btn btn-primary" style="color: #ffffff" href='approve_assetreq.php?order=<?php echo $order_id; ?>'>Approve</a>
-                                                    <a class="btn btn-danger" style="color: #ffffff" href='cancel_assetreq.php?order=<?php echo $order_id; ?>&serial=<?php echo json_encode($serials); ?>'>Cancel</a>
+                                                    <a class="btn btn-primary" style="color: #ffffff" href='approve_assetres.php?reserve=<?php echo $reserve_id; ?>'>Approve</a>
+                                                    <a class="btn btn-danger" style="color: #ffffff" href='cancel_assetres.php?reserve=<?php echo $reserve_id; ?>&serial=<?php echo json_encode($serials); ?>'>Cancel</a>
                                                 </td>
                                                 <?php
                                             }
                                             else if ($row["req_status"] == 'Incomplete') {
                                                 ?>
                                                 <td colspan="9">
-                                                    <a class="btn btn-primary" style="color: #ffffff" href='complete_assetreq.php?order=<?php echo $order_id; ?>'>Complete</a>
+                                                    <a class="btn btn-primary" style="color: #ffffff" href='complete_assetres.php?reserve=<?php echo $reserve_id; ?>'>Complete</a>
                                                 </td>
                                                 <?php
                                             }

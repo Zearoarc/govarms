@@ -2,6 +2,9 @@
 session_start();
 include("admin_header.php");
 ?> 
+<head>
+        <title>Generate Reports</title>
+    </head>
 
 <div class="container-fluid px-4">
     <h2 class="mt-4">Generate Reports</h2>
@@ -11,7 +14,7 @@ include("admin_header.php");
                     <div class="card-body" style="color: black;" >Export Products</div>
                     <div class="card-footer align-items-right justify-content" >
                         <a class="btn btn-primary" href="excel_assets.php">Excel</a>
-                        <a class="btn btn-primary" href="pdf_assets.php">PDF</a>
+                        <a class="btn btn-primary" href="pdf_assets.php">CSV</a>
                         
                     </div>
                 </div>
@@ -21,7 +24,7 @@ include("admin_header.php");
                     <div class="card-body"style="color: black;">Export Employees</div>
                     <div class="card-footer alignRight justify-content">
                     <a class="btn btn-primary" href="excel_users.php">Excel</a>
-                    <a class="btn btn-primary" href="#">PDF</a>
+                    <a class="btn btn-primary" href="#">CSV</a>
                     </div>
                 </div>
             </div>
@@ -30,7 +33,7 @@ include("admin_header.php");
                     <div class="card-body" style="color: black;">Export Requests</div>
                     <div class="card-footer align-right justify-content">
                     <a class="btn btn-primary" href="#">Excel</a>
-                    <a class="btn btn-primary" href="#">PDF</a>
+                    <a class="btn btn-primary" href="#">CSV</a>
                     </div>
                 </div>
             </div>
