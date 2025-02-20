@@ -5,7 +5,7 @@ include("header.php");
 $con = new connec();
 
 if (empty($_SESSION["username"])) {
-    header("location:../login.php");
+    header("location:login.php");
 } else {
     $id = $_SESSION["employee_id"];
     $sql="SELECT u.id, u.name, u.email, u.contact, u.date_add, dept.department, d.division, u.user_role, (SELECT COUNT(r.id) FROM req r WHERE r.user_id = u.id) AS request_count
@@ -16,13 +16,10 @@ if (empty($_SESSION["username"])) {
     $result=$con->select_by_query($sql);
     $row = $result->fetch_assoc();
 
-    $sql_req = "SELECT r.req_type, r.order_id, u.name, a.model, a.serial, s.supplier, d.department, dv.division, r.req_status, r.action
+    $sql_req = "SELECT r.req_type, r.asset_type_id, t.type, t.category, r.date_add, r.date_expected, r.order_id, u.name, r.amount, r.req_status, r.action
     FROM req r
     JOIN users u ON r.user_id = u.id
-    JOIN assets a ON r.asset_id = a.id
-    JOIN supplier s ON a.supplier_id = s.id
-    JOIN department d ON a.department_id = d.id
-    JOIN division dv ON a.division_id = dv.id
+    JOIN asset_type t ON r.asset_type_id = t.id
     WHERE r.user_id = '$id' AND r.req_status IN ('Incomplete', 'Pending')";
     $result_req = $con->select_by_query($sql_req);
 
@@ -38,11 +35,13 @@ if (empty($_SESSION["username"])) {
         }
         $orders[$order_id]["order_data"][] = array(
             "req_type" => $row_req["req_type"],
-            "model" => $row_req["model"],
-            "supplier" => $row_req["supplier"],
-            "serial" => $row_req["serial"],
-            "department" => $row_req["department"],
-            "division" => $row_req["division"],
+            "asset_type_id" => $row_req["asset_type_id"],
+            "type" => $row_req["type"],
+            "category" => $row_req["category"],
+            "date_add" => $row_req["date_add"],
+            "date_expected" => $row_req["date_expected"],
+            "name" => $row_req["name"],
+            "amount" => $row_req["amount"],
             "req_status" => $row_req["req_status"],
             "action" => $row_req["action"]
         );
@@ -134,7 +133,7 @@ if (empty($_SESSION["username"])) {
         } else {
             ?>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Requests</h2>
+                <h2 class="mt-4">Asset Requests</h2>
                 <?php
                 foreach ($orders as $order_id => $order_data) {
                     ?>
@@ -151,12 +150,13 @@ if (empty($_SESSION["username"])) {
                                 <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
-                                            <th>Supplier</th>
-                                            <th>Asset Model</th>
-                                            <th>Asset Serial</th>
-                                            <th>Department</th>
-                                            <th>Division</th>
+                                            <th>Asset Type</th>
+                                            <th>Asset Category</th>
+                                            <th>Date Requested</th>
+                                            <th>Date Expected</th>
+                                            <th>Amount</th>
                                             <th>Request Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -164,11 +164,11 @@ if (empty($_SESSION["username"])) {
                                     foreach ($order_data["order_data"] as $row) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $row["supplier"]; ?></td>
-                                            <td><?php echo $row["model"]; ?></td>
-                                            <td><?php echo $row["serial"]; ?></td>
-                                            <td><?php echo $row["department"]; ?></td>
-                                            <td><?php echo $row["division"]; ?></td>
+                                            <td style="width: 250px;"><?php echo $row["type"]; ?></td>
+                                            <td><?php echo $row["category"]; ?></td>
+                                            <td><?php echo $row["date_add"]; ?></td>
+                                            <td><?php echo $row["date_expected"]; ?></td>
+                                            <td><?php echo $row["amount"]; ?></td>
                                             <td style="height: 40px;">
                                                 <?php
                                                 if ($row["req_status"] == "Incomplete") {
@@ -182,11 +182,33 @@ if (empty($_SESSION["username"])) {
                                                 }
                                                 ?>
                                             </td>
+                                            <td style="width: 120px;">
+                                            <?php
+                                                if ($row["req_status"] == 'Incomplete' && $row["action"] == 'none') {
+                                                    ?>
+                                                    <a class='btn btn-primary btn-sm' href='complete_assetreq_one.php?order=<?php echo $order_id; ?>&asset_type=<?php echo $row["asset_type_id"]; ?>'>Received</a>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </td>
                                         </tr>
                                         <?php
                                         }
                                     ?>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <?php
+                                            if ($row["req_status"] == 'Incomplete' && $row["action"] == 'none') {
+                                                ?>
+                                                <td colspan="9">
+                                                    <a class="btn btn-primary" style="color: #ffffff" href='complete_assetreq.php?order=<?php echo $order_id; ?>'>Received All</a>
+                                                </td>
+                                                <?php
+                                            }
+                                            ?>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -202,7 +224,7 @@ if (empty($_SESSION["username"])) {
         if (empty($reserves)) {
             ?>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Reservations</h2>
+                <h2 class="mt-4">Asset Reservations</h2>
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <p>No asset reservations found.</p>
@@ -264,6 +286,28 @@ if (empty($_SESSION["username"])) {
                                         }
                                     ?>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <?php
+                                            if ($row["req_status"] == 'Pending'){
+                                                $serials = array_column($order_data["order_data"], "serial");
+                                                ?>
+                                                <td colspan="9">
+                                                    <a class="btn btn-primary" style="color: #ffffff" href='approve_assetreq.php?order=<?php echo $order_id; ?>'>Approve</a>
+                                                    <a class="btn btn-danger" style="color: #ffffff" href='cancel_assetreq.php?order=<?php echo $order_id; ?>&serial=<?php echo json_encode($serials); ?>'>Cancel</a>
+                                                </td>
+                                                <?php
+                                            }
+                                            else if ($row["req_status"] == 'Incomplete') {
+                                                ?>
+                                                <td colspan="9">
+                                                    <a class="btn btn-primary" style="color: #ffffff" href='complete_assetreq.php?order=<?php echo $order_id; ?>'>Complete</a>
+                                                </td>
+                                                <?php
+                                            }
+                                            ?>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>

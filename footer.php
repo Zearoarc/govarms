@@ -35,6 +35,49 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script type="text/javascript" src="app.js"></script>
+  <script>
+    $(document).ready(function() {
+        $('#selectAll').click(function() {
+            if ($(this).is(':checked')) {
+                $('.checkbox').prop('checked', true);
+            } else {
+                $('.checkbox').prop('checked', false);
+            }
+        });
+    });
+  </script>
+  <script>
+      $(document).ready(function(){
+        $("#search-input").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#table-body tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+        $('#request-btn').click(function(e) {
+            e.preventDefault();
+            var selectedAssets = [];
+            var user_id = '<?php echo $_SESSION["employee_id"]; ?>';
+            $('.checkbox:checked').each(function() {
+                var type = $(this).val();
+                var id = $('#id-' + type).val();
+                var amount = $('#amount-' + type).val();
+                var date_expected = $('#date-expected-' + type).val();
+                selectedAssets.push({ id: id, type: type, amount: amount, date_expected: date_expected });
+            });
+            var queryString = '';
+            if (selectedAssets.length > 0) {
+                queryString = '?assets=' + encodeURIComponent(JSON.stringify(selectedAssets)) + '&user_id=' + user_id;
+            }
+            window.location.href = 'confirm_assetreq.php' + queryString;
+        });
+    });
+  </script>
+  
 </body>
 
 </html>

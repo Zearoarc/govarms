@@ -36,18 +36,6 @@
             </a>
         </li>
         <?php
-        if (strpos($url, 'manage') !== false || strpos($url, 'user') !== false) {
-            echo '<li class="active">';
-        } else {
-            echo '<li>';
-        }
-        ?>
-            <a href="manage.php">
-                <i class='bx bxs-user'></i>
-                <span>Manage</span>
-            </a>
-        </li>
-        <?php
         if (strpos($url, 'req') !== false || strpos($url, 'res') !== false) {
             echo '<li class="active">';
         } else {
@@ -79,6 +67,15 @@
                     }
                     ?>
                     >Asset Reservations</a></li>
+                    <li><a href="supplyreq.php"
+                    <?php
+                    if (strpos($url, 'supplyreq') !== false) {
+                        echo '';
+                    } else {
+                        echo 'style="color: #ffffff"';
+                    }
+                    ?>
+                    >Supply Request</a></li>
                     <li><a href="maintenancereq.php"
                     <?php
                     if (strpos($url, 'maintenancereq') !== false) {
@@ -88,17 +85,20 @@
                     }
                     ?>
                     >Maintenance</a></li>
-                    <li><a href="completedreq.php"
-                    <?php
-                    if (strpos($url, 'completedreq') !== false) {
-                        echo '';
-                    } else {
-                        echo 'style="color: #ffffff"';
-                    }
-                    ?>
-                    >Completed</a></li>
                 </div>
             </ul>
+        </li>
+        <?php
+        if (strpos($url, 'manage') !== false || strpos($url, 'user') !== false) {
+            echo '<li class="active">';
+        } else {
+            echo '<li>';
+        }
+        ?>
+            <a href="manage.php">
+                <i class='bx bxs-user'></i>
+                <span>Manage</span>
+            </a>
         </li>
         <?php
         if (strpos($url, 'reports.php') !== false) {

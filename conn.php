@@ -56,6 +56,20 @@ class connec
         return  $result;
     }
 
+    function insert($query,$msg)
+    { 
+        if($this->conn->query($query)===TRUE)
+        {
+             echo '<script> alert("'.$msg.'");</script>' ;
+                //echo "inserted";
+        }
+        else
+        {
+             echo '<script> alert("'.$this->conn->error.'");</script>' ;
+               // echo $this->conn->error;
+        }
+    }
+
     function delete($table_name,$id)
     { 
         $query="DELETE FROM $table_name WHERE id=$id";

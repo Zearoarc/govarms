@@ -5,7 +5,7 @@ include("header.php");
 $con = new connec();
 
 if (empty($_SESSION["username"])) {
-    header("location:../login.php");
+    header("location:login.php");
 } else {
     $id = $_SESSION["employee_id"];
     $sql_req = "SELECT r.req_type, r.order_id, u.name, a.model, a.serial, s.supplier, t.type, d.department, dv.division, r.req_status, r.action

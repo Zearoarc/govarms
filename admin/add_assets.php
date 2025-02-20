@@ -13,6 +13,8 @@ if(isset($_POST["btn_insert"])){
     $salvage = $_POST["salvage_new"];
     $useful = $_POST["useful_new"];
     $repair = $_POST["repair_new"];
+    // $req = $_POST["req_new"];
+    // $res = $_POST["res_new"];
 
     
     $con=new connec();
