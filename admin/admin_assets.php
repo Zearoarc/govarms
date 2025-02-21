@@ -7,36 +7,31 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $sql="SELECT t.type, s.supplier, a.model, a.cost, a.useful_life, a.status, dept.department, d.division
+    $sql="SELECT t.type, s.supplier, a.model, a.cost, a.status, o.office
     FROM assets a
     INNER JOIN asset_type t ON a.type_id = t.id
     INNER JOIN supplier s ON a.supplier_id = s.id
-    INNER JOIN department dept ON a.department_id = dept.id
-    INNER JOIN division d ON a.division_id = d.id
+    INNER JOIN office o ON a.office_id = o.id
     WHERE a.status='Available'";
     $result=$con->select_by_query($sql);
     $assets = array();
     while ($row = $result->fetch_assoc()) {
         $model = $row["model"];
         $cost = $row["cost"];
-        $useful_life = $row["useful_life"];
         $type = $row["type"];
         $supplier = $row["supplier"];
         $status = $row["status"];
-        $dept = $row["department"];
-        $division = $row["division"];
-        $key = $model . "_" . $type . "_" . $supplier . "_" . $dept . "_" . $division;
+        $office = $row["office"];
+        $key = $model . "_" . $type . "_" . $supplier . "_" . $office;
         if (!isset($assets[$key])) {
             $assets[$key] = array(
                 "model" => $model,
                 "cost" => $cost,
-                "useful_life" => $useful_life,
                 "amount" => 1,
                 "type" => $type,
                 "supplier" => $supplier,
                 "status" => $status,
-                "dept" => $dept,
-                "division" => $division
+                "office" => $office
             );
         } else {
             $assets[$key]["amount"]++;
@@ -66,10 +61,8 @@ else {
                                             <th>Type</th>
                                             <th>Supplier</th>
                                             <th>Asset Model</th>
-                                            <th>Department</th>
-                                            <th>Division</th>
+                                            <th>Office</th>
                                             <th>Cost</th>
-                                            <th>Useful Life</th>
                                             <th>Amount</th>
                                             <th>Action</th>
                                         </tr>
@@ -82,14 +75,12 @@ else {
                                                 <td><?php echo $asset["type"]; ?></td>
                                                 <td><?php echo $asset["supplier"]; ?></td>
                                                 <td><?php echo $asset["model"]; ?></td>
-                                                <td><?php echo $asset["dept"]; ?></td>
-                                                <td><?php echo $asset["division"]; ?></td>
+                                                <td><?php echo $asset["office"]; ?></td>
                                                 <td>₱ <?php echo number_format($asset["cost"]); ?></td>
-                                                <td><?php echo $asset["useful_life"]; ?> years</td>
                                                 <td><?php echo $asset["amount"]; ?></td>
                                                 <td>
-                                                <a class='btn btn-primary btn-sm' href='edit_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>&dept=<?php echo $asset["dept"]; ?>&division=<?php echo $asset["division"]; ?>'>Edit</a>
-                                                <a class='btn btn-sm btn-danger' href='delete_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>&dept=<?php echo $asset["dept"]; ?>&division=<?php echo $asset["division"]; ?>'>Delete</a>
+                                                <a class='btn btn-primary btn-sm' href='edit_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>&office=<?php echo $asset["office"]; ?>'>Edit</a>
+                                                <a class='btn btn-sm btn-danger' href='delete_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>?>&office=<?php echo $asset["office"]; ?>'>Delete</a>
                                                 </td>
                                             </tr>
                                             <?php

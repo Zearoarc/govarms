@@ -4,8 +4,7 @@ session_start();
 $name_edit="";
 $email_edit="";
 $password_edit="";
-$dept_edit="";
-$division_edit="";
+$office_edit="";
 $contact_edit="";
 $user_role_edit="";
 
@@ -14,14 +13,13 @@ if(isset($_POST["btn_update"])){
     $name=$_POST["name_new"];
     $email=$_POST["email_new"];
     $password=$_POST["psw_new"];
-    $dept=$_POST["number_new"];
-    $division=$_POST["division_new"];
+    $office=$_POST["office_new"];
     $contact=$_POST["contact_new"];
     $user_role=$_POST["user_role_new"];
 
     $id=$_GET['id'];
     $con=new connec();
-    $sql="UPDATE users SET name='$name', email='$email', password='$password', dept='$dept', division='$division', contact='$contact', user_role='$user_role' WHERE id='$id'";
+    $sql="UPDATE users SET name='$name', email='$email', password='$password', office='$office', contact='$contact', user_role='$user_role' WHERE id='$id'";
     $con->update($sql, "Data Updated Successfully");
     header("location:admin_manage.php");
 }
@@ -38,10 +36,9 @@ else{
         $id=$_GET['id'];
 
         $con=new connec();
-        $sql="SELECT u.id, u.name, u.email, u.password, u.contact, u.date_add, u.user_role, u.division_id, dept.department, d.division
+        $sql="SELECT u.id, u.name, u.email, u.password, u.contact, u.date_add, u.user_role, u.office_id, o.office
         FROM users u
-        INNER JOIN department dept ON u.dept_id = dept.id
-        INNER JOIN division d ON u.division_id = d.id
+        INNER JOIN office o ON u.office_id = o.id
         WHERE u.id='$id'";
         $result=$con->select_by_query($sql);
 
@@ -54,8 +51,7 @@ else{
             } else {
                 $password_edit=password_hash($row["password"], PASSWORD_DEFAULT);
             }
-            $dept_edit=$row["department"];
-            $division_edit=$row["division"];
+            $office_edit=$row["office"];
             $contact_edit=$row["contact"];
             $user_role_edit=$row["user_role"];
         }
@@ -80,24 +76,8 @@ else{
                                     <label for="psw_new"><b>Password</b></label>
 						            <input type="text" name="psw_new" id="psw_new" class="form-control" value="<?php echo $password_edit ?>" required><br>
 
-                                    <label for="dept_new<?php echo $row["id"]; ?>"><b>Department</b></label>
-                                    <select name="dept_new<?php echo $row["id"]; ?>" id="dept_new<?php echo $row["id"]; ?>" class="form-control" data-row-id="<?php echo $row["id"]; ?>" data-division-id="<?php echo $row["division_id"]; ?>" required>
-                                        <?php
-                                            // Retrieve department data from the database
-                                            $sql_dept = "SELECT id, department FROM department";
-                                            $result_dept = $con->select_by_query($sql_dept);
-                                            if($result_dept->num_rows > 0){
-                                                while($row_dept = $result_dept->fetch_assoc()){
-                                                    ?>
-                                                    <option value="<?php echo $row_dept["id"]; ?>" <?php if($row["department"] == $row_dept["department"]) echo "selected"; ?>><?php echo $row_dept["department"]; ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                        ?>
-                                    </select><br>
-
-                                    <label for="division_new<?php echo $row["id"]; ?>"><b>Division</b></label>
-                                    <select name="division_new<?php echo $row["id"]; ?>" id="division_new<?php echo $row["id"]; ?>" class="form-control" required>
+                                    <label for="office_new<?php echo $row["id"]; ?>"><b>Office</b></label>
+                                    <select name="office_new<?php echo $row["id"]; ?>" id="office_new<?php echo $row["id"]; ?>" class="form-control" required>
                                         <option value="" disabled selected>Select Department First</option>
                                     </select><br>
 
@@ -107,8 +87,7 @@ else{
                                     <label for="user_role"><b>Role</b></label>
                                     <select name="user_role" id="user_role" class="form-control" value="<?php echo $user_role_edit ?>" required>
                                         <option value="Admin">Admin</option>
-                                        <option value="Dept Head">Dept Head</option>
-                                        <option value="Division Head">Division Head</option>
+                                        <option value="Office Head">Office Head</option>
                                         <option value="Employee">Employee</option>
                                     </select><br>
 

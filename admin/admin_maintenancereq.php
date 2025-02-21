@@ -7,7 +7,7 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $sql="SELECT r.req_type, r.order_id, u.name, a.model, a.serial, s.supplier, a.date_add, a.cost, a.salvage, a.useful_life, a.repair, a.repair_times, r.req_status, r.req_level, r.action
+    $sql="SELECT r.req_type, r.order_id, u.name, a.model, a.serial, s.supplier, a.date_add, a.cost, r.req_status, r.req_level, r.action
     FROM req r
     JOIN users u ON r.user_id = u.id
     JOIN assets a ON r.asset_id = a.id
@@ -32,10 +32,6 @@ else {
             "serial" => $row["serial"],
             "date_add" => $row["date_add"],
             "cost" => $row["cost"],
-            "salvage" => $row["salvage"],
-            "useful_life" => $row["useful_life"],
-            "repair" => $row["repair"],
-            "repair_times" => $row["repair_times"],
             "req_status" => $row["req_status"],
             "req_level" => $row["req_level"],
             "action" => $row["action"]
@@ -82,13 +78,6 @@ else {
                                             <th>Asset Model</th>
                                             <th>Asset Serial</th>
                                             <th>Asset Cost</th>
-                                            <th>Salvage Cost</th>
-                                            <th>Useful Life</th>
-                                            <th>Times Repaired</th>
-                                            <th>Repair Cost</th>
-                                            <th>Depreciation</th>
-                                            <th>Current Value</th>
-                                            <th>Suggestion</th>
                                             <th>Request Status</th>
                                         </tr>
                                     </thead>
@@ -99,24 +88,12 @@ else {
                                         $today = new DateTime();
                                         $years = $today->diff($date_add)->y;
 
-                                        $repair_cost = $row["repair"] + ($row["repair"] * $row["repair_times"] * 0.3);
-                                        $depreciation = ($row["cost"] - $row["salvage"]) / $row["useful_life"];
-                                        $value = $row["cost"] - $depreciation * $years;
-                                        $dispose_suggestion = ($value <= $row["salvage"] && $repair_cost >= $row["salvage"]) || $repair_cost >= ($row["cost"] * 0.5) ? "Dispose" : "Repair";
-
                                         ?>
                                         <tr>
                                             <td><?php echo $row["supplier"]; ?></td>
                                             <td><?php echo $row["model"]; ?></td>
                                             <td><?php echo $row["serial"]; ?></td>
                                             <td>₱ <?php echo number_format($row["cost"]); ?></td>
-                                            <td>₱ <?php echo number_format($row["salvage"]); ?></td>
-                                            <td><?php echo $row["useful_life"]; ?> years</td>
-                                            <td><?php echo $row["repair_times"]; ?> times</td>
-                                            <td>₱ <?php echo number_format($repair_cost); ?></td>
-                                            <td>₱ <?php echo number_format($depreciation); ?>/yr</td>
-                                            <td>₱ <?php echo number_format($value); ?></td>
-                                            <td><?php echo $dispose_suggestion; ?></td>
                                             <td style="height: 40px;">
                                             <?php
                                                 if ($row["req_status"] == "Incomplete") {

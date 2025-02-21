@@ -4,8 +4,7 @@ session_start();
 $name_edit="";
 $email_edit="";
 $password_edit="";
-$dept_edit="";
-$division_edit="";
+$office_edit="";
 $contact_edit="";
 $user_role_edit="";
 
@@ -31,10 +30,9 @@ else{
         $id=$_GET['id'];    
 
         $con=new connec();
-        $sql="SELECT u.id, u.name, u.email, u.password, u.contact, u.date_add, u.user_role, dept.department, d.division
+        $sql="SELECT u.id, u.name, u.email, u.password, u.contact, u.date_add, u.user_role, o.office
         FROM users u
-        INNER JOIN department dept ON u.dept_id = dept.id
-        INNER JOIN division d ON u.division_id = d.id
+        INNER JOIN office o ON u.office_id = o.id
         WHERE u.id='$id'";
         $result=$con->select_by_query($sql);
 
@@ -47,8 +45,7 @@ else{
             } else {
                 $password_edit=password_hash($row["password"], PASSWORD_DEFAULT);
             }
-            $dept_edit=$row["department"];
-            $division_edit=$row["division"];
+            $office_edit=$row["office"];
             $contact_edit=$row["contact"];
             $user_role_edit=$row["user_role"];
         }
@@ -73,11 +70,8 @@ else{
                                     <label for="psw_new"><b>Password</b></label>
 						            <input type="text" name="psw_new" id="psw_new" class="form-control" value="<?php echo $password_edit ?>" readonly required><br>
 
-                                    <label for="dept_new"><b>Department</b></label>
-						            <input type="text" name="dept_new" id="dept_new" class="form-control" value="<?php echo $dept_edit ?>" readonly required><br>
-
-                                    <label for="division_new"><b>Division</b></label>
-                                    <input type="text" name="division_new" id="division_new" class="form-control" value="<?php echo $division_edit ?>" readonly required><br>
+                                    <label for="office_new"><b>Office</b></label>
+                                    <input type="text" name="office_new" id="office_new" class="form-control" value="<?php echo $office_edit ?>" readonly required><br>
 
                                     <label for="contact_new"><b>Contact</b></label>
                                     <input type="text" name="contact_new" id="contact_new" class="form-control" value="<?php echo $contact_edit ?>" readonly required><br>

@@ -7,15 +7,13 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $sql="SELECT u.id, u.name, u.email, u.contact, u.date_add, dept.department, d.division, (SELECT COUNT(r.id) FROM req r WHERE r.user_id = u.id) AS request_count
+    $sql="SELECT u.id, u.name, u.email, u.contact, u.date_add, o.office, (SELECT COUNT(r.id) FROM req r WHERE r.user_id = u.id) AS request_count
     FROM users u
-    INNER JOIN department dept ON u.dept_id = dept.id
-    INNER JOIN division d ON u.division_id = d.id";
+    JOIN office o ON u.office_id = o.id";
     $result=$con->select_by_query($sql);
     ?>
     <head>
         <title>Admin Manage</title>
-        <link rel="stylesheet" href="../admin_manage.css">
     </head>
 
     <main>
@@ -35,7 +33,6 @@ else {
                                         <th>Name</th>
                                         <th>Contact</th>
                                         <th>Email</th>
-                                        <th>Department</th>
                                         <th>Date</th>
                                         <th>Requests</th>
                                         <th>Action</th>
@@ -51,7 +48,6 @@ else {
                                                     <td><?php echo $row["name"]; ?></td>
                                                     <td><?php echo $row["contact"]; ?></td>
                                                     <td><?php echo $row["email"]; ?></td>
-                                                    <td><?php echo $row["department"]; ?></td>
                                                     <td><?php echo $row["date_add"]; ?></td>
                                                     <td><?php echo $row["request_count"]; ?></td>
                                                     <td>

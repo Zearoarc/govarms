@@ -5,8 +5,7 @@ if(isset($_POST["btn_insert"])){
     $type = $_POST["type_new"];
     $supplier = $_POST["supplier_new"];
     $model = $_POST["model_new"];
-    $dept = $_POST["dept_new"];
-    $division = $_POST["division_new"];
+    $office = $_POST["office_new"];
     $serial = $_POST["serial_new"];
     $date = date('Y-m-d');
     $cost = $_POST["cost_new"];
@@ -18,7 +17,7 @@ if(isset($_POST["btn_insert"])){
 
     
     $con=new connec();
-    $sql="INSERT INTO assets VALUES(0,'$type', '$supplier', '$model', '$serial', '$dept', '$division', '$date', '$cost', '$salvage', '$useful', '$repair', 0, 'Available')";
+    $sql="INSERT INTO assets VALUES(0,'$type', '$supplier', '$model', '$serial', '$office', '$date', '$cost', '$salvage', '$useful', '$repair', 0, 'Available')";
     $con->insert($sql, "Data Inserted Successfully");
     header("location:admin_assets.php");
 }
@@ -78,25 +77,8 @@ else{
                                     <label for="model_new"><b>Model</b></label>
                                     <input type="text" name="model_new" id="model_new" class="form-control" required><br>
 
-                                    <label for="dept_new"><b>Department</b></label>
-                                    <select name="dept_new" id="dept_new" class="form-control" required>
-                                        <option value="" disabled selected>Select Department</option>
-                                        <?php
-                                            // Retrieve department data from the database
-                                            $sql_dept = "SELECT id, department FROM department";
-                                            $result_dept = $con->select_by_query($sql_dept);
-                                            if($result_dept->num_rows > 0){
-                                                while($row_dept = $result_dept->fetch_assoc()){
-                                                    ?>
-                                                    <option value="<?php echo $row_dept["id"]; ?>"><?php echo $row_dept["department"]; ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                        ?>
-                                    </select><br>
-
-                                    <label for="division_new"><b>Division</b></label>
-                                    <select name="division_new" id="division_new" class="form-control" required>
+                                    <label for="office_new"><b>Office</b></label>
+                                    <select name="office_new" id="office_new" class="form-control" required>
                                     </select><br>
 
                                     <label for="serial_new"><b>Serial</b></label>
@@ -104,15 +86,6 @@ else{
 
                                     <label for="cost_new"><b>Unit Cost</b></label>
                                     <input type="text" name="cost_new" id="cost_new" class="form-control" required><br>
-
-                                    <label for="salvage_new"><b>Salvage Cost</b></label>
-                                    <input type="text" name="salvage_new" id="salvage_new" class="form-control" required><br>
-
-                                    <label for="useful_new"><b>Useful Life (Years)</b></label>
-                                    <input type="text" name="useful_new" id="useful_new" class="form-control" required><br>
-
-                                    <label for="repair_new"><b>Repair Cost</b></label>
-                                    <input type="text" name="repair_new" id="repair_new" class="form-control" required><br>
 
                                     <a href="admin_assets.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                                     <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Insert</button><br><br><br>

@@ -7,13 +7,12 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $sql="SELECT r.reserve_id, u.name, a.model, a.serial, s.supplier, d.department, dv.division, r.date_start, r.date_end, r.req_status, r.req_level
+    $sql="SELECT r.reserve_id, u.name, a.model, a.serial, s.supplier, o.office, r.date_start, r.date_end, r.req_status, r.req_level
     FROM res r
     JOIN users u ON r.user_id = u.id
     JOIN assets a ON r.asset_id = a.id
     JOIN supplier s ON a.supplier_id = s.id
-    JOIN department d ON a.department_id = d.id
-    JOIN division dv ON a.division_id = dv.id
+    JOIN office o ON a.office_id = o.id
     WHERE r.req_level='admin' AND r.req_status IN ('Incomplete', 'Pending');";
     $result=$con->select_by_query($sql);
 
@@ -31,8 +30,7 @@ else {
             "model" => $row["model"],
             "supplier" => $row["supplier"],
             "serial" => $row["serial"],
-            "department" => $row["department"],
-            "division" => $row["division"],
+            "office" => $row["office"],
             "date_start" => $row["date_start"],
             "date_end" => $row["date_end"],
             "req_status" => $row["req_status"]
@@ -72,8 +70,7 @@ else {
                                             <th>Supplier</th>
                                             <th>Asset Model</th>
                                             <th>Asset Serial</th>
-                                            <th>Department</th>
-                                            <th>Division</th>
+                                            <th>Office</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                             <th>Request Status</th>
@@ -87,8 +84,7 @@ else {
                                             <td><?php echo $row["supplier"]; ?></td>
                                             <td><?php echo $row["model"]; ?></td>
                                             <td><?php echo $row["serial"]; ?></td>
-                                            <td><?php echo $row["department"]; ?></td>
-                                            <td><?php echo $row["division"]; ?></td>
+                                            <td><?php echo $row["office"]; ?></td>
                                             <td><?php echo $row["date_start"]; ?></td>
                                             <td><?php echo $row["date_end"]; ?></td>
                                             <td style="height: 40px;">

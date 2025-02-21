@@ -8,10 +8,9 @@ if (empty($_SESSION["username"])) {
     header("location:login.php");
 } else {
     $id = $_SESSION["employee_id"];
-    $sql="SELECT u.id, u.name, u.email, u.contact, u.date_add, dept.department, d.division, u.user_role, (SELECT COUNT(r.id) FROM req r WHERE r.user_id = u.id) AS request_count
+    $sql="SELECT u.id, u.name, u.email, u.contact, u.date_add, o.office, u.user_role, (SELECT COUNT(r.id) FROM req r WHERE r.user_id = u.id) AS request_count
     FROM users u
-    INNER JOIN department dept ON u.dept_id = dept.id
-    INNER JOIN division d ON u.division_id = d.id
+    JOIN office o ON u.office_id = o.id
     WHERE u.id = '$id'";
     $result=$con->select_by_query($sql);
     $row = $result->fetch_assoc();
@@ -48,13 +47,12 @@ if (empty($_SESSION["username"])) {
     }
 
 
-    $sql_res="SELECT r.reserve_id, u.name, a.model, a.serial, s.supplier, d.department, dv.division, r.date_start, r.date_end, r.req_status
+    $sql_res="SELECT r.reserve_id, u.name, a.model, a.serial, s.supplier, o.office, r.date_start, r.date_end, r.req_status
     FROM res r
     JOIN users u ON r.user_id = u.id
     JOIN assets a ON r.asset_id = a.id
     JOIN supplier s ON a.supplier_id = s.id
-    JOIN department d ON a.department_id = d.id
-    JOIN division dv ON a.division_id = dv.id
+    JOIN office o ON a.office_id = o.id
     WHERE r.user_id = '$id' AND r.req_status IN ('Incomplete', 'Pending');";
     $result_res=$con->select_by_query($sql_res);
 
@@ -72,8 +70,7 @@ if (empty($_SESSION["username"])) {
             "model" => $row_res["model"],
             "supplier" => $row_res["supplier"],
             "serial" => $row_res["serial"],
-            "department" => $row_res["department"],
-            "division" => $row_res["division"],
+            "office" => $row_res["office"],
             "date_start" => $row_res["date_start"],
             "date_end" => $row_res["date_end"],
             "req_status" => $row_res["req_status"]
@@ -96,8 +93,7 @@ if (empty($_SESSION["username"])) {
                             <p><b>Name:</b> <?php echo $row["name"]; ?></p>
                             <p><b>Email:</b> <?php echo $row["email"]; ?></p>
                             <p><b>Contact:</b> <?php echo $row["contact"]; ?></p>
-                            <p><b>Department:</b> <?php echo $row["department"]; ?></p>
-                            <p><b>Division:</b> <?php echo $row["division"]; ?></p>
+                            <p><b>Office:</b> <?php echo $row["office"]; ?></p>
                             <p><b>User Role:</b> <?php echo $row["user_role"]; ?></p>
                         </div>
                     </div>
@@ -249,8 +245,7 @@ if (empty($_SESSION["username"])) {
                                             <th>Supplier</th>
                                             <th>Asset Model</th>
                                             <th>Asset Serial</th>
-                                            <th>Department</th>
-                                            <th>Division</th>
+                                            <th>Office</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                             <th>Request Status</th>
@@ -264,8 +259,7 @@ if (empty($_SESSION["username"])) {
                                             <td><?php echo $row["supplier"]; ?></td>
                                             <td><?php echo $row["model"]; ?></td>
                                             <td><?php echo $row["serial"]; ?></td>
-                                            <td><?php echo $row["department"]; ?></td>
-                                            <td><?php echo $row["division"]; ?></td>
+                                            <td><?php echo $row["office"]; ?></td>
                                             <td><?php echo $row["date_start"]; ?></td>
                                             <td><?php echo $row["date_end"]; ?></td>
                                             <td style="height: 40px;">

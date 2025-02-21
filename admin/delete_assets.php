@@ -6,21 +6,18 @@ if (isset($_POST["btn_delete"])) {
     $model=$_GET['model'];
     $type=$_GET['type'];
     $supplier=$_GET['supplier'];
-    $dept=$_GET['dept'];
-    $division=$_GET['division'];
+    $office=$_GET['office'];
 
     $con = new connec();
     $sql = "SELECT a.id
     FROM assets a
     INNER JOIN asset_type t ON a.type_id = t.id
     INNER JOIN supplier s ON a.supplier_id = s.id
-    INNER JOIN department dept ON a.department_id = dept.id
-    INNER JOIN division d ON a.division_id = d.id
+    INNER JOIN office o ON a.office_id = o.id
     WHERE a.model='$model'
     AND t.type='$type'
     AND s.supplier='$supplier'
-    AND dept.department='$dept'
-    AND d.division='$division'";
+    AND o.office='$office'";
     $result = $con->select_by_query($sql);
 
     if ($result->num_rows > 0) {
@@ -39,25 +36,22 @@ if (empty($_SESSION["username"])) {
 else {
     include("admin_header.php");
 
-    if (isset($_GET['model'], $_GET['type'], $_GET['supplier'], $_GET['dept'], $_GET['division'])) {
+    if (isset($_GET['model'], $_GET['type'], $_GET['supplier'], $_GET['office'])) {
         $model=$_GET['model'];
         $type=$_GET['type'];
         $supplier=$_GET['supplier'];
-        $dept=$_GET['dept'];
-        $division=$_GET['division'];
+        $office=$_GET['office'];
 
         $con = new connec();
-        $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, a.division_id, dept.department, d.division
+        $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, o.office_id, o.office
         FROM assets a
         INNER JOIN asset_type t ON a.type_id = t.id
         INNER JOIN supplier s ON a.supplier_id = s.id
-        INNER JOIN department dept ON a.department_id = dept.id
-        INNER JOIN division d ON a.division_id = d.id
+        INNER JOIN office o ON a.office_id = o.id
         WHERE a.model='$model'
         AND t.type='$type'
         AND s.supplier='$supplier'
-        AND dept.department='$dept'
-        AND d.division='$division'";
+        AND o.office='$office'";
         $result = $con->select_by_query($sql);
     }
 
@@ -86,11 +80,8 @@ else {
                                     <label for="model"><b>Model</b></label>
                                     <input type="text" name="model" id="model" class="form-control" value="<?php echo $row["model"]; ?>" readonly>
 
-                                    <label for="dept"><b>Department</b></label>
-                                    <input type="text" name="dept" id="dept" class="form-control" value="<?php echo $row["department"]; ?>" readonly>
-
-                                    <label for="division"><b>Division</b></label>
-                                    <input type="text" name="division" id="division" class="form-control" value="<?php echo $row["division"]; ?>" readonly>
+                                    <label for="office"><b>Office</b></label>
+                                    <input type="text" name="office" id="office" class="form-control" value="<?php echo $row["office"]; ?>" readonly>
 
                                     <label for="serial"><b>Serial</b></label>
                                     <input type="text" name="serial" id="serial" class="form-control" value="<?php echo $row["serial"]; ?>" readonly>

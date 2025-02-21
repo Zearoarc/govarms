@@ -5,13 +5,12 @@ if (isset($_POST["btn_insert"])) {
     $name = $_POST["name_new"];
     $email = $_POST["email_new"];
     $password = $_POST["psw_new"];
-    $dept = $_POST["dept_new"];
-    $division = $_POST["division_new"];
+    $office = $_POST["office_new"];
     $contact = $_POST["contact_new"];
     $user_role = $_POST["user_role_new"];
 
     $con = new connec();
-    $sql = "INSERT INTO users VALUES(0, '$name', '$email', '$password', '$dept', '$division', '$contact', '$user_role')";
+    $sql = "INSERT INTO users VALUES(0, '$name', '$email', '$password', '$office', '$contact', '$user_role')";
     $con->insert($sql, "Data Inserted Successfully");
     header("location:admin_manage.php");
 }
@@ -43,25 +42,8 @@ else {
                             <label for="psw_new"><b>Password</b></label>
                             <input type="password" name="psw_new" id="psw_new" class="form-control" required><br>
 
-                            <label for="dept_new"><b>Department</b></label>
-                            <select name="dept_new" id="dept_new" class="form-control" required>
-                                <option value="" disabled selected>Select Department</option>
-                                <?php
-                                // Retrieve department data from the database
-                                $sql_dept = "SELECT id, department FROM department";
-                                $result_dept = $con->select_by_query($sql_dept);
-                                if ($result_dept->num_rows > 0) {
-                                    while ($row_dept = $result_dept->fetch_assoc()) {
-                                        ?>
-                                        <option value="<?php echo $row_dept["id"]; ?>"><?php echo $row_dept["department"]; ?></option>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                            </select><br>
-
-                            <label for="division_new"><b>Division</b></label>
-                            <select name="division_new" id="division_new" class="form-control" required>
+                            <label for="office_new"><b>Office</b></label>
+                            <select name="office_new" id="office_new" class="form-control" required>
                                 <option value="" disabled selected>Select Department First</option>
                             </select><br>
 
@@ -71,8 +53,7 @@ else {
                             <label for="user_role"><b>Role</b></label>
                             <select name="user_role_new" id="user_role_new" class="form-control" required>
                                 <option value="Admin">Admin</option>
-                                <option value="Dept Head">Dept Head</option>
-                                <option value="Division Head">Division Head</option>
+                                <option value="Office">Office</option>
                                 <option value="Employee">Employee</option>
                             </select><br>
 

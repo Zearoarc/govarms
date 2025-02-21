@@ -6,20 +6,17 @@ if(isset($_POST["btn_update"])){
     $model=$_GET['model'];
     $type=$_GET['type'];
     $supplier=$_GET['supplier'];
-    $dept=$_GET['dept'];
-    $division=$_GET['division'];
+    $office=$_GET['office'];
     $con=new connec();
-    $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, dept.department, d.division
+    $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, o.office
         FROM assets a
         INNER JOIN asset_type t ON a.type_id = t.id
         INNER JOIN supplier s ON a.supplier_id = s.id
-        INNER JOIN department dept ON a.department_id = dept.id
-        INNER JOIN division d ON a.division_id = d.id
+        INNER JOIN office o ON a.office_id = o.id
         WHERE a.model='$model'
         AND t.type='$type'
         AND s.supplier='$supplier'
-        AND dept.department='$dept'
-        AND d.division='$division'";
+        AND o.office='$office'";
     $result=$con->select_by_query($sql);
 
     if($result->num_rows > 0){
@@ -28,11 +25,10 @@ if(isset($_POST["btn_update"])){
             $type = $_POST["type_new" . $id];
             $supplier = $_POST["supplier_new" . $id];
             $model = $_POST["model_new" . $id];
-            $dept = $_POST["dept_new" . $id];
-            $division = $_POST["division_new" . $id];
+            $office = $_POST["office_new" . $id];
             $serial = $_POST["serial_new" . $id];
 
-            $sql = "UPDATE assets SET type_id='$type', supplier_id='$supplier', model='$model', department_id='$dept', division_id='$division', serial='$serial' WHERE id='$id'";
+            $sql = "UPDATE assets SET type_id='$type', supplier_id='$supplier', model='$model', office_id='$office', serial='$serial' WHERE id='$id'";
             $con->update($sql, "Data Updated Successfully");
         }
     }
@@ -47,25 +43,22 @@ else{
     include("admin_header.php");
     
     
-    if(isset($_GET['model'], $_GET['type'], $_GET['supplier'], $_GET['dept'], $_GET['division'])){
+    if(isset($_GET['model'], $_GET['type'], $_GET['supplier'], $_GET['office'])){
         $model=$_GET['model'];
         $type=$_GET['type'];
         $supplier=$_GET['supplier'];
-        $dept=$_GET['dept'];
-        $division=$_GET['division'];
+        $office=$_GET['office'];
 
         $con=new connec();
-        $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, a.division_id, dept.department, d.division, a.status
+        $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, o.office_id, o.office, a.status
         FROM assets a
         INNER JOIN asset_type t ON a.type_id = t.id
         INNER JOIN supplier s ON a.supplier_id = s.id
-        INNER JOIN department dept ON a.department_id = dept.id
-        INNER JOIN division d ON a.division_id = d.id
+        INNER JOIN office o ON a.office_id = o.id
         WHERE a.model='$model'
         AND t.type='$type'
         AND s.supplier='$supplier'
-        AND dept.department='$dept'
-        AND d.division='$division'
+        AND o.office='$office'
         AND a.status='Available'";
         $result=$con->select_by_query($sql);
     }
@@ -122,24 +115,20 @@ else{
                                                 <label for="model_new<?php echo $row["id"]; ?>"><b>Model</b></label>
                                                 <input type="text" name="model_new<?php echo $row["id"]; ?>" id="model_new<?php echo $row["id"]; ?>" class="form-control" value="<?php echo $row["model"] ?>" required><br>
 
-                                                <label for="dept_new<?php echo $row["id"]; ?>"><b>Department</b></label>
-                                                <select name="dept_new<?php echo $row["id"]; ?>" id="dept_new<?php echo $row["id"]; ?>" class="form-control" data-row-id="<?php echo $row["id"]; ?>" data-division-id="<?php echo $row["division_id"]; ?>" required>
-                                                    <?php
-                                                        // Retrieve department data from the database
-                                                        $sql_dept = "SELECT id, department FROM department";
-                                                        $result_dept = $con->select_by_query($sql_dept);
-                                                        if($result_dept->num_rows > 0){
-                                                            while($row_dept = $result_dept->fetch_assoc()){
+                                                <label for="office_new<?php echo $row["id"]; ?>"><b>Office</b></label>
+                                                <select name="office_new<?php echo $row["id"]; ?>" id="office_new<?php echo $row["id"]; ?>" class="form-control" required>
+                                                <?php
+                                                        // Retrieve office data from the database
+                                                        $sql_office = "SELECT id, office FROM office";
+                                                        $result_office = $con->select_by_query($sql_office);
+                                                        if($result_office->num_rows > 0){
+                                                            while($row_office = $result_office->fetch_assoc()){
                                                                 ?>
-                                                                <option value="<?php echo $row_dept["id"]; ?>" <?php if($row["department"] == $row_dept["department"]) echo "selected"; ?>><?php echo $row_dept["department"]; ?></option>
+                                                                <option value="<?php echo $row_officet["id"]; ?>" <?php if($row["office"] == $row_office["office"]) echo "selected"; ?>><?php echo $row_office["office"]; ?></option>
                                                                 <?php
                                                             }
                                                         }
                                                     ?>
-                                                </select><br>
-
-                                                <label for="division_new<?php echo $row["id"]; ?>"><b>Division</b></label>
-                                                <select name="division_new<?php echo $row["id"]; ?>" id="division_new<?php echo $row["id"]; ?>" class="form-control" required>
                                                 </select><br>
 
                                                 <label for="serial_new<?php echo $row["id"]; ?>"><b>Serial</b></label>
