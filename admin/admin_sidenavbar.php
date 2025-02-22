@@ -69,7 +69,7 @@
                     }
                     ?>
                     >Assets</a></li>
-                    <li><a href="admin_suppplytypes.php"
+                    <li><a href="admin_supplytypes.php"
                     <?php
                     if (strpos($url, 'suppplytypes') !== false) {
                         echo '';
