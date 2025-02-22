@@ -47,11 +47,11 @@ if (empty($_SESSION["username"])) {
     }
 
 
-    $sql_res="SELECT r.reserve_id, u.name, a.model, a.serial, s.supplier, o.office, r.date_start, r.date_end, r.req_status
+    $sql_res="SELECT r.reserve_id, u.name, a.model, a.serial, b.brand, o.office, r.date_start, r.date_end, r.req_status
     FROM res r
     JOIN users u ON r.user_id = u.id
     JOIN assets a ON r.asset_id = a.id
-    JOIN supplier s ON a.supplier_id = s.id
+    JOIN brand b ON a.brand_id = b.id
     JOIN office o ON a.office_id = o.id
     WHERE r.user_id = '$id' AND r.req_status IN ('Incomplete', 'Pending');";
     $result_res=$con->select_by_query($sql_res);
@@ -68,7 +68,7 @@ if (empty($_SESSION["username"])) {
         }
         $reserves[$reserve_id]["reserve_data"][] = array(
             "model" => $row_res["model"],
-            "supplier" => $row_res["supplier"],
+            "brand" => $row_res["brand"],
             "serial" => $row_res["serial"],
             "office" => $row_res["office"],
             "date_start" => $row_res["date_start"],
@@ -242,7 +242,7 @@ if (empty($_SESSION["username"])) {
                                 <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
-                                            <th>Supplier</th>
+                                            <th>Brand</th>
                                             <th>Asset Model</th>
                                             <th>Asset Serial</th>
                                             <th>Office</th>
@@ -256,7 +256,7 @@ if (empty($_SESSION["username"])) {
                                     foreach ($reserve_data["reserve_data"] as $row) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $row["supplier"]; ?></td>
+                                            <td><?php echo $row["brand"]; ?></td>
                                             <td><?php echo $row["model"]; ?></td>
                                             <td><?php echo $row["serial"]; ?></td>
                                             <td><?php echo $row["office"]; ?></td>

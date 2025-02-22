@@ -7,10 +7,10 @@ else {
     include("office_header.php");
 
     $con=new connec();
-    $sql="SELECT t.type, s.supplier, a.model, a.cost, a.status, o.office
+    $sql="SELECT t.type, b.brand, a.model, a.cost, a.status, o.office
     FROM assets a
     INNER JOIN asset_type t ON a.type_id = t.id
-    INNER JOIN supplier s ON a.supplier_id = s.id
+    INNER JOIN brand b ON a.brand_id = b.id
     INNER JOIN office o ON a.office_id = o.id
     WHERE a.status='Available'";
     $result=$con->select_by_query($sql);
@@ -19,17 +19,17 @@ else {
         $model = $row["model"];
         $cost = $row["cost"];
         $type = $row["type"];
-        $supplier = $row["supplier"];
+        $brand = $row["brand"];
         $status = $row["status"];
         $office = $row["office"];
-        $key = $model . "_" . $type . "_" . $supplier . "_" . $office;
+        $key = $model . "_" . $type . "_" . $brand . "_" . $office;
         if (!isset($assets[$key])) {
             $assets[$key] = array(
                 "model" => $model,
                 "cost" => $cost,
                 "amount" => 1,
                 "type" => $type,
-                "supplier" => $supplier,
+                "brand" => $brand,
                 "status" => $status,
                 "office" => $office
             );
@@ -59,7 +59,7 @@ else {
                                     <thead class="table-blue">
                                         <tr>
                                             <th>Type</th>
-                                            <th>Supplier</th>
+                                            <th>Brand</th>
                                             <th>Asset Model</th>
                                             <th>Office</th>
                                             <th>Cost</th>
@@ -73,14 +73,14 @@ else {
                                             ?>
                                             <tr>
                                                 <td><?php echo $asset["type"]; ?></td>
-                                                <td><?php echo $asset["supplier"]; ?></td>
+                                                <td><?php echo $asset["brand"]; ?></td>
                                                 <td><?php echo $asset["model"]; ?></td>
                                                 <td><?php echo $asset["office"]; ?></td>
                                                 <td>₱ <?php echo number_format($asset["cost"]); ?></td>
                                                 <td><?php echo $asset["amount"]; ?></td>
                                                 <td>
-                                                <a class='btn btn-primary btn-sm' href='edit_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>&office=<?php echo $asset["office"]; ?>'>Edit</a>
-                                                <a class='btn btn-sm btn-danger' href='delete_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&supplier=<?php echo $asset["supplier"]; ?>?>&office=<?php echo $asset["office"]; ?>'>Delete</a>
+                                                <a class='btn btn-primary btn-sm' href='edit_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&brand=<?php echo $asset["brand"]; ?>&office=<?php echo $asset["office"]; ?>'>Edit</a>
+                                                <a class='btn btn-sm btn-danger' href='delete_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&brand=<?php echo $asset["brand"]; ?>?>&office=<?php echo $asset["office"]; ?>'>Delete</a>
                                                 </td>
                                             </tr>
                                             <?php

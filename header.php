@@ -52,7 +52,7 @@ if (isset($_POST["btn_login"])) {
             </nav>';
             if ($_SESSION["user_role"] === 'Admin') {
                 header("Location: admin/admin_index.php");
-            } else if ($_SESSION["user_role"] === 'Office Supplier') {
+            } else if ($_SESSION["user_role"] === 'Office Brand') {
                 header("Location: office-s/office_index.php");
             } else {
                 header("Location: index.php");

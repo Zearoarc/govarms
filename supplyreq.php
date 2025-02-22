@@ -7,7 +7,7 @@ else {
     include("header.php");
 
     $con=new connec();
-    $sql="SELECT s.id, t.type, t.category, t.date_expected, s.quantity, s.price, s.date_update
+    $sql="SELECT b.id, t.type, t.category, t.date_expected, s.quantity, s.price, s.date_update
     FROM supplies s
     JOIN supply_type t ON s.type_id = t.id";
     $result=$con->select_by_query($sql);

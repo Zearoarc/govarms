@@ -5,17 +5,17 @@ if(isset($_POST["btn_update"])){
     include("../conn.php");
     $model=$_GET['model'];
     $type=$_GET['type'];
-    $supplier=$_GET['supplier'];
+    $brand=$_GET['brand'];
     $office=$_GET['office'];
     $con=new connec();
-    $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, o.office
+    $sql="SELECT a.id, t.type, b.brand, a.model, a.serial, o.office
         FROM assets a
         INNER JOIN asset_type t ON a.type_id = t.id
-        INNER JOIN supplier s ON a.supplier_id = s.id
+        INNER JOIN brand b ON a.brand_id = b.id
         INNER JOIN office o ON a.office_id = o.id
         WHERE a.model='$model'
         AND t.type='$type'
-        AND s.supplier='$supplier'
+        AND b.brand='$brand'
         AND o.office='$office'";
     $result=$con->select_by_query($sql);
 
@@ -23,12 +23,12 @@ if(isset($_POST["btn_update"])){
         while($row = $result->fetch_assoc()){
             $id = $row["id"];
             $type = $_POST["type_new" . $id];
-            $supplier = $_POST["supplier_new" . $id];
+            $brand = $_POST["brand_new" . $id];
             $model = $_POST["model_new" . $id];
             $office = $_POST["office_new" . $id];
             $serial = $_POST["serial_new" . $id];
 
-            $sql = "UPDATE assets SET type_id='$type', supplier_id='$supplier', model='$model', office_id='$office', serial='$serial' WHERE id='$id'";
+            $sql = "UPDATE assets SET type_id='$type', brand_id='$brand', model='$model', office_id='$office', serial='$serial' WHERE id='$id'";
             $con->update($sql, "Data Updated Successfully");
         }
     }
@@ -43,21 +43,21 @@ else{
     include("office_header.php");
     
     
-    if(isset($_GET['model'], $_GET['type'], $_GET['supplier'], $_GET['office'])){
+    if(isset($_GET['model'], $_GET['type'], $_GET['brand'], $_GET['office'])){
         $model=$_GET['model'];
         $type=$_GET['type'];
-        $supplier=$_GET['supplier'];
+        $brand=$_GET['brand'];
         $office=$_GET['office'];
 
         $con=new connec();
-        $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, o.office_id, o.office, a.status
+        $sql="SELECT a.id, t.type, b.brand, a.model, a.serial, o.office_id, o.office, a.status
         FROM assets a
         INNER JOIN asset_type t ON a.type_id = t.id
-        INNER JOIN supplier s ON a.supplier_id = s.id
+        INNER JOIN brand b ON a.brand_id = b.id
         INNER JOIN office o ON a.office_id = o.id
         WHERE a.model='$model'
         AND t.type='$type'
-        AND s.supplier='$supplier'
+        AND b.brand='$brand'
         AND o.office='$office'
         AND a.status='Available'";
         $result=$con->select_by_query($sql);
@@ -96,16 +96,16 @@ else{
                                                     ?>
                                                 </select><br>
                                                 
-                                                <label for="supplier_new<?php echo $row["id"]; ?>"><b>Supplier</b></label>
-                                                <select name="supplier_new<?php echo $row["id"]; ?>" id="supplier_new<?php echo $row["id"]; ?>" class="form-control" required>
+                                                <label for="brand_new<?php echo $row["id"]; ?>"><b>Brand</b></label>
+                                                <select name="brand_new<?php echo $row["id"]; ?>" id="brand_new<?php echo $row["id"]; ?>" class="form-control" required>
                                                     <?php
-                                                        // Retrieve supplier data from the database
-                                                        $sql_supplier = "SELECT id, supplier FROM supplier";
-                                                        $result_supplier = $con->select_by_query($sql_supplier);
-                                                        if($result_supplier->num_rows > 0){
-                                                            while($row_supplier = $result_supplier->fetch_assoc()){
+                                                        // Retrieve brand data from the database
+                                                        $sql_brand = "SELECT id, brand FROM brand";
+                                                        $result_brand = $con->select_by_query($sql_brand);
+                                                        if($result_brand->num_rows > 0){
+                                                            while($row_brand = $result_brand->fetch_assoc()){
                                                                 ?>
-                                                                <option value="<?php echo $row_supplier["id"]; ?>" <?php if($row["supplier"] == $row_supplier["supplier"]) echo "selected"; ?>><?php echo $row_supplier["supplier"]; ?></option>
+                                                                <option value="<?php echo $row_brand["id"]; ?>" <?php if($row["brand"] == $row_brand["brand"]) echo "selected"; ?>><?php echo $row_brand["brand"]; ?></option>
                                                                 <?php
                                                             }
                                                         }

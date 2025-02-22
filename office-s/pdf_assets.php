@@ -14,7 +14,7 @@ function filterData(&$str){
 
 $office = $_SESSION["office_id"];
 
-$fields = array('ID', 'TYPE', 'SUPPLIER', 'MODEL', 'SERIAL', 'OFFICE', 'DATE ADDED', 'COST', 'STATUS');
+$fields = array('ID', 'TYPE', 'BRAND', 'MODEL', 'SERIAL', 'OFFICE', 'DATE ADDED', 'COST', 'STATUS');
 
 require('fpdf/fpdf.php');
 
@@ -26,7 +26,7 @@ $pdf->SetFont("Arial", "", 12);
 $pdf->SetFont("Arial", "B", 8);
 $pdf->Cell(20, 10, 'ID', 1, 0, 'C');
 $pdf->Cell(30, 10, 'TYPE', 1, 0, 'C');
-$pdf->Cell(30, 10, 'SUPPLIER', 1, 0, 'C');
+$pdf->Cell(30, 10, 'BRAND', 1, 0, 'C');
 $pdf->Cell(40, 10, 'MODEL', 1, 0, 'C');
 $pdf->Cell(30, 10, 'SERIAL', 1, 0, 'C');
 $pdf->Cell(30, 10, 'OFFICE', 1, 0, 'C');
@@ -35,10 +35,10 @@ $pdf->Cell(30, 10, 'COST', 1, 0, 'C');
 $pdf->Cell(30, 10, 'STATUS', 1, 0, 'C');
 $pdf->Ln();
 
-$sql = "SELECT a.id, t.type, s.supplier, a.model, a.serial, o.office, a.date_add, a.cost, a.status
+$sql = "SELECT a.id, t.type, b.brand, a.model, a.serial, o.office, a.date_add, a.cost, a.status
     FROM assets a
     INNER JOIN asset_type t ON a.type_id = t.id
-    INNER JOIN supplier s ON a.supplier_id = s.id
+    INNER JOIN brand b ON a.brand_id = b.id
     INNER JOIN office o ON a.office_id = o.id
     WHERE a.office_id = $office";
 
@@ -52,7 +52,7 @@ if($result->num_rows>0){
         }
         $pdf->Cell(20, 10, $row['id'], 1, 0, 'C');
         $pdf->Cell(30, 10, $row['type'], 1, 0, 'C');
-        $pdf->Cell(30, 10, $row['supplier'], 1, 0, 'C');
+        $pdf->Cell(30, 10, $row['brand'], 1, 0, 'C');
         $pdf->Cell(40, 10, $row['model'], 1, 0, 'C');
         $pdf->Cell(30, 10, $row['serial'], 1, 0, 'C');
         $pdf->Cell(30, 10, $row['office'], 1, 0, 'C');

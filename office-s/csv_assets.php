@@ -13,14 +13,14 @@ function filterData(&$str){
 }
 $office = $_SESSION["office_id"];
 
-$fields = array('ID', 'TYPE', 'SUPPLIER', 'MODEL', 'SERIAL', 'OFFICE', 'DATE ADDED', 'COST', 'STATUS');
+$fields = array('ID', 'TYPE', 'BRAND', 'MODEL', 'SERIAL', 'OFFICE', 'DATE ADDED', 'COST', 'STATUS');
 
 $csvData = implode(",", array_values($fields)) . "\n";
 
-$sql = "SELECT a.id, t.type, s.supplier, a.model, a.serial, o.office, a.date_add, a.cost, a.status
+$sql = "SELECT a.id, t.type, b.brand, a.model, a.serial, o.office, a.date_add, a.cost, a.status
     FROM assets a
     INNER JOIN asset_type t ON a.type_id = t.id
-    INNER JOIN supplier s ON a.supplier_id = s.id
+    INNER JOIN brand b ON a.brand_id = b.id
     INNER JOIN office o ON a.office_id = o.id
     WHERE a.office_id = $office";
 $result=$con->select_by_query($sql);
@@ -30,7 +30,7 @@ if($result->num_rows>0){
         if (empty($officeName)) {
             $officeName = $row['office'];
         }
-        $lineData = array($row['id'], $row['type'], $row['supplier'], $row['model'], $row['serial'], $row['office'], $row['date_add'], $row['cost'], $row['status'],);
+        $lineData = array($row['id'], $row['type'], $row['brand'], $row['model'], $row['serial'], $row['office'], $row['date_add'], $row['cost'], $row['status'],);
         foreach ($lineData as &$field) {
             filterData($field);
         }

@@ -3,7 +3,7 @@ session_start();
 if(isset($_POST["btn_insert"])){
     include("../conn.php");
     $type = $_POST["type_new"];
-    $supplier = $_POST["supplier_new"];
+    $brand = $_POST["brand_new"];
     $model = $_POST["model_new"];
     $office = $_POST["office_new"];
     $serial = $_POST["serial_new"];
@@ -17,7 +17,7 @@ if(isset($_POST["btn_insert"])){
 
     
     $con=new connec();
-    $sql="INSERT INTO assets VALUES(0,'$type', '$supplier', '$model', '$serial', '$office', '$date', '$cost', '$salvage', '$useful', '$repair', 0, 'Available')";
+    $sql="INSERT INTO assets VALUES(0,'$type', '$brand', '$model', '$serial', '$office', '$date', '$cost', '$salvage', '$useful', '$repair', 0, 'Available')";
     $con->insert($sql, "Data Inserted Successfully");
     header("location:office_assets.php");
 }
@@ -57,17 +57,17 @@ else{
                                         ?>
                                     </select><br>
 
-                                    <label for="supplier_new"><b>Supplier</b></label>
-                                    <select name="supplier_new" id="supplier_new" class="form-control" required>
-                                        <option value="" disabled selected>Select Supplier</option>
+                                    <label for="brand_new"><b>Brand</b></label>
+                                    <select name="brand_new" id="brand_new" class="form-control" required>
+                                        <option value="" disabled selected>Select Brand</option>
                                         <?php
-                                            // Retrieve supplier data from the database
-                                            $sql_supplier = "SELECT id, supplier FROM supplier";
-                                            $result_supplier = $con->select_by_query($sql_supplier);
-                                            if($result_supplier->num_rows > 0){
-                                                while($row_supplier = $result_supplier->fetch_assoc()){
+                                            // Retrieve brand data from the database
+                                            $sql_brand = "SELECT id, brand FROM brand";
+                                            $result_brand = $con->select_by_query($sql_brand);
+                                            if($result_brand->num_rows > 0){
+                                                while($row_brand = $result_brand->fetch_assoc()){
                                                     ?>
-                                                    <option value="<?php echo $row_supplier["id"]; ?>"><?php echo $row_supplier["supplier"]; ?></option>
+                                                    <option value="<?php echo $row_brand["id"]; ?>"><?php echo $row_brand["brand"]; ?></option>
                                                     <?php
                                                 }
                                             }

@@ -5,18 +5,18 @@ if (isset($_POST["btn_delete"])) {
     include("../conn.php");
     $model=$_GET['model'];
     $type=$_GET['type'];
-    $supplier=$_GET['supplier'];
+    $brand=$_GET['brand'];
     $office=$_GET['office'];
 
     $con = new connec();
     $sql = "SELECT a.id
     FROM assets a
     INNER JOIN asset_type t ON a.type_id = t.id
-    INNER JOIN supplier s ON a.supplier_id = s.id
+    INNER JOIN brand b ON a.brand_id = b.id
     INNER JOIN office o ON a.office_id = o.id
     WHERE a.model='$model'
     AND t.type='$type'
-    AND s.supplier='$supplier'
+    AND b.brand='$brand'
     AND o.office='$office'";
     $result = $con->select_by_query($sql);
 
@@ -36,21 +36,21 @@ if (empty($_SESSION["username"])) {
 else {
     include("office_header.php");
 
-    if (isset($_GET['model'], $_GET['type'], $_GET['supplier'], $_GET['office'])) {
+    if (isset($_GET['model'], $_GET['type'], $_GET['brand'], $_GET['office'])) {
         $model=$_GET['model'];
         $type=$_GET['type'];
-        $supplier=$_GET['supplier'];
+        $brand=$_GET['brand'];
         $office=$_GET['office'];
 
         $con = new connec();
-        $sql="SELECT a.id, t.type, s.supplier, a.model, a.serial, o.office_id, o.office
+        $sql="SELECT a.id, t.type, b.brand, a.model, a.serial, o.office_id, o.office
         FROM assets a
         INNER JOIN asset_type t ON a.type_id = t.id
-        INNER JOIN supplier s ON a.supplier_id = s.id
+        INNER JOIN brand b ON a.brand_id = b.id
         INNER JOIN office o ON a.office_id = o.id
         WHERE a.model='$model'
         AND t.type='$type'
-        AND s.supplier='$supplier'
+        AND b.brand='$brand'
         AND o.office='$office'";
         $result = $con->select_by_query($sql);
     }
@@ -74,8 +74,8 @@ else {
                                     <label for="type"><b>Type</b></label>
                                     <input type="text" name="type" id="type" class="form-control" value="<?php echo $row["type"]; ?>" readonly>
 
-                                    <label for="supplier"><b>Supplier</b></label>
-                                    <input type="text" name="supplier" id="supplier" class="form-control" value="<?php echo $row["supplier"]; ?>" readonly>
+                                    <label for="brand"><b>Brand</b></label>
+                                    <input type="text" name="brand" id="brand" class="form-control" value="<?php echo $row["brand"]; ?>" readonly>
 
                                     <label for="model"><b>Model</b></label>
                                     <input type="text" name="model" id="model" class="form-control" value="<?php echo $row["model"]; ?>" readonly>
