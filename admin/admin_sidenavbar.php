@@ -12,31 +12,7 @@
         // Change to Server Name on Deployment
         $url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-        if (strpos($url, 'index') !== false) {
-            echo '<li class="active">';
-        } else {
-            echo '<li>';
-        }
-        ?>
-            <a href="admin_index.php">
-                <i class='bx bxs-dashboard'></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        <?php
-        if (strpos($url, 'assets') !== false) {
-            echo '<li class="active">';
-        } else {
-            echo '<li>';
-        }
-        ?>
-            <a href="admin_assets.php">
-                <i class='bx bx-desktop'></i>
-                <span>Assets</span>
-            </a>
-        </li>
-        <?php
-        if (strpos($url, 'manage') !== false) {
+        if (strpos($url, 'manage') !== false || strpos($url, 'user') !== false || strpos($url, 'office') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
@@ -51,7 +27,7 @@
                 <div>
                     <li><a href="admin_manageusers.php"
                     <?php
-                    if (strpos($url, 'users') !== false) {
+                    if (strpos($url, 'user') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff"';
@@ -71,55 +47,46 @@
             </ul>
         </li>
         <?php
-        if (strpos($url, 'req') !== false || strpos($url, 'res') !== false) {
+        if (strpos($url, 'types') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
         }
         ?>
             <button onclick=toggleSubMenu(this) class="dropdown-btn">
-                <i class='bx bx-user-voice'></i>
-                <span>Requests</span>
+                <i class='bx bx-purchase-tag' ></i>
+                <span>Types</span>
                 <i class='bx bx-chevron-down'></i>
             </button>
             <ul class="sub-menu">
                 <div>
-                    <li><a href="admin_assetreq.php"
+                    <li><a href="admin_assettypes.php"
                     <?php
-                    if (strpos($url, 'assetreq') !== false) {
+                    if (strpos($url, 'assettypes') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff"';
                     }
                     ?>
-                    >Asset Requests</a></li>
-                    <li><a href="admin_assetres.php"
+                    >Assets</a></li>
+                    <li><a href="admin_suppplytypes.php"
                     <?php
-                    if (strpos($url, 'assetres') !== false) {
+                    if (strpos($url, 'suppplytypes') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff"';
                     }
                     ?>
-                    >Asset Reservations</a></li>
-                    <li><a href="admin_maintenancereq.php"
+                    >Supplies</a></li>
+                    <li><a href="admin_brandtypes.php"
                     <?php
-                    if (strpos($url, 'maintenancereq') !== false) {
+                    if (strpos($url, 'brandtypes') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff"';
                     }
                     ?>
-                    >Maintenance</a></li>
-                    <li><a href="admin_completedreq.php"
-                    <?php
-                    if (strpos($url, 'completedreq') !== false) {
-                        echo '';
-                    } else {
-                        echo 'style="color: #ffffff"';
-                    }
-                    ?>
-                    >Completed</a></li>
+                    >Brands</a></li>
                 </div>
             </ul>
         </li>

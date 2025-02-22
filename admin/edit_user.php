@@ -21,19 +21,21 @@ if(isset($_POST["btn_update"])){
     $con=new connec();
     $sql="UPDATE users SET name='$name', email='$email', password='$password', office_id='$office', contact='$contact', user_role='$user_role' WHERE id='$id'";
     $con->update($sql, "Data Updated Successfully");
-    header("location:office_manage.php");
+    header("location:admin_manageusers.php");
 }
 
 if(empty($_SESSION["username"])){
-    header("location:office_index.php");
+    header("location:../login.php");
 }
 
 else{
-    include("office_header.php");
+    include("admin_header.php");
     
     
     if(isset($_GET['id'])){
         $id=$_GET['id'];
+        $office_id=$_SESSION['office_id'];
+        error_log($_SESSION['office_id']);
 
         $con=new connec();
         $sql="SELECT u.id, u.name, u.email, u.password, u.contact, u.date_add, u.user_role, u.office_id, o.office
@@ -52,7 +54,6 @@ else{
                 $password_edit=password_hash($row["password"], PASSWORD_DEFAULT);
             }
             $office_edit=$row["office"];
-            $office_id_edit=$row["office_id"];
             $contact_edit=$row["contact"];
             $user_role_edit=$row["user_role"];
         }
@@ -77,18 +78,31 @@ else{
                                     <label for="psw_new"><b>Password</b></label>
 						            <input type="text" name="psw_new" id="psw_new" class="form-control" value="<?php echo $password_edit ?>" readonly required><br>
 
-                                    <label for="office_display"><b>Office</b></label>
-                                    <input type="text" name="office_display" id="office_display" class="form-control" value="<?php echo $office_edit ?>" readonly required><br>
-                                    <input type="hidden" name="office_new" id="office_new" class="form-control" value="<?php echo $office_id_edit ?>" readonly required><br>
+                                    <label for="office_new<?php echo $row["id"]; ?>"><b>Office</b></label>
+                                    <select name="office_new" id="office_new" class="form-control" required>
+                                        <option value="" disabled selected>Select Type</option>
+                                        <?php
+                                            // Retrieve type data from the database
+                                            $sql_office = "SELECT id, office FROM office";
+                                            $result_office = $con->select_by_query($sql_office);
+                                            if($result_office->num_rows > 0){
+                                                while($row_office = $result_office->fetch_assoc()){
+                                                    ?>
+                                                    <option value="<?php echo $row_office["id"]; ?>" <?php if($row["office_id"] == $row_office["id"]) echo 'selected'; ?>><?php echo $row_office["office"]; ?></option>
+                                                    <?php
+                                                }
+                                            }
+                                        ?>
+                                    </select><br>
 
                                     <label for="contact_new"><b>Contact</b></label>
                                     <input type="text" name="contact_new" id="contact_new" class="form-control" value="<?php echo $contact_edit ?>" required><br>
 
                                     <label for="user_role"><b>Role</b></label>
-                                    <input type="text" name="user_role_new" id="user_role_new" class="form-control" value="Employee" readonly required><br>
+                                    <input type="text" name="user_role_new" id="user_role_new" class="form-control" value="Office Supplier" readonly required><br>
 
 
-                                    <a href="office_manage.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
+                                    <a href="admin_manageusers.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                                     <button type="submit" class="btn" name="btn_update" style="background-color:#3741c9; color:white">Update</button><br><br><br>
 
                                 </div>
@@ -98,6 +112,6 @@ else{
                 </div>
         </section>
         <?php
-    include("office_footer.php");
+    include("admin_footer.php");
 }
 ?>

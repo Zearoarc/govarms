@@ -9,9 +9,6 @@ if(isset($_POST["btn_insert"])){
     $serial = $_POST["serial_new"];
     $date = date('Y-m-d');
     $cost = $_POST["cost_new"];
-    $salvage = $_POST["salvage_new"];
-    $useful = $_POST["useful_new"];
-    $repair = $_POST["repair_new"];
     // $req = $_POST["req_new"];
     // $res = $_POST["res_new"];
 

@@ -7,9 +7,10 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $sql="SELECT u.id, u.name, u.email, u.contact, u.date_add, o.office, (SELECT COUNT(r.id) FROM req r WHERE r.user_id = u.id) AS request_count
+    $sql="SELECT u.id, u.name, u.email, u.contact, u.date_add, o.office, u.user_role
     FROM users u
-    JOIN office o ON u.office_id = o.id";
+    JOIN office o ON u.office_id = o.id
+    WHERE u.user_role = 'Office Supplier'";
     $result=$con->select_by_query($sql);
     ?>
     <head>
@@ -33,8 +34,7 @@ else {
                                         <th>Name</th>
                                         <th>Contact</th>
                                         <th>Email</th>
-                                        <th>Date</th>
-                                        <th>Requests</th>
+                                        <th>Date Added</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -49,7 +49,6 @@ else {
                                                     <td><?php echo $row["contact"]; ?></td>
                                                     <td><?php echo $row["email"]; ?></td>
                                                     <td><?php echo $row["date_add"]; ?></td>
-                                                    <td><?php echo $row["request_count"]; ?></td>
                                                     <td>
                                                         <a class='btn btn-primary btn-sm' href='edit_user.php?id=<?php echo $row["id"]; ?>'>Edit</a>
                                                         <a class='btn btn-sm btn-danger' href='delete_user.php?id=<?php echo $row["id"]; ?>'>Delete</a>

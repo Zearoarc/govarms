@@ -7,19 +7,19 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $tbl="office";
+    $tbl="asset_type";
     $result=$con->select_all($tbl);
     ?>
     <head>
-        <title>Manage Offices</title>
+        <title>Asset Types</title>
     </head>
 
     <main>
         <div class="container-fluid px-4">
-            <h2 class="mt-4">Manage Offices</h2>
+            <h2 class="mt-4">Asset Types</h2>
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <a type="button" class="btn btn-primary" href="add_office.php"> Add</a>
+                    <a type="button" class="btn btn-primary" href="add_assettypes.php"> Add</a>
                 </div>
                 <div class="card-body">
 
@@ -28,7 +28,9 @@ else {
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Office Name</th>
+                                        <th>Asset Type</th>
+                                        <th>Category</th>
+                                        <th>Expected Time of Delivery</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -39,10 +41,12 @@ else {
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $row["id"]; ?></td>
-                                                    <td><?php echo $row["office"]; ?></td>
+                                                    <td><?php echo $row["type"]; ?></td>
+                                                    <td><?php echo $row["category"]; ?></td>
+                                                    <td><?php echo $row["date_expected"]; ?> days</td>
                                                     <td>
-                                                        <a class='btn btn-primary btn-sm' href='edit_office.php?id=<?php echo $row["id"]; ?>'>Edit</a>
-                                                        <a class='btn btn-sm btn-danger' href='delete_office.php?id=<?php echo $row["id"]; ?>'>Delete</a>
+                                                        <a class='btn btn-primary btn-sm' href='edit_assettypes.php?id=<?php echo $row["id"]; ?>'>Edit</a>
+                                                        <a class='btn btn-sm btn-danger' href='delete_assettypes.php?id=<?php echo $row["id"]; ?>'>Delete</a>
                                                     </td>
                                                 </tr>
                                                 <?php
