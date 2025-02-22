@@ -36,16 +36,39 @@
             </a>
         </li>
         <?php
-        if (strpos($url, 'manage') !== false || strpos($url, 'user') !== false) {
+        if (strpos($url, 'manage') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
         }
         ?>
-            <a href="admin_manage.php">
+            <button onclick=toggleSubMenu(this) class="dropdown-btn">
                 <i class='bx bxs-user'></i>
                 <span>Manage</span>
-            </a>
+                <i class='bx bx-chevron-down'></i>
+            </button>
+            <ul class="sub-menu">
+                <div>
+                    <li><a href="admin_manageusers.php"
+                    <?php
+                    if (strpos($url, 'users') !== false) {
+                        echo '';
+                    } else {
+                        echo 'style="color: #ffffff"';
+                    }
+                    ?>
+                    >Users</a></li>
+                    <li><a href="admin_manageoffices.php"
+                    <?php
+                    if (strpos($url, 'offices') !== false) {
+                        echo '';
+                    } else {
+                        echo 'style="color: #ffffff"';
+                    }
+                    ?>
+                    >Offices</a></li>
+                </div>
+            </ul>
         </li>
         <?php
         if (strpos($url, 'req') !== false || strpos($url, 'res') !== false) {

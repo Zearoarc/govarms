@@ -32,6 +32,7 @@ if (isset($_POST["btn_login"])) {
             $_SESSION["username"] = $row["name"];
             $_SESSION["employee_id"] = $row["id"];
             $_SESSION["user_role"] = $row["user_role"];
+            $_SESSION["office_id"] = $row["office_id"];
 
             error_log("User role: " . $_SESSION["user_role"]);
 
@@ -51,6 +52,8 @@ if (isset($_POST["btn_login"])) {
             </nav>';
             if ($_SESSION["user_role"] === 'Admin') {
                 header("Location: admin/admin_index.php");
+            } else if ($_SESSION["user_role"] === 'Office Supplier') {
+                header("Location: office-s/office_index.php");
             } else {
                 header("Location: index.php");
             }

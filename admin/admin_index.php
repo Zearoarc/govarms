@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include("admin_header.php");
+include("office_header.php");
 
 
 
@@ -78,6 +78,6 @@ include("admin_header.php");
 </main>
 
 <?php
-include("admin_footer.php");
+include("office_footer.php");
 
 ?>

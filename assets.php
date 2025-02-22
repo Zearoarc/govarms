@@ -19,14 +19,14 @@ if (empty($_SESSION["username"])) {
     $result_req = $con->select_by_query($sql_req);
 
 
-    $sql_res="SELECT r.reserve_id, u.name, a.model, a.serial, s.supplier, t.type, o.office, r.date_start, r.date_end, r.req_status, r.req_level
+    $sql_res="SELECT r.reserve_id, u.name, a.model, a.serial, s.supplier, t.type, o.office, r.date_start, r.date_end, r.req_status
     FROM res r
     JOIN users u ON r.user_id = u.id
     JOIN assets a ON r.asset_id = a.id
     JOIN supplier s ON a.supplier_id = s.id
     JOIN asset_type t ON a.type_id = t.id
     JOIN office o ON a.office_id = o.id
-    WHERE r.req_level='admin' AND r.req_status = 'Complete';";
+    WHERE r.req_status = 'Complete';";
     $result_res=$con->select_by_query($sql_res);
     ?>
 
