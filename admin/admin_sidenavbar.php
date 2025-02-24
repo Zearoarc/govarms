@@ -71,7 +71,7 @@
                     >Assets</a></li>
                     <li><a href="admin_supplytypes.php"
                     <?php
-                    if (strpos($url, 'suppplytypes') !== false) {
+                    if (strpos($url, 'supplytypes') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff"';

@@ -7,8 +7,10 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $tbl="asset_type";
-    $result=$con->select_all($tbl);
+    $sql="SELECT a.id, a.type, a.category, u.unit_name, u.description, a.date_expected
+    FROM asset_type a
+    JOIN unit u ON a.unit_id = u.id";
+    $result=$con->select_by_query($sql);
     ?>
     <head>
         <title>Asset Types</title>
@@ -30,7 +32,9 @@ else {
                                         <th>ID</th>
                                         <th>Asset Type</th>
                                         <th>Category</th>
-                                        <th>Expected Time of Delivery</th>
+                                        <th>Unit of Issue</th>
+                                        <th>Description</th>
+                                        <th>Expected Time</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -42,7 +46,9 @@ else {
                                                 <tr>
                                                     <td><?php echo $row["id"]; ?></td>
                                                     <td><?php echo $row["type"]; ?></td>
-                                                    <td><?php echo $row["category"]; ?></td>
+                                                    <td style="width: 100px;"><?php echo $row["category"]; ?></td>
+                                                    <td style="width: 150px;"><?php echo $row["unit_name"]; ?></td>
+                                                    <td style="width: 250px;"><?php echo $row["description"]; ?></td>
                                                     <td><?php echo $row["date_expected"]; ?> days</td>
                                                     <td>
                                                         <a class='btn btn-primary btn-sm' href='edit_assettypes.php?id=<?php echo $row["id"]; ?>'>Edit</a>

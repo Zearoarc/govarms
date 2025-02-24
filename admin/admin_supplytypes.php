@@ -7,8 +7,10 @@ else {
     include("admin_header.php");
 
     $con=new connec();
-    $tbl="supply_type";
-    $result=$con->select_all($tbl);
+    $sql="SELECT s.id, s.type, s.category, u.unit_name, u.description, s.date_expected
+    FROM supply_type s
+    JOIN unit u ON s.unit_id = u.id";
+    $result=$con->select_by_query($sql);
     ?>
     <head>
         <title>Supply Types</title>
@@ -30,7 +32,9 @@ else {
                                         <th>ID</th>
                                         <th>Supply Type</th>
                                         <th>Category</th>
-                                        <th>Expected Time of Delivery</th>
+                                        <th>Unit of Issue</th>
+                                        <th>Description</th>
+                                        <th>Expected Time</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -42,7 +46,9 @@ else {
                                                 <tr>
                                                     <td><?php echo $row["id"]; ?></td>
                                                     <td><?php echo $row["type"]; ?></td>
-                                                    <td><?php echo $row["category"]; ?></td>
+                                                    <td style="width: 100px;"><?php echo $row["category"]; ?></td>
+                                                    <td style="width: 150px;"><?php echo $row["unit_name"]; ?></td>
+                                                    <td style="width: 250px;"><?php echo $row["description"]; ?></td>
                                                     <td><?php echo $row["date_expected"]; ?> days</td>
                                                     <td>
                                                         <a class='btn btn-primary btn-sm' href='edit_supplytypes.php?id=<?php echo $row["id"]; ?>'>Edit</a>

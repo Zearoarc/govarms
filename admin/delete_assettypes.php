@@ -21,8 +21,11 @@ else {
         $id=$_GET['id'];
 
         $con = new connec();
-        $tbl='asset_type';
-        $result=$con->select($tbl, $id);
+        $sql="SELECT a.type, a.category, u.id, u.unit_name, a.date_expected
+        FROM asset_type a
+        JOIN unit u ON a.unit_id = u.id
+        WHERE a.id = '$id'";
+        $result=$con->select_by_query($sql);
         $row=$result->fetch_assoc();
     }
 
@@ -41,6 +44,9 @@ else {
 
                             <label for="category_new"><b>Category</b></label>
                             <input name="category_new" id="category_new" class="form-control" value="<?php echo $row["category"] ?>" readonly required><br>
+
+                            <label for="unit_new"><b>Unit</b></label>
+                            <input type="text" name="unit_new" id="unit_new" class="form-control" value="<?php echo $row["unit_name"] ?>" readonly required><br>
 
                             <label for="date_expected_new"><b>Expected Time of Delivery</b></label>
                             <input type="text" name="date_expected_new" id="date_expected_new" class="form-control" value="<?php echo $row["date_expected"] ?>" readonly required><br>

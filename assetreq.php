@@ -20,7 +20,6 @@ else {
             <h2 class="mt-4">Asset Request</h2>
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <a class="btn btn-primary" href="add_assets.php" role="button">Add</a>
                     <div class="input-group" style="width: 30%; float: right;">
                         <input type="text" id="search-input" placeholder="Search assets..." class="form-control">
                         <div class="input-group-append">

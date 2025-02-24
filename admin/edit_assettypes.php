@@ -5,10 +5,11 @@ if (isset($_POST["btn_update"])) {
     $id=$_GET['id'];
     $type = $_POST["type_new"];
     $category = $_POST["category_new"];
+    $unit_id = $_POST["unit_new"];
     $date_expected = $_POST["date_expected_new"];
 
     $con = new connec();
-    $sql="UPDATE asset_type SET type='$type', category='$category', date_expected='$date_expected' WHERE id='$id'";
+    $sql="UPDATE asset_type SET type='$type', category='$category', unit_id='$unit_id', date_expected='$date_expected' WHERE id='$id'";
     $con->update($sql, "Data Updated Successfully");
     header("location:admin_assettypes.php");
 }
@@ -24,8 +25,11 @@ else {
         $id=$_GET['id'];
 
         $con = new connec();
-        $tbl='asset_type';
-        $result=$con->select($tbl, $id);
+        $sql="SELECT a.type, a.category, u.id, u.unit_name, a.date_expected
+        FROM asset_type a
+        JOIN unit u ON a.unit_id = u.id
+        WHERE a.id = '$id'";
+        $result=$con->select_by_query($sql);
         $row=$result->fetch_assoc();
     }
     ?>
@@ -46,6 +50,19 @@ else {
                                 <option value="" disabled selected>Select Type</option>
                                 <option value="Hardware" <?php if ($row["category"] == "Hardware") echo "selected"; ?>>Hardware</option>
                                 <option value="Furniture" <?php if ($row["category"] == "Furniture") echo "selected"; ?>>Furniture</option>
+                            </select><br>
+
+                            <label for="unit_new"><b>Unit</b></label>
+                            <select name="unit_new" id="unit_new" class="form-control" required>
+                                <option value="<?php echo $row["id"] ?>" selected><?php echo $row["unit_name"] ?></option>
+                                <?php
+                                $con = new connec();
+                                $sql_unit = "SELECT id, unit_name FROM unit";
+                                $result_unit = $con->select_by_query($sql_unit);
+                                while ($row_unit = $result_unit->fetch_assoc()) {
+                                    echo "<option value='" . $row_unit['id'] . "'>" . $row_unit['unit_name'] . "</option>";
+                                }
+                                ?>
                             </select><br>
 
                             <label for="date_expected_new"><b>Expected Time of Delivery</b></label>

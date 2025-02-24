@@ -24,7 +24,7 @@ else {
 
     <main>
         <div class="container-fluid px-4">
-            <h2 class="mt-4">Owned Assets</h2>
+            <h2 class="mt-4">Completed Supply Requests</h2>
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
