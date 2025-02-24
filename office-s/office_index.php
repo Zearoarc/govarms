@@ -37,7 +37,7 @@ $lowStockCount = $result_thresh->num_rows;
                         $total_completed_requests = $result->fetch_assoc()["total_completed_requests"];
                         ?>
                         <p class="text-white">Completed Requests</p>
-                        <h2 class="text-white"><?php echo $total_completed_requests; ?></h2>
+                        <h2 class="text-white"><b><?php echo $total_completed_requests; ?></b></h2>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
                         <a class="small text-white stretched-link" href="office_completedreq.php">View Details</a>
@@ -78,7 +78,7 @@ $lowStockCount = $result_thresh->num_rows;
                         $total_pending_requests = $result->fetch_assoc()["total_pending_requests"];
                         ?>
                         <p class="text-white">Pending Asset Requests</p>
-                        <h2 class="text-white"><?php echo $total_pending_requests; ?></h2>
+                        <h2 class="text-white"><b><?php echo $total_pending_requests; ?></b></h2>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
                         <a class="small text-white stretched-link" href="office_assetreq.php?view=pending">View Details</a>

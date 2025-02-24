@@ -8,10 +8,11 @@ else {
     $office = $_SESSION["office_id"];
 
     $con=new connec();
-    $sql="SELECT s.id, t.type, t.category, t.date_expected, s.quantity, s.price, s.date_update
+    $sql="SELECT s.id, t.type, t.category, u.unit_name, t.date_expected, s.quantity, s.price, s.date_update
     FROM supplies s
     JOIN supply_type t ON s.type_id = t.id
     JOIN office o ON s.office_id = o.id
+    JOIN unit u ON t.unit_id = u.id
     WHERE s.office_id = $office";
     $result=$con->select_by_query($sql);
     
@@ -42,6 +43,7 @@ else {
                                     <th><input type="checkbox" id="selectAll" /></th>
                                     <th>Supply Type</th>
                                     <th>Supply Category</th>
+                                    <th>Unit of Issue</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Last Updated</th>
@@ -59,6 +61,7 @@ else {
                                                 <td><input type="checkbox" class="checkbox" value="<?php echo $type_id; ?>" /></td>
                                                 <td><?php echo $row["type"]; ?></td>
                                                 <td><?php echo $row["category"]; ?></td>
+                                                <td><?php echo $row["unit_name"]; ?></td>
                                                 <td>₱ <?php echo $row["price"]; ?></td>
                                                 <td><?php echo $row["quantity"]; ?></td>
                                                 <td><?php echo $row["date_update"]; ?></td>

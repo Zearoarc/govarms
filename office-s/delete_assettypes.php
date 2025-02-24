@@ -7,7 +7,7 @@ if (isset($_POST["btn_delete"])) {
     $con=new connec();
 
     $con->delete($table,$id);
-    header("location:admin_assettypes.php");
+    header("location:office_assettypes.php");
 }
 
 if (empty($_SESSION["username"])) {
@@ -15,7 +15,7 @@ if (empty($_SESSION["username"])) {
 }
 
 else {
-    include("admin_header.php");
+    include("office_header.php");
 
     if(isset($_GET['id'])){
         $id=$_GET['id'];
@@ -51,7 +51,7 @@ else {
                             <label for="date_expected_new"><b>Expected Time of Delivery</b></label>
                             <input type="text" name="date_expected_new" id="date_expected_new" class="form-control" value="<?php echo $row["date_expected"] ?>" readonly required><br>
 
-                            <a href="admin_manageoffices.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
+                            <a href="office_manageoffices.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                             <button type="submit" class="btn btn-danger" name="btn_delete" style="color:white">Delete</button><br><br><br>
 
                         </div>
@@ -61,6 +61,6 @@ else {
         </div>
     </section>
     <?php
-    include("admin_footer.php");
+    include("office_footer.php");
 }
 ?>

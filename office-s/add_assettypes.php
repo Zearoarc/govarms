@@ -10,7 +10,7 @@ if (isset($_POST["btn_insert"])) {
     $con = new connec();
     $sql = "INSERT INTO asset_type VALUES(0, '$type', '$category', '$unit_id', '$date_expected')";
     $con->insert($sql, "Data Inserted Successfully");
-    header("location:admin_assettypes.php");
+    header("location:office_assettypes.php");
 }
 
 if (empty($_SESSION["username"])) {
@@ -55,7 +55,7 @@ else {
                             <label for="date_expected_new"><b>Expected Time of Delivery</b></label>
                             <input type="text" name="date_expected_new" id="date_expected_new" class="form-control" required><br>
 
-                            <a href="admin_manageusers.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
+                            <a href="office_assettypes.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                             <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Insert</button><br><br><br>
 
                         </div>

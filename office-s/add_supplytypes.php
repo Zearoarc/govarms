@@ -10,7 +10,7 @@ if (isset($_POST["btn_insert"])) {
     $con = new connec();
     $sql = "INSERT INTO supply_type VALUES(0, '$type', '$category', '$unit_id', '$date_expected')";
     $con->insert($sql, "Data Inserted Successfully");
-    header("location:admin_supplytypes.php");
+    header("location:office_supplytypes.php");
 }
 
 if (empty($_SESSION["username"])) {
@@ -58,7 +58,7 @@ else {
                             <label for="date_expected_new"><b>Expected Time of Delivery</b></label>
                             <input type="text" name="date_expected_new" id="date_expected_new" class="form-control" required><br>
 
-                            <a href="admin_supplytypes.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
+                            <a href="office_supplytypes.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                             <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Insert</button><br><br><br>
 
                         </div>

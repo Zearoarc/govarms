@@ -7,7 +7,7 @@ if (isset($_POST["btn_insert"])) {
     $con = new connec();
     $sql = "INSERT INTO brand VALUES(0, '$brand')";
     $con->insert($sql, "Data Inserted Successfully");
-    header("location:admin_brandtypes.php");
+    header("location:office_brandtypes.php");
 }
 
 if (empty($_SESSION["username"])) {
@@ -30,7 +30,7 @@ else {
                             <label for="brand_new"><b>Brand</b></label>
                             <input type="text" name="brand_new" id="brand_new" class="form-control" required><br>
 
-                            <a href="admin_brandtypes.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
+                            <a href="office_brandtypes.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                             <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Insert</button><br><br><br>
 
                         </div>

@@ -7,8 +7,10 @@ else {
     include("header.php");
 
     $con=new connec();
-    $tbl="asset_type";
-    $result=$con->select_all($tbl);
+    $sql="SELECT a.id, a.type, a.category, u.unit_name, u.description, a.date_expected
+    FROM asset_type a
+    JOIN unit u ON a.unit_id = u.id";
+    $result=$con->select_by_query($sql);
     
     ?> 
  
@@ -37,6 +39,7 @@ else {
                                     <th><input type="checkbox" id="selectAll" /></th>
                                     <th>Asset Type</th>
                                     <th>Asset Category</th>
+                                    <th>Unit of Issue</th>
                                     <th>Expected Delivery Date</th>
                                     <th>Start and End Date</th>
                                     <th>Amount</th>
@@ -51,6 +54,7 @@ else {
                                                 <td><input type="checkbox" class="checkbox" value="<?php echo $row["type"]; ?>" /></td>
                                                 <td><?php echo $row["type"]; ?></td>
                                                 <td><?php echo $row["category"]; ?></td>
+                                                <td><?php echo $row["unit_name"]; ?></td>
                                                 <td>
                                                     <?php echo date('Y-m-d', strtotime('+' . $row["date_expected"] . ' days')); ?>
                                                     <input type="hidden" id="date-expected-<?php echo $row["type"]; ?>" value="<?php echo $row["date_expected"]; ?>">

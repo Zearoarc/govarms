@@ -135,7 +135,7 @@
             </button>
             <ul class="sub-menu">
                 <div>
-                    <li><a href="admin_assettypes.php"
+                    <li><a href="office_assettypes.php"
                     <?php
                     if (strpos($url, 'assettypes') !== false) {
                         echo '';
@@ -144,7 +144,7 @@
                     }
                     ?>
                     >Assets</a></li>
-                    <li><a href="admin_supplytypes.php"
+                    <li><a href="office_supplytypes.php"
                     <?php
                     if (strpos($url, 'supplytypes') !== false) {
                         echo '';
@@ -153,7 +153,7 @@
                     }
                     ?>
                     >Supplies</a></li>
-                    <li><a href="admin_brandtypes.php"
+                    <li><a href="office_brandtypes.php"
                     <?php
                     if (strpos($url, 'brandtypes') !== false) {
                         echo '';
