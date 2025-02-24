@@ -5,13 +5,25 @@ if(empty($_SESSION["username"])){
 }
 else {
     include("office_header.php");
+    $office_id = $_SESSION['office_id'];
 
     $con=new connec();
-    $sql="SELECT u.id, u.name, u.email, u.contact, u.date_add, u.user_role, o.office, (SELECT COUNT(r.id) FROM req r WHERE r.user_id = u.id) AS request_count
-    FROM users u
-    JOIN office o ON u.office_id = o.id
-    WHERE u.user_role='Employee'
-    AND u.office_id=".$_SESSION['office_id'];
+    if (isset($_GET["view"]) && $_GET["view"] == "highest") {
+        $sql = "SELECT u.id, u.name, u.contact, u.email, u.date_add, o.office, (SELECT COUNT(r.id) FROM req r WHERE r.user_id = u.id) AS request_count
+                FROM users u
+                JOIN office o ON u.office_id = o.id
+                WHERE u.user_role='Employee'
+                AND u.office_id=$office_id
+                GROUP BY u.id
+                ORDER BY request_count DESC
+                LIMIT 1";
+    } else {
+        $sql = "SELECT u.id, u.name, u.contact, u.email, u.date_add, u.user_role, o.office, (SELECT COUNT(r.id) FROM req r WHERE r.user_id = u.id) AS request_count
+                FROM users u
+                JOIN office o ON u.office_id = o.id
+                WHERE u.user_role='Employee'
+                AND u.office_id=$office_id";
+    }
     $result=$con->select_by_query($sql);
     ?>
     <head>

@@ -19,7 +19,7 @@ if (empty($_SESSION["username"])) {
         $sql = "UPDATE users SET name = '$name', email = '$email', contact = '$contact' WHERE id = '$id'";
         $con->update($sql, "Data Updated Successfully");
 
-        header("location:user_profile.php");
+        header("location:index.php");
     }
 }
 ?>

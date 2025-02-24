@@ -4,6 +4,7 @@ if(isset($_POST["btn_insert"])){
     include("../conn.php");
     $type = $_POST["type_new"];
     $quantity = $_POST["quantity_new"];
+    $threshold = $_POST["threshold_new"];
     $office = $_POST["office_new"];
     $price = $_POST["price_new"];
     $date = date('Y-m-d H:i:s');
@@ -12,7 +13,7 @@ if(isset($_POST["btn_insert"])){
 
     
     $con=new connec();
-    $sql="INSERT INTO supplies VALUES(0,'$type', '$quantity', '$office', '$price', '$date', '$date')";
+    $sql="INSERT INTO supplies VALUES(0,'$type', '$quantity', '$threshold' , '$office', '$price', '$date', '$date')";
     $con->insert($sql, "Data Inserted Successfully");
     header("location:office_supplies.php");
 }
@@ -80,6 +81,9 @@ else{
 
                                     <label for="quantity_new"><b>Quantity</b></label>
                                     <input type="number" name="quantity_new" id="quantity_new" class="form-control" required><br>
+
+                                    <label for="threshold_new"><b>Threshold</b></label>
+                                    <input type="number" name="threshold_new" id="threshold_new" class="form-control" required><br>
 
                                     <label for="office_display"><b>Office</b></label>
                                     <input type="text" name="office_display" class="form-control" value="<?php echo $office_name ?>" readonly required><br>

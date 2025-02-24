@@ -22,7 +22,7 @@ else {
         $id=$_GET['id']; 
 
         $con=new connec();
-        $sql="SELECT s.id, t.type, t.category, s.quantity, o.office, s.price
+        $sql="SELECT s.id, t.type, t.category, s.quantity, s.threshold, o.office, s.price
         FROM supplies s
         INNER JOIN supply_type t ON s.type_id = t.id
         INNER JOIN office o ON s.office_id = o.id
@@ -48,6 +48,9 @@ else {
 
                                     <label for="quantity_new"><b>Quantity</b></label>
                                     <input type="number" name="quantity_new" id="quantity_new" class="form-control" value="<?php echo $row["quantity"]; ?>" readonly required><br>
+
+                                    <label for="threshold_new"><b>Threshold</b></label>
+                                    <input type="number" name="threshold_new" id="threshold_new" class="form-control" value="<?php echo $row["threshold"]; ?>" readonly required><br>
 
                                     <label for="office_display"><b>Office</b></label>
                                     <input type="text" name="office_display" class="form-control" value="<?php echo $row["office"]; ?>" readonly required><br>

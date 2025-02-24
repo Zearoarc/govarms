@@ -52,12 +52,21 @@ else {
     $office = $_SESSION["office_id"];
 
     $con=new connec();
-    $sql="SELECT r.id, r.req_type, t.type, r.order_id, u.name, o.office, r.req_status
-    FROM req r
-    JOIN asset_type t ON r.asset_type_id = t.id
-    JOIN users u ON r.user_id = u.id
-    JOIN office o ON u.office_id = o.id
-    WHERE req_type='Asset' AND r.req_status IN ('Incomplete', 'Pending') AND u.office_id = '$office';";
+    if (isset($_GET["view"]) && $_GET["view"] == "pending") {
+        $sql = "SELECT r.id, r.req_type, t.type, r.order_id, u.name, o.office, r.req_status
+                FROM req r
+                JOIN asset_type t ON r.asset_type_id = t.id
+                JOIN users u ON r.user_id = u.id
+                JOIN office o ON u.office_id = o.id
+                WHERE req_type = 'Asset' AND req_status = 'Pending' AND u.office_id = '$office';";
+    } else {
+        $sql="SELECT r.id, r.req_type, t.type, r.order_id, u.name, o.office, r.req_status
+                FROM req r
+                JOIN asset_type t ON r.asset_type_id = t.id
+                JOIN users u ON r.user_id = u.id
+                JOIN office o ON u.office_id = o.id
+                WHERE req_type='Asset' AND r.req_status IN ('Incomplete', 'Pending') AND u.office_id = '$office';";
+    }
     $result=$con->select_by_query($sql);
 
     // Group orders by order ID

@@ -8,11 +8,19 @@ else {
     $office = $_SESSION["office_id"];
 
     $con=new connec();
-    $sql="SELECT s.id, t.type, t.category, s.quantity, o.office, s.price
-    FROM supplies s
-    INNER JOIN supply_type t ON s.type_id = t.id
-    INNER JOIN office o ON s.office_id = o.id
-    WHERE s.office_id = $office";
+    if (isset($_GET["view"]) && $_GET["view"] == "low_stock") {
+        $sql = "SELECT s.id, t.type, t.category, s.quantity, s.threshold, o.office, s.price
+                FROM supplies s
+                INNER JOIN supply_type t ON s.type_id = t.id
+                INNER JOIN office o ON s.office_id = o.id
+                WHERE s.office_id = $office AND s.quantity < s.threshold";
+    } else {
+        $sql = "SELECT s.id, t.type, t.category, s.quantity, s.threshold, o.office, s.price
+                FROM supplies s
+                INNER JOIN supply_type t ON s.type_id = t.id
+                INNER JOIN office o ON s.office_id = o.id
+                WHERE s.office_id = $office";
+    }
     $result=$con->select_by_query($sql);
 
     ?> 
@@ -36,6 +44,7 @@ else {
                                 <th>Supply Category</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
+                                <th>Threshold</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -49,6 +58,7 @@ else {
                                                 <td><?php echo $row["category"]; ?></td>
                                                 <td>₱ <?php echo number_format($row["price"]); ?></td>
                                                 <td><?php echo $row["quantity"]; ?></td>
+                                                <td><?php echo $row["threshold"]; ?></td>
                                                 <td style="width: 150px;">
                                                 <a class='btn btn-primary btn-sm' href='edit_supplies.php?id=<?php echo $row["id"]; ?>'>Edit</a>
                                                 <a class='btn btn-sm btn-danger' href='delete_supplies.php?id=<?php echo $row["id"]; ?>'>Delete</a>

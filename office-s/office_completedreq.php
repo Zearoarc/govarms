@@ -38,6 +38,34 @@ else {
         );
     }
 
+    $sql_supp = "SELECT s.id, t.type, t.category, s.date_add, s.date_expected, s.order_id, u.name, s.amount, s.req_status, s.notes
+    FROM supp s
+    JOIN supply_type t ON s.supply_type_id = t.id
+    JOIN users u ON s.user_id = u.id
+    WHERE s.req_status = 'Complete'";
+    $result_supp = $con->select_by_query($sql_supp);
+
+    // Group supply requests by order ID
+    $supply_orders = array();
+    while ($row_supp = $result_supp->fetch_assoc()) {
+        $order_id = $row_supp["order_id"];
+        if (!isset($supply_orders[$order_id])) {
+            $supply_orders[$order_id] = array(
+                "user_name" => $row_supp["name"],
+                "order_data" => array()
+            );
+        }
+        $supply_orders[$order_id]["order_data"][] = array(
+            "type" => $row_supp["type"],
+            "category" => $row_supp["category"],
+            "date_add" => $row_supp["date_add"],
+            "date_expected" => $row_supp["date_expected"],
+            "amount" => $row_supp["amount"],
+            "req_status" => $row_supp["req_status"],
+            "notes" => $row_supp["notes"]
+        );
+    }
+
 
     $sql="SELECT r.reserve_id, u.name, a.model, a.serial, b.brand, o.office, r.date_start, r.date_end, r.req_status
     FROM res r
@@ -184,6 +212,58 @@ else {
                                                 }
                                                 ?>
                                             </td>
+                                        </tr>
+                                        <?php
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    }
+                ?>
+            </div>
+            <div class="container-fluid px-4">
+                <h2 class="mt-4">Completed Supply Requests</h2>
+                <?php
+                foreach ($supply_orders as $order_id => $order_data) {
+                    ?>
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <h4>Order ID: <?php echo $order_id; ?> (<?php echo $order_data["user_name"]; ?>)</h4>
+                                <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
+                                    <thead class="table-blue">
+                                        <tr>
+                                            <th>Supply Type</th>
+                                            <th>Supply Category</th>
+                                            <th>Date Requested</th>
+                                            <th>Date Expected</th>
+                                            <th>Request Status</th>
+                                            <th>Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    foreach ($order_data["order_data"] as $row) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $row["type"]; ?></td>
+                                            <td><?php echo $row["category"]; ?></td>
+                                            <td><?php echo $row["date_add"]; ?></td>
+                                            <td><?php echo $row["date_expected"]; ?></td>
+                                            <td style="height: 40px;">
+                                                <?php
+                                                if ($row["req_status"] == "Complete") {
+                                                    ?>
+                                                    <i class='bx bxs-check-circle large-icon' style='color:#93b858' title="<?php echo $row["req_status"]; ?>"></i>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </td>
+                                            <td><?php echo $row["notes"]; ?></td>
                                         </tr>
                                         <?php
                                         }
