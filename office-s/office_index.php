@@ -49,20 +49,27 @@ $lowStockCount = $result_thresh->num_rows;
                 <div class="card bg-warning text-white mb-4">
                     <div class="card-body">
                     <?php
+                    $office=$_SESSION['office_id'];
                     $sql = "SELECT u.name, COUNT(r.id) as total_requests
                             FROM users u
                             JOIN req r ON u.id = r.user_id
+                            WHERE u.office_id = $office
                             GROUP BY u.id
                             ORDER BY total_requests DESC
                             LIMIT 1";
                     $result = $con->select_by_query($sql);
                     $row = $result->fetch_assoc();
                     ?>
-                    <p class="text-white">Highest Requests by <?php echo $row["name"]; ?></p>
-                    <h2 class="text-white"><b><?php echo $row["total_requests"]; ?></b></h2>
+                    <?php if ($row) : ?>
+                        <p class="text-white">Highest Requests by a User</p>
+                        <h2 class="text-white"><b><?php echo $row["total_requests"]; ?></b></h2>
+                    <?php else : ?>
+                        <p class="text-white">No Highest Requests</p>
+                        <h2 class="text-white">0</b></h2>
+                    <?php endif; ?>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="office_manage.php?view=highest">View Details</a>
+                        <a class="small text-white stretched-link" href="office_manage.php?<?php echo ($row) ? 'view=highest' : ''; ?>">View Details</a>
                         <div class="small text-white"><i class='bx bx-chevron-right' style='color:#ffffff'></i></div>
                     </div>
                 </div>
