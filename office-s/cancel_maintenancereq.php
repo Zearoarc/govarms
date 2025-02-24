@@ -2,10 +2,10 @@
 include("../conn.php");
 $order=$_GET['order'];
 $serials=json_decode($_GET['serial'], true);
-$table="req";
+$tbl="req";
 $con=new connec();
 
-$con->delete_order($table,$order);
+$con->delete_order($tbl,$order);
 
 $sql = "UPDATE assets SET status = 'Available' WHERE serial IN ('" . implode("', '", $serials) . "')";
 $con->update($sql, "Data Updated Successfully");

@@ -127,8 +127,8 @@ if (empty($_SESSION["username"])) {
                     <div class="col-md-4">
                         <h5>Profile Actions</h5>
                         <div class="user-profile-actions">
-                            <a href="#" class="btn btn-primary">Edit Profile</a>
-                            <a href="#" class="btn btn-primary">Change Password</a>
+                            <a href="edit_profile.php" class="btn btn-primary">Edit Profile</a>
+                            <a href="change_password.php" class="btn btn-primary">Change Password</a>
                         </div>
                     </div>
                     <div class="col-md-4">

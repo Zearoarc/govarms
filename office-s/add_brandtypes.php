@@ -15,7 +15,7 @@ if (empty($_SESSION["username"])) {
 }
 
 else {
-    include("admin_header.php");
+    include("office_header.php");
 
     ?>
     <section>
@@ -40,6 +40,6 @@ else {
         </div>
     </section>
     <?php
-    include("admin_footer.php");
+    include("office_footer.php");
 }
 ?>

@@ -83,9 +83,9 @@ class connec
         }
     }
 
-    function delete_order($order)
+    function delete_order($table, $order)
     { 
-        $query="DELETE FROM req WHERE order_id=$order";
+        $query="DELETE FROM $table WHERE order_id=$order";
         if($this->conn->query($query)===TRUE)
         {
              echo '<script> alert("Data Removed Successfully");</script>' ;

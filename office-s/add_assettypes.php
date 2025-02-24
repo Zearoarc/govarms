@@ -8,9 +8,9 @@ if (isset($_POST["btn_insert"])) {
     $date_expected = $_POST["date_expected_new"];
 
     $con = new connec();
-    $sql = "INSERT INTO supply_type VALUES(0, '$type', '$category', '$unit_id', '$date_expected')";
+    $sql = "INSERT INTO asset_type VALUES(0, '$type', '$category', '$unit_id', '$date_expected')";
     $con->insert($sql, "Data Inserted Successfully");
-    header("location:admin_supplytypes.php");
+    header("location:admin_assettypes.php");
 }
 
 if (empty($_SESSION["username"])) {
@@ -18,13 +18,13 @@ if (empty($_SESSION["username"])) {
 }
 
 else {
-    include("admin_header.php");
+    include("office_header.php");
     ?>
     <section>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-10">
-                    <h5 class="text-center mt-2">Add New Supply Type</h5>
+                    <h5 class="text-center mt-2">Add New Asset Type</h5>
 
                     <form method="post">
                         <div class="container">
@@ -35,11 +35,8 @@ else {
                             <label for="category_new"><b>Category</b></label>
                             <select name="category_new" id="category_new" class="form-control" required>
                                 <option value="" disabled selected>Select Type</option>
-                                <option value="Office">Office</option>
-                                <option value="Food and Beverage">Food and Beverage</option>
-                                <option value="Safety and Security">Safety and Security</option>
-                                <option value="Technology">Technology</option>
-                                <option value="Miscallaneous">Miscallaneous</option>
+                                <option value="Hardware">Hardware</option>
+                                <option value="Furniture">Furniture</option>
                             </select><br>
 
                             <label for="unit_new"><b>Unit of Issue</b></label>
@@ -58,7 +55,7 @@ else {
                             <label for="date_expected_new"><b>Expected Time of Delivery</b></label>
                             <input type="text" name="date_expected_new" id="date_expected_new" class="form-control" required><br>
 
-                            <a href="admin_supplytypes.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
+                            <a href="admin_manageusers.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                             <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Insert</button><br><br><br>
 
                         </div>
@@ -68,6 +65,6 @@ else {
         </div>
     </section>
     <?php
-    include("admin_footer.php");
+    include("office_footer.php");
 }
 ?>

@@ -46,49 +46,5 @@
                 </div>
             </ul>
         </li>
-        <?php
-        if (strpos($url, 'types') !== false) {
-            echo '<li class="active">';
-        } else {
-            echo '<li>';
-        }
-        ?>
-            <button onclick=toggleSubMenu(this) class="dropdown-btn">
-                <i class='bx bx-purchase-tag' ></i>
-                <span>Types</span>
-                <i class='bx bx-chevron-down'></i>
-            </button>
-            <ul class="sub-menu">
-                <div>
-                    <li><a href="admin_assettypes.php"
-                    <?php
-                    if (strpos($url, 'assettypes') !== false) {
-                        echo '';
-                    } else {
-                        echo 'style="color: #ffffff"';
-                    }
-                    ?>
-                    >Assets</a></li>
-                    <li><a href="admin_supplytypes.php"
-                    <?php
-                    if (strpos($url, 'supplytypes') !== false) {
-                        echo '';
-                    } else {
-                        echo 'style="color: #ffffff"';
-                    }
-                    ?>
-                    >Supplies</a></li>
-                    <li><a href="admin_brandtypes.php"
-                    <?php
-                    if (strpos($url, 'brandtypes') !== false) {
-                        echo '';
-                    } else {
-                        echo 'style="color: #ffffff"';
-                    }
-                    ?>
-                    >Brands</a></li>
-                </div>
-            </ul>
-        </li>
     </ul>
 </aside>

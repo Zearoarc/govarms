@@ -28,11 +28,9 @@ foreach ($decodedAssets as $asset) {
     $assets_amount = $asset["amount"];
     $assets_date = $asset["date_expected"];
 
-    for ($i = 0; $i < $assets_amount; $i++) {
         $sql = "INSERT INTO supp (supply_type_id, date_add, date_expected, order_id, amount, user_id, req_status, notes)
                         VALUES('$assets_id', CURDATE(), DATE_ADD(CURDATE(), INTERVAL $assets_date DAY), '$max_order_id', '$assets_amount', '$user_id', 'Pending', '$notes')";
         $con->insert($sql, "Request submitted successfully");
-    }
 }
 
 // Send a notification to the administrator

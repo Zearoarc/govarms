@@ -4,7 +4,7 @@ if(empty($_SESSION["username"])){
     header("location:../login.php");
 }
 else {
-    include("admin_header.php");
+    include("office_header.php");
 
     $con=new connec();
     $tbl="brand";
@@ -62,6 +62,6 @@ else {
     </html>
 
 <?php
-include("admin_footer.php");
+include("office_footer.php");
 }
 ?>

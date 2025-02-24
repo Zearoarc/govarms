@@ -4,7 +4,7 @@ if(empty($_SESSION["username"])){
     header("location:../login.php");
 }
 else {
-    include("admin_header.php");
+    include("office_header.php");
 
     $con=new connec();
     $sql="SELECT a.id, a.type, a.category, u.unit_name, u.description, a.date_expected
@@ -72,6 +72,6 @@ else {
     </html>
 
 <?php
-include("admin_footer.php");
+include("office_footer.php");
 }
 ?>
