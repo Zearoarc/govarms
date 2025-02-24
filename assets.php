@@ -8,7 +8,8 @@ if (empty($_SESSION["username"])) {
     header("location:login.php");
 } else {
     $id = $_SESSION["employee_id"];
-    $sql_req = "SELECT r.req_type, r.order_id, u.name, a.model, a.serial, b.brand, t.type, o.office, r.req_status, r.action
+    $sql_req = "SELECT r.req_type, r.order_id, r.asset_id, u.name, a.model, a.serial, b.brand, t.type, o.office, r.req_status, r.action,
+    (SELECT COUNT(*) FROM req WHERE asset_id = r.asset_id AND req_type = 'Maintenance' AND req_status IN ('Incomplete', 'Pending')) AS maintenance_pending
     FROM req r
     JOIN users u ON r.user_id = u.id
     JOIN assets a ON r.asset_id = a.id
@@ -19,14 +20,14 @@ if (empty($_SESSION["username"])) {
     $result_req = $con->select_by_query($sql_req);
 
 
-    $sql_res="SELECT r.reserve_id, u.name, a.model, a.serial, b.brand, t.type, o.office, r.date_start, r.date_end, r.req_status
+    $sql_res="SELECT r.reserve_id, r.asset_id, u.name, a.model, a.serial, b.brand, t.type, o.office, r.date_start, r.date_end, r.req_status
     FROM res r
     JOIN users u ON r.user_id = u.id
     JOIN assets a ON r.asset_id = a.id
     JOIN brand b ON a.brand_id = b.id
     JOIN asset_type t ON a.type_id = t.id
     JOIN office o ON a.office_id = o.id
-    WHERE r.req_status = 'Complete';";
+    WHERE r.req_status = 'Complete' AND r.action = 'none';";
     $result_res=$con->select_by_query($sql_res);
     ?>
 
@@ -49,6 +50,7 @@ if (empty($_SESSION["username"])) {
                                         <th>Asset Serial</th>
                                         <th>Office</th>
                                         <th>Request Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,7 +64,7 @@ if (empty($_SESSION["username"])) {
                                                     <td><?php echo $row["model"]; ?></td>
                                                     <td><?php echo $row["serial"]; ?></td>
                                                     <td><?php echo $row["office"]; ?></td>
-                                                    <td style="height: 40px;">
+                                                    <td style="width: 250px;">
                                                         <?php
                                                         if ($row["req_status"] == "Complete") {
                                                             ?>
@@ -70,6 +72,19 @@ if (empty($_SESSION["username"])) {
                                                             <?php
                                                         }
                                                         ?>
+                                                    </td>
+                                                    <td>
+                                                    <?php
+                                                    if ($row["maintenance_pending"] == 0) {
+                                                        ?>
+                                                        <a href="confirm_maintenance.php?asset_id=<?php echo $row["asset_id"]; ?>" class="btn btn-primary btn-sm">Maintenance</a>
+                                                        <?php
+                                                    } else {
+                                                        ?>
+                                                        In Maintenance
+                                                        <?php
+                                                    }
+                                                    ?>
                                                     </td>
                                                 </tr>
                                                 <?php
@@ -98,6 +113,8 @@ if (empty($_SESSION["username"])) {
                                 <th>Date Start</th>
                                 <th>Date End</th>
                                 <th>Request Status</th>
+                                <th>Reservation Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,10 +130,34 @@ if (empty($_SESSION["username"])) {
                                     <td><?php echo $row_res["office"]; ?></td>
                                     <td><?php echo $row_res["date_start"]; ?></td>
                                     <td><?php echo $row_res["date_end"]; ?></td>
-                                    <td><?php echo $row_res["req_status"]; ?></td>
+                                    <td style="height: 40px;">
+                                        <?php
+                                        if ($row_res["req_status"] == "Complete") {
+                                            ?>
+                                            <i class='bx bxs-check-circle large-icon' style='color:#93b858' title="<?php echo $row_res["req_status"]; ?>"></i>
+                                            <?php
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
+                                    <?php
+                                    if ($row_res["date_end"] < date("Y-m-d")) {
+                                        ?>
+                                        <span class="badge badge-danger">Overdue</span>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <span class="badge badge-success">On Track</span>
+                                        <?php
+                                    }
+                                    ?>
+                                    </td>
+                                    <td>
+                                    <a href="return_asset.php?asset_id=<?php echo $row_res["asset_id"]; ?>" class="btn btn-primary btn-sm">Return</a>
+                                    </td>
                                 </tr>
                                 <?php
-                            }
+                                }
                             }
                             ?>
                         </tbody>

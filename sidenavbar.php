@@ -36,6 +36,18 @@
             </a>
         </li>
         <?php
+        if (strpos($url, 'supplies') !== false) {
+            echo '<li class="active">';
+        } else {
+            echo '<li>';
+        }
+        ?>
+            <a href="supplies.php">
+                <i class='bx bx-cart' ></i>
+                <span>Supplies</span>
+            </a>
+        </li>
+        <?php
         if (strpos($url, 'req') !== false || strpos($url, 'res') !== false) {
             echo '<li class="active">';
         } else {
@@ -44,7 +56,7 @@
         ?>
             <button onclick=toggleSubMenu(this) class="dropdown-btn">
                 <i class='bx bx-user-voice'></i>
-                <span>Requests</span>
+                <span>Request</span>
                 <i class='bx bx-chevron-down'></i>
             </button>
             <ul class="sub-menu">
@@ -57,7 +69,7 @@
                         echo 'style="color: #ffffff"';
                     }
                     ?>
-                    >Asset Requests</a></li>
+                    >Asset Request</a></li>
                     <li><a href="assetres.php"
                     <?php
                     if (strpos($url, 'assetres') !== false) {
@@ -66,7 +78,7 @@
                         echo 'style="color: #ffffff"';
                     }
                     ?>
-                    >Asset Reservations</a></li>
+                    >Asset Reservation</a></li>
                     <li><a href="supplyreq.php"
                     <?php
                     if (strpos($url, 'supplyreq') !== false) {
@@ -76,41 +88,8 @@
                     }
                     ?>
                     >Supply Request</a></li>
-                    <li><a href="maintenancereq.php"
-                    <?php
-                    if (strpos($url, 'maintenancereq') !== false) {
-                        echo '';
-                    } else {
-                        echo 'style="color: #ffffff"';
-                    }
-                    ?>
-                    >Maintenance</a></li>
                 </div>
             </ul>
-        </li>
-        <?php
-        if (strpos($url, 'manage') !== false || strpos($url, 'user') !== false) {
-            echo '<li class="active">';
-        } else {
-            echo '<li>';
-        }
-        ?>
-            <a href="manage.php">
-                <i class='bx bxs-user'></i>
-                <span>Manage</span>
-            </a>
-        </li>
-        <?php
-        if (strpos($url, 'reports.php') !== false) {
-            echo '<li class="active">';
-        } else {
-            echo '<li>';
-        }
-        ?>
-            <a href="reports.php">
-                <i class='bx bxs-report'></i>
-                <span>Generate Reports</span>
-            </a>
         </li>
     </ul>
 </aside>

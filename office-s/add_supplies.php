@@ -3,20 +3,18 @@ session_start();
 if(isset($_POST["btn_insert"])){
     include("../conn.php");
     $type = $_POST["type_new"];
-    $brand = $_POST["brand_new"];
-    $model = $_POST["model_new"];
+    $quantity = $_POST["quantity_new"];
     $office = $_POST["office_new"];
-    $serial = $_POST["serial_new"];
-    $date = date('Y-m-d');
-    $cost = $_POST["cost_new"];
+    $price = $_POST["price_new"];
+    $date = date('Y-m-d H:i:s');
     // $req = $_POST["req_new"];
     // $res = $_POST["res_new"];
 
     
     $con=new connec();
-    $sql="INSERT INTO assets VALUES(0,'$type', '$brand', '$model', '$serial', '$office', '$date', '$cost', 'Available')";
+    $sql="INSERT INTO supplies VALUES(0,'$type', '$quantity', '$office', '$price', '$date', '$date')";
     $con->insert($sql, "Data Inserted Successfully");
-    header("location:office_assets.php");
+    header("location:office_supplies.php");
 }
 
 if(empty($_SESSION["username"])){
@@ -47,7 +45,7 @@ else{
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-10">
-                            <h5 class="text-center mt-2">Add New Asset</h5>
+                            <h5 class="text-center mt-2">Add New Supply</h5>
 
                             <form method="post">
                                 <div class="container" style="color:#353133">
@@ -57,49 +55,40 @@ else{
                                         <option value="" disabled selected>Select Type</option>
                                         <?php
                                             // Retrieve type data from the database
-                                            $sql_type = "SELECT id, type FROM asset_type";
+                                            $sql_type = "SELECT id, type FROM supply_type";
                                             $result_type = $con->select_by_query($sql_type);
+
+                                            // Retrieve existing supply types from the supplies table
+                                            $sql_supplies = "SELECT type_id FROM supplies WHERE office_id = '$office_id'";
+                                            $result_supplies = $con->select_by_query($sql_supplies);
+                                            $existing_types = array();
+                                            while($row_supplies = $result_supplies->fetch_assoc()){
+                                                $existing_types[] = $row_supplies["type_id"];
+                                            }
+                                            
                                             if($result_type->num_rows > 0){
                                                 while($row_type = $result_type->fetch_assoc()){
-                                                    ?>
-                                                    <option value="<?php echo $row_type["id"]; ?>"><?php echo $row_type["type"]; ?></option>
-                                                    <?php
+                                                    if(!in_array($row_type["id"], $existing_types)){
+                                                        ?>
+                                                        <option value="<?php echo $row_type["id"]; ?>"><?php echo $row_type["type"]; ?></option>
+                                                        <?php
+                                                    }
                                                 }
                                             }
                                         ?>
                                     </select><br>
 
-                                    <label for="brand_new"><b>Brand</b></label>
-                                    <select name="brand_new" id="brand_new" class="form-control" required>
-                                        <option value="" disabled selected>Select Brand</option>
-                                        <?php
-                                            // Retrieve brand data from the database
-                                            $sql_brand = "SELECT id, brand FROM brand";
-                                            $result_brand = $con->select_by_query($sql_brand);
-                                            if($result_brand->num_rows > 0){
-                                                while($row_brand = $result_brand->fetch_assoc()){
-                                                    ?>
-                                                    <option value="<?php echo $row_brand["id"]; ?>"><?php echo $row_brand["brand"]; ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                        ?>
-                                    </select><br>
-
-                                    <label for="model_new"><b>Model</b></label>
-                                    <input type="text" name="model_new" id="model_new" class="form-control" required><br>
+                                    <label for="quantity_new"><b>Quantity</b></label>
+                                    <input type="number" name="quantity_new" id="quantity_new" class="form-control" required><br>
 
                                     <label for="office_display"><b>Office</b></label>
                                     <input type="text" name="office_display" class="form-control" value="<?php echo $office_name ?>" readonly required><br>
                                     <input type="hidden" name="office_new" id="office_new" value="<?php echo $office_id; ?>">
 
-                                    <label for="serial_new"><b>Serial</b></label>
-                                    <input type="text" name="serial_new" id="serial_new" class="form-control" required><br>
+                                    <label for="price_new"><b>Price</b></label>
+                                    <input type="number" name="price_new" id="price_new" class="form-control" required><br>
 
-                                    <label for="cost_new"><b>Unit Cost</b></label>
-                                    <input type="number" name="cost_new" id="cost_new" class="form-control" required><br>
-
-                                    <a href="office_assets.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
+                                    <a href="office_supplies.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                                     <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Insert</button><br><br><br>
 
                                 </div>

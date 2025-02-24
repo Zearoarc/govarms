@@ -71,7 +71,9 @@ include("office_header.php");
                         Request Trends
                     </div>
                     <div class="card-body">
-                        <canvas id="trendsChart" width="100%" height="40"></canvas>
+                        <div id="trendsChartContainer">
+                            <canvas id="trendsChart" width="100%" height="40"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>

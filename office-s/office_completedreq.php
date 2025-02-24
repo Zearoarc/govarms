@@ -5,6 +5,7 @@ if(empty($_SESSION["username"])){
 }
 else {
     include("office_header.php");
+    $office = $_SESSION["office_id"];
 
     $con=new connec();
     $sql="SELECT r.req_type, r.order_id, u.name, a.model, a.serial, b.brand, o.office, r.req_status, r.action
@@ -13,7 +14,7 @@ else {
     JOIN assets a ON r.asset_id = a.id
     JOIN brand b ON a.brand_id = b.id
     JOIN office o ON a.office_id = o.id
-    WHERE r.req_status = 'Complete';";
+    WHERE r.req_status = 'Complete' AND u.office_id = '$office';";
     $result=$con->select_by_query($sql);
 
     // Group orders by order ID
@@ -44,7 +45,7 @@ else {
     JOIN assets a ON r.asset_id = a.id
     JOIN brand b ON a.brand_id = b.id
     JOIN office o ON a.office_id = o.id
-    WHERE r.req_status = 'Complete';";
+    WHERE r.req_status = 'Complete' AND u.office_id = '$office';";
     $result=$con->select_by_query($sql);
     
 

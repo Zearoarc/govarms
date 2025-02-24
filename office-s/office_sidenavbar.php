@@ -36,6 +36,18 @@
             </a>
         </li>
         <?php
+        if (strpos($url, 'supplies') !== false) {
+            echo '<li class="active">';
+        } else {
+            echo '<li>';
+        }
+        ?>
+            <a href="office_supplies.php">
+                <i class='bx bx-cart' ></i>
+                <span>Supplies</span>
+            </a>
+        </li>
+        <?php
         if (strpos($url, 'manage') !== false || strpos($url, 'user') !== false) {
             echo '<li class="active">';
         } else {
@@ -79,6 +91,15 @@
                     }
                     ?>
                     >Asset Reservations</a></li>
+                    <li><a href="office_supplyreq.php"
+                    <?php
+                    if (strpos($url, 'supplyreq') !== false) {
+                        echo '';
+                    } else {
+                        echo 'style="color: #ffffff"';
+                    }
+                    ?>
+                    >Supply Requests</a></li>
                     <li><a href="office_maintenancereq.php"
                     <?php
                     if (strpos($url, 'maintenancereq') !== false) {

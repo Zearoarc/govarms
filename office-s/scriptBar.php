@@ -12,6 +12,9 @@ FROM req
 WHERE MONTH(date_add) = '$month' AND YEAR(date_add) = '$year'";
 $result = $mysqli->query($sql);
 $data = [];
+if (empty($data)) {
+    $data = [0];
+}
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
 }

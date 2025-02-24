@@ -90,17 +90,5 @@
                 </div>
             </ul>
         </li>
-        <?php
-        if (strpos($url, 'admin_reports.php') !== false) {
-            echo '<li class="active">';
-        } else {
-            echo '<li>';
-        }
-        ?>
-            <a href="admin_reports.php">
-                <i class='bx bxs-report'></i>
-                <span>Generate Reports</span>
-            </a>
-        </li>
     </ul>
 </aside>

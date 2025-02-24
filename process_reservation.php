@@ -2,7 +2,7 @@
 // Include the database connection file
 include('conn.php');
 
-// Retrieve the request data from the $_POST array
+// Retrieve the reservation data from the $_POST array
 $assets = $_GET['assets'];
 $user_id = $_POST['user_id'];
 $notes = $_POST['notes'];
@@ -11,7 +11,7 @@ error_log($assets);
 
 
 
-// Validate the request data
+// Validate the reservation data
 if (empty($assets)) {
     // Handle invalid data
     header('Location: error.php');
@@ -20,23 +20,25 @@ if (empty($assets)) {
 
 
 
-// Create a new request record in the database
+// Create a new reservation record in the database
 $con = new connec();
-$sql_order = "SELECT MAX(order_id) FROM req";
+$sql_order = "SELECT MAX(reserve_id) FROM res";
 $result_order = $con->select_by_query($sql_order);
 $row_order = $result_order->fetch_assoc();
-$max_order_id = $row_order['MAX(order_id)'] + 1;
+$max_order_id = $row_order['MAX(reserve_id)'] + 1;
 error_log($max_order_id);
 
 foreach ($decodedAssets as $asset) {
     $assets_id = $asset["id"];
     $assets_amount = $asset["amount"];
     $assets_date = $asset["date_expected"];
+    $assets_start = $asset["start_date"];
+    $assets_end = $asset["end_date"];
 
     for ($i = 0; $i < $assets_amount; $i++) {
-        $sql = "INSERT INTO req (req_type, asset_type_id, date_add, date_expected, order_id, user_id, req_status, notes)
-                        VALUES('Asset', '$assets_id', CURDATE(), DATE_ADD(CURDATE(), INTERVAL $assets_date DAY), '$max_order_id', '$user_id', 'Pending', '$notes')";
-        $con->insert($sql, "Request submitted successfully");
+        $sql = "INSERT INTO res (asset_type_id, date_add, date_expected, reserve_id, user_id, date_start, date_end, req_status, notes)
+                        VALUES('$assets_id', CURDATE(), DATE_ADD(CURDATE(), INTERVAL $assets_date DAY), '$max_order_id', '$user_id', '$assets_start', '$assets_end', 'Pending', '$notes')";
+        $con->insert($sql, "Reservation submitted successfully");
     }
 }
 
@@ -44,6 +46,6 @@ foreach ($decodedAssets as $asset) {
 // ...
 
 // Redirect the user to a confirmation page
-header('Location: assetreq.php');
+header('Location: assetres.php');
 exit;
 ?>

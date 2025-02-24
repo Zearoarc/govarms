@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="pieChart.js"></script>
     <script src="barChart.js"></script>
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="../app.js"></script>
     
     </body>
 

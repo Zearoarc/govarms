@@ -12,14 +12,13 @@ if(isset($_POST["btn_update"])){
     include("../conn.php");
     $name=$_POST["name_new"];
     $email=$_POST["email_new"];
-    $password=$_POST["psw_new"];
     $office=$_POST["office_new"];
     $contact=$_POST["contact_new"];
     $user_role=$_POST["user_role_new"];
 
     $id=$_GET['id'];
     $con=new connec();
-    $sql="UPDATE users SET name='$name', email='$email', password='$password', office_id='$office', contact='$contact', user_role='$user_role' WHERE id='$id'";
+    $sql="UPDATE users SET name='$name', email='$email', office_id='$office', contact='$contact', user_role='$user_role' WHERE id='$id'";
     $con->update($sql, "Data Updated Successfully");
     header("location:admin_manageusers.php");
 }
@@ -48,6 +47,7 @@ else{
             $row=$result->fetch_assoc();
             $name_edit=$row["name"];
             $email_edit=$row["email"];
+            $password_current=$row["password"];
             if($_SESSION["username"] == $name_edit){
                 $password_edit=$row["password"];
             } else {
@@ -77,6 +77,7 @@ else{
 
                                     <label for="psw_new"><b>Password</b></label>
 						            <input type="text" name="psw_new" id="psw_new" class="form-control" value="<?php echo $password_edit ?>" readonly required><br>
+                                    <input type="hidden" name="psw_current" id="psw_current" class="form-control" value="<?php echo $password_current ?>" readonly required>
 
                                     <label for="office_new<?php echo $row["id"]; ?>"><b>Office</b></label>
                                     <select name="office_new" id="office_new" class="form-control" required>

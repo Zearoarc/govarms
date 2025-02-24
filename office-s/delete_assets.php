@@ -43,7 +43,7 @@ else {
         $office=$_GET['office'];
 
         $con = new connec();
-        $sql="SELECT a.id, t.type, b.brand, a.model, a.serial, o.office_id, o.office
+        $sql="SELECT a.id, t.type, b.brand, a.model, a.serial, a.office_id, o.office
         FROM assets a
         INNER JOIN asset_type t ON a.type_id = t.id
         INNER JOIN brand b ON a.brand_id = b.id
@@ -69,22 +69,22 @@ else {
                                 ?>
                                 <div class="container" style="padding-bottom: 50px">
                                     <label for="id"><b>ID</b></label>
-                                    <input type="text" name="id" id="id" class="form-control" value="<?php echo $row["id"]; ?>" readonly>
+                                    <input type="text" name="id" id="id" class="form-control" value="<?php echo $row["id"]; ?>" readonly><br>
 
                                     <label for="type"><b>Type</b></label>
-                                    <input type="text" name="type" id="type" class="form-control" value="<?php echo $row["type"]; ?>" readonly>
+                                    <input type="text" name="type" id="type" class="form-control" value="<?php echo $row["type"]; ?>" readonly><br>
 
                                     <label for="brand"><b>Brand</b></label>
-                                    <input type="text" name="brand" id="brand" class="form-control" value="<?php echo $row["brand"]; ?>" readonly>
+                                    <input type="text" name="brand" id="brand" class="form-control" value="<?php echo $row["brand"]; ?>" readonly><br>
 
                                     <label for="model"><b>Model</b></label>
-                                    <input type="text" name="model" id="model" class="form-control" value="<?php echo $row["model"]; ?>" readonly>
+                                    <input type="text" name="model" id="model" class="form-control" value="<?php echo $row["model"]; ?>" readonly><br>
 
                                     <label for="office"><b>Office</b></label>
-                                    <input type="text" name="office" id="office" class="form-control" value="<?php echo $row["office"]; ?>" readonly>
+                                    <input type="text" name="office" id="office" class="form-control" value="<?php echo $row["office"]; ?>" readonly><br>
 
                                     <label for="serial"><b>Serial</b></label>
-                                    <input type="text" name="serial" id="serial" class="form-control" value="<?php echo $row["serial"]; ?>" readonly>
+                                    <input type="text" name="serial" id="serial" class="form-control" value="<?php echo $row["serial"]; ?>" readonly><br>
                                 </div>
                                 <?php
                             }

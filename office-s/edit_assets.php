@@ -50,7 +50,7 @@ else{
         $office=$_GET['office'];
 
         $con=new connec();
-        $sql="SELECT a.id, t.type, b.brand, a.model, a.serial, o.office_id, o.office, a.status
+        $sql="SELECT a.id, t.type, b.brand, a.model, a.serial, a.office_id, o.office, a.status
         FROM assets a
         INNER JOIN asset_type t ON a.type_id = t.id
         INNER JOIN brand b ON a.brand_id = b.id
@@ -78,7 +78,7 @@ else{
                                             ?>
                                             <div class="container" style ="padding-bottom: 50px">
                                                 <label for="id"><b>ID</b></label>
-                                                <input type="text" name="id" id="id" class="form-control" value="<?php echo $row["id"]; ?>" readonly>
+                                                <input type="text" name="id" id="id" class="form-control" value="<?php echo $row["id"]; ?>" readonly><br>
 
                                                 <label for="type_new<?php echo $row["id"]; ?>"><b>Type</b></label>
                                                 <select name="type_new<?php echo $row["id"]; ?>" id="type_new<?php echo $row["id"]; ?>" class="form-control" required>

@@ -12,14 +12,13 @@ if(isset($_POST["btn_update"])){
     include("../conn.php");
     $name=$_POST["name_new"];
     $email=$_POST["email_new"];
-    $password=$_POST["psw_new"];
     $office=$_POST["office_new"];
     $contact=$_POST["contact_new"];
     $user_role=$_POST["user_role_new"];
 
     $id=$_GET['id'];
     $con=new connec();
-    $sql="UPDATE users SET name='$name', email='$email', password='$password', office_id='$office', contact='$contact', user_role='$user_role' WHERE id='$id'";
+    $sql="UPDATE users SET name='$name', email='$email', office_id='$office', contact='$contact', user_role='$user_role' WHERE id='$id'";
     $con->update($sql, "Data Updated Successfully");
     header("location:office_manage.php");
 }

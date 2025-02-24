@@ -61,6 +61,14 @@ function createBar(chartData, type) {
     ];
     console.log(dataValues);
 
+    // Check if all counts are zero
+    if (dataValues.every((value) => value === 0)) {
+        // Display "No Data Yet" message
+        const chartContainer = document.getElementById("trendsChartContainer");
+        chartContainer.innerHTML = "<p>No Data Yet</p>";
+        return;
+    }
+
     const ctx = document.getElementById("trendsChart").getContext('2d');
     trendsChart = new Chart(ctx, {
         type: type,
