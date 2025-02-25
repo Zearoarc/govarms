@@ -34,7 +34,7 @@ $lowStockCount = $result_thresh->num_rows;
                                 WHERE 
                                     r.req_status = 'Complete';";
                         $result = $con->select_by_query($sql);
-                        $total_completed_requests = $result->fetch_assoc()["total_completed_requests"];
+                        $total_completed_requests = $result->fetch_assoc()["total_completed_requests"] ?? 0;
                         ?>
                         <p class="text-white">Completed Requests</p>
                         <h2 class="text-white"><b><?php echo $total_completed_requests; ?></b></h2>
@@ -62,7 +62,7 @@ $lowStockCount = $result_thresh->num_rows;
                     ?>
                     <?php if ($row) : ?>
                         <p class="text-white">Highest Requests by a User</p>
-                        <h2 class="text-white"><b><?php echo $row["total_requests"]; ?></b></h2>
+                        <h2 class="text-white"><b><?php echo $row["total_requests"] ?? 0; ?></b></h2>
                     <?php else : ?>
                         <p class="text-white">No Highest Requests</p>
                         <h2 class="text-white">0</b></h2>
@@ -82,7 +82,7 @@ $lowStockCount = $result_thresh->num_rows;
                                 FROM req
                                 WHERE req_type = 'Asset' AND req_status = 'Pending'";
                         $result = $con->select_by_query($sql);
-                        $total_pending_requests = $result->fetch_assoc()["total_pending_requests"];
+                        $total_pending_requests = $result->fetch_assoc()["total_pending_requests"] ?? 0;
                         ?>
                         <p class="text-white">Pending Asset Requests</p>
                         <h2 class="text-white"><b><?php echo $total_pending_requests; ?></b></h2>
@@ -97,7 +97,7 @@ $lowStockCount = $result_thresh->num_rows;
                 <div class="card bg-danger text-white mb-4">
                     <div class="card-body">
                         <p class="text-white">Low Stock Supplies</p>
-                        <h2 class="text-white"><b><?php echo $lowStockCount; ?></b></h2>
+                        <h2 class="text-white"><b><?php echo $lowStockCount ?? 0; ?></b></h2>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
                         <a class="small text-white stretched-link" href="office_supplies.php?view=low_stock">View Details</a>
