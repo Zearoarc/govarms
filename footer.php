@@ -8,25 +8,6 @@
 
 <body>
 
-  <footer style="background-color:#353133; color:white; padding:2%">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <h2><i class="fas fa-user-alt"></i> Social Media</h2>
-          <ul class="navbar-nav">
-            <li><i class="fab fa-lg fa-facebook-square"></i> Facebook</li>
-            <li><i class="fab fa-lg fa-twitter-square"></i> Twitter</li>
-            <li><i class="fab fa-lg fa-instagram"></i> Instagram</li>
-          </ul>
-        </div>
-        <div class="col-md-8">
-          <h2><i class="fas fa-map-marked"></i> Reach Us</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-        </div>
-      </div>
-  </footer>
-
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

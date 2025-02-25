@@ -88,6 +88,24 @@ else {
         );
     }
 
+    $serials = array();
+foreach ($orders as $order_id => $order_data) {
+    foreach ($order_data["order_data"] as $row) {
+        $req_id = $row["id"];
+        $sql_inc = "SELECT r.id, r.req_type, b.brand, a.model, a.serial, t.type, r.order_id, u.name, o.office, r.req_status
+        FROM req r
+        JOIN assets a ON r.asset_id = a.id
+        JOIN brand b ON a.brand_id = b.id
+        JOIN asset_type t ON r.asset_type_id = t.id
+        JOIN users u ON r.user_id = u.id
+        JOIN office o ON u.office_id = o.id
+        WHERE r.id = '$req_id' AND r.req_status IN ('Incomplete')";
+        $result_inc = $con->select_by_query($sql_inc);
+        $row_inc = $result_inc->fetch_assoc();
+        $serials[$req_id] = $row_inc["serial"];
+    }
+}
+
     $sql_inc = "SELECT r.id, r.req_type, b.brand, a.model, a.serial, t.type, r.order_id, u.name, o.office, r.req_status
     FROM req r
     JOIN assets a ON r.asset_id = a.id
@@ -173,7 +191,7 @@ else {
                                             <?php } else { ?>
                                                 <td><?php echo $row_inc["brand"]; ?></td>
                                                 <td><?php echo $row_inc["model"]; ?></td>
-                                                <td><?php echo $row_inc["serial"]; ?></td>
+                                                <td><?php echo $serials[$row["id"]]; ?></td>
                                             <?php } ?>
                                             <td><?php echo $row["office"]; ?></td>
                                             <td style="height: 40px;">

@@ -47,12 +47,7 @@ else{
             $row=$result->fetch_assoc();
             $name_edit=$row["name"];
             $email_edit=$row["email"];
-            $password_current=$row["password"];
-            if($_SESSION["username"] == $name_edit){
-                $password_edit=$row["password"];
-            } else {
-                $password_edit=password_hash($row["password"], PASSWORD_DEFAULT);
-            }
+            $password_edit=$row["password"];
             $office_edit=$row["office"];
             $contact_edit=$row["contact"];
             $user_role_edit=$row["user_role"];
@@ -76,7 +71,7 @@ else{
 						            <input type="email" name="email_new" id="email_new" class="form-control" value="<?php echo $email_edit ?>" required><br>
 
                                     <label for="psw_new"><b>Password</b></label>
-						            <input type="text" name="psw_new" id="psw_new" class="form-control" value="<?php echo $password_edit ?>" readonly required><br>
+						            <input type="text" name="psw_new" id="psw_new" class="form-control" value="<?php echo $password_edit ?>" required><br>
                                     <input type="hidden" name="psw_current" id="psw_current" class="form-control" value="<?php echo $password_current ?>" readonly required>
 
                                     <label for="office_new<?php echo $row["id"]; ?>"><b>Office</b></label>
