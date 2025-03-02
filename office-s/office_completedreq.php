@@ -8,12 +8,11 @@ else {
     $office = $_SESSION["office_id"];
 
     $con=new connec();
-    $sql="SELECT r.req_type, r.order_id, u.name, a.model, a.serial, b.brand, o.office, r.req_status, r.action
+    $sql="SELECT r.req_type, r.order_id, u.name, i.model, i.serial, b.brand, r.req_status, r.action
     FROM req r
     JOIN users u ON r.user_id = u.id
-    JOIN assets a ON r.asset_id = a.id
-    JOIN brand b ON a.brand_id = b.id
-    JOIN office o ON a.office_id = o.id
+    LEFT JOIN items i ON r.asset_id = i.id
+    LEFT JOIN brand b ON i.brand_id = b.id
     WHERE r.req_status = 'Complete' AND u.office_id = '$office';";
     $result=$con->select_by_query($sql);
 
@@ -32,13 +31,12 @@ else {
             "model" => $row["model"],
             "brand" => $row["brand"],
             "serial" => $row["serial"],
-            "office" => $row["office"],
             "req_status" => $row["req_status"],
             "action" => $row["action"]
         );
     }
 
-    $sql_supp = "SELECT s.id, t.type, t.category, s.date_add, s.date_expected, s.order_id, u.name, s.amount, s.req_status, s.notes
+    $sql_supp = "SELECT s.id, t.type, t.category, s.date_add, s.date_expected, s.order_id, u.name, s.amount, s.req_status
     FROM supp s
     JOIN supply_type t ON s.supply_type_id = t.id
     JOIN users u ON s.user_id = u.id
@@ -61,18 +59,17 @@ else {
             "date_add" => $row_supp["date_add"],
             "date_expected" => $row_supp["date_expected"],
             "amount" => $row_supp["amount"],
-            "req_status" => $row_supp["req_status"],
-            "notes" => $row_supp["notes"]
+            "req_status" => $row_supp["req_status"]
         );
     }
 
 
-    $sql="SELECT r.reserve_id, u.name, a.model, a.serial, b.brand, o.office, r.date_start, r.date_end, r.req_status
+    $sql="SELECT r.reserve_id, u.name, i.model, i.serial, b.brand, o.office, r.date_start, r.date_end, r.req_status
     FROM res r
     JOIN users u ON r.user_id = u.id
-    JOIN assets a ON r.asset_id = a.id
-    JOIN brand b ON a.brand_id = b.id
-    JOIN office o ON a.office_id = o.id
+    JOIN items i ON r.asset_id = i.id
+    JOIN brand b ON i.brand_id = b.id
+    JOIN office o ON i.office_id = o.id
     WHERE r.req_status = 'Complete' AND u.office_id = '$office';";
     $result=$con->select_by_query($sql);
     
@@ -130,13 +127,12 @@ else {
                                 } elseif ($order_data["order_data"][0]["action"] == 'dispose') {
                                     echo ' - For Disposal';
                                 }?>)</h4>
-                                <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
+                                <table class="table " id="completedreq<?php echo $order_id; ?>" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
                                             <th>Brand</th>
                                             <th>Asset Model</th>
                                             <th>Asset Serial</th>
-                                            <th>Office</th>
                                             <th>Request Status</th>
                                         </tr>
                                     </thead>
@@ -148,7 +144,6 @@ else {
                                             <td><?php echo $row["brand"]; ?></td>
                                             <td><?php echo $row["model"]; ?></td>
                                             <td><?php echo $row["serial"]; ?></td>
-                                            <td><?php echo $row["office"]; ?></td>
                                             <td style="height: 40px;">
                                                 <?php
                                                 if ($row["req_status"] == "Complete") {
@@ -164,6 +159,16 @@ else {
                                     ?>
                                     </tbody>
                                 </table>
+                                <script>
+                                    new DataTable('#completedreq<?php echo $order_id; ?>', {
+                                        "paging": false,
+                                        "lengthChange": true,
+                                        "searching": false,
+                                        "ordering": true,
+                                        "info": false,
+                                        "autoWidth": false
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -180,7 +185,7 @@ else {
                         <div class="card-body">
                             <div class="table-responsive">
                                 <h4>Reserve ID: <?php echo $reserve_id; ?> (<?php echo $reserve_data["user_name"]; ?>)</h4>
-                                <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
+                                <table class="table " id="completedres<?php echo $reserve_id; ?>" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
                                             <th>Brand</th>
@@ -218,6 +223,16 @@ else {
                                     ?>
                                     </tbody>
                                 </table>
+                                <script>
+                                    new DataTable('#completedres<?php echo $reserve_id; ?>', {
+                                        "paging": false,
+                                        "lengthChange": true,
+                                        "searching": false,
+                                        "ordering": true,
+                                        "info": false,
+                                        "autoWidth": false
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -234,7 +249,7 @@ else {
                         <div class="card-body">
                             <div class="table-responsive">
                                 <h4>Order ID: <?php echo $order_id; ?> (<?php echo $order_data["user_name"]; ?>)</h4>
-                                <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
+                                <table class="table " id="completedsupp<?php echo $order_id; ?>" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
                                             <th>Supply Type</th>
@@ -242,7 +257,6 @@ else {
                                             <th>Date Requested</th>
                                             <th>Date Expected</th>
                                             <th>Request Status</th>
-                                            <th>Notes</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -263,13 +277,22 @@ else {
                                                 }
                                                 ?>
                                             </td>
-                                            <td><?php echo $row["notes"]; ?></td>
                                         </tr>
                                         <?php
                                         }
                                     ?>
                                     </tbody>
                                 </table>
+                                <script>
+                                    new DataTable('#completedsupp<?php echo $order_id; ?>', {
+                                        "paging": false,
+                                        "lengthChange": true,
+                                        "searching": false,
+                                        "ordering": true,
+                                        "info": false,
+                                        "autoWidth": false
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>

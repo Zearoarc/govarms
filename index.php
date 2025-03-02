@@ -15,10 +15,11 @@ if (empty($_SESSION["username"])) {
     $result=$con->select_by_query($sql);
     $row = $result->fetch_assoc();
 
-    $sql_req = "SELECT r.req_type, r.asset_type_id, t.type, t.category, r.date_add, r.date_expected, r.order_id, u.name, r.req_status, r.action
+    $sql_req = "SELECT r.req_type, r.asset_type_id, i.model, r.asset_id, t.type, t.category, r.date_add, r.date_expected, r.order_id, u.name, r.req_status, r.action, r.notes
     FROM req r
     JOIN users u ON r.user_id = u.id
     JOIN asset_type t ON r.asset_type_id = t.id
+    LEFT JOIN items i ON r.asset_id = i.id
     WHERE r.user_id = '$id' AND r.req_status IN ('Incomplete', 'Pending')";
     $result_req = $con->select_by_query($sql_req);
 
@@ -35,13 +36,16 @@ if (empty($_SESSION["username"])) {
         $orders[$order_id]["order_data"][] = array(
             "req_type" => $row_req["req_type"],
             "asset_type_id" => $row_req["asset_type_id"],
+            "model" => $row_req["model"],
+            "asset_id" => $row_req["asset_id"],
             "type" => $row_req["type"],
             "category" => $row_req["category"],
             "date_add" => $row_req["date_add"],
             "date_expected" => $row_req["date_expected"],
             "name" => $row_req["name"],
             "req_status" => $row_req["req_status"],
-            "action" => $row_req["action"]
+            "action" => $row_req["action"],
+            "notes" => $row_req["notes"]
         );
     }
 
@@ -74,12 +78,11 @@ if (empty($_SESSION["username"])) {
     }
 
 
-    $sql_res="SELECT r.reserve_id, u.name, a.model, a.serial, b.brand, o.office, r.date_start, r.date_end, r.req_status
+    $sql_res="SELECT r.asset_type_id, i.model, r.asset_id, t.type, t.category, r.date_add, r.date_expected, r.reserve_id, u.name, r.req_status, r.action, r.notes
     FROM res r
     JOIN users u ON r.user_id = u.id
-    JOIN assets a ON r.asset_id = a.id
-    JOIN brand b ON a.brand_id = b.id
-    JOIN office o ON a.office_id = o.id
+    JOIN asset_type t ON r.asset_type_id = t.id
+    LEFT JOIN items i ON r.asset_id = i.id
     WHERE r.user_id = '$id' AND r.req_status IN ('Incomplete', 'Pending');";
     $result_res=$con->select_by_query($sql_res);
 
@@ -94,13 +97,17 @@ if (empty($_SESSION["username"])) {
             );
         }
         $reserves[$reserve_id]["reserve_data"][] = array(
+            "asset_type_id" => $row_res["asset_type_id"],
             "model" => $row_res["model"],
-            "brand" => $row_res["brand"],
-            "serial" => $row_res["serial"],
-            "office" => $row_res["office"],
-            "date_start" => $row_res["date_start"],
-            "date_end" => $row_res["date_end"],
-            "req_status" => $row_res["req_status"]
+            "asset_id" => $row_res["asset_id"],
+            "type" => $row_res["type"],
+            "category" => $row_res["category"],
+            "date_add" => $row_res["date_add"],
+            "date_expected" => $row_res["date_expected"],
+            "name" => $row_res["name"],
+            "req_status" => $row_res["req_status"],
+            "action" => $row_res["action"],
+            "notes" => $row_res["notes"]
         );
     }
     ?>
@@ -174,11 +181,12 @@ if (empty($_SESSION["username"])) {
                                     echo ' - For Disposal';
                                 }
                                 ?>)</h4>
-                                <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
+                                <table class="table " id="assetreq<?php echo $order_id; ?>" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
                                             <th>Asset Type</th>
-                                            <th>Asset Category</th>
+                                            <th>Category</th>
+                                            <th>Model</th>
                                             <th>Date Requested</th>
                                             <th>Date Expected</th>
                                             <th>Request Status</th>
@@ -192,6 +200,7 @@ if (empty($_SESSION["username"])) {
                                         <tr>
                                             <td style="width: 250px;"><?php echo $row["type"]; ?></td>
                                             <td><?php echo $row["category"]; ?></td>
+                                            <td><?php echo $row["model"]; ?></td>
                                             <td><?php echo $row["date_add"]; ?></td>
                                             <td><?php echo $row["date_expected"]; ?></td>
                                             <td style="height: 40px;">
@@ -211,7 +220,7 @@ if (empty($_SESSION["username"])) {
                                             <?php
                                                 if ($row["req_status"] == 'Incomplete' && $row["action"] == 'none') {
                                                     ?>
-                                                    <a class='btn btn-primary btn-sm' href='complete_assetreq_one.php?order=<?php echo $order_id; ?>&asset_type=<?php echo $row["asset_type_id"]; ?>'>Received</a>
+                                                    <a class='btn btn-primary btn-sm' href='complete_assetreq_one.php?order=<?php echo $order_id; ?>&asset_id=<?php echo $row["asset_id"]; ?>'>Received</a>
                                                     <?php
                                                 }
                                                 ?>
@@ -222,6 +231,12 @@ if (empty($_SESSION["username"])) {
                                     ?>
                                     </tbody>
                                     <tfoot>
+                                        <tr>
+                                            <td colspan="5">
+                                                <h5>Notes:</h5>
+                                                <p><?php echo $row["notes"]; ?></p>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <?php
                                             if ($row["req_status"] == 'Incomplete' && $row["action"] == 'none') {
@@ -235,6 +250,16 @@ if (empty($_SESSION["username"])) {
                                         </tr>
                                     </tfoot>
                                 </table>
+                                <script>
+                                    new DataTable('#assetreq<?php echo $order_id; ?>', {
+                                        "paging": false,
+                                        "lengthChange": true,
+                                        "searching": false,
+                                        "ordering": true,
+                                        "info": false,
+                                        "autoWidth": false
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -268,7 +293,7 @@ if (empty($_SESSION["username"])) {
                         <div class="card-body">
                             <div class="table-responsive">
                                 <h4>Order ID: <?php echo $order_id; ?> (<?php echo $order_data["user_name"]; ?>)</h4>
-                                <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
+                                <table class="table " id="supplyreq<?php echo $order_id; ?>" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
                                             <th>Supply Type</th>
@@ -276,7 +301,6 @@ if (empty($_SESSION["username"])) {
                                             <th>Date Requested</th>
                                             <th>Date Expected</th>
                                             <th>Request Status</th>
-                                            <th>Notes</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -301,13 +325,30 @@ if (empty($_SESSION["username"])) {
                                                 }
                                                 ?>
                                             </td>
-                                            <td><?php echo $row["notes"]; ?></td>
                                         </tr>
                                         <?php
                                         }
                                     ?>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5">
+                                                <h5>Notes:</h5>
+                                                <p><?php echo $row["notes"]; ?></p>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
+                                <script>
+                                    new DataTable('#supplyreq<?php echo $order_id; ?>', {
+                                        "paging": false,
+                                        "lengthChange": true,
+                                        "searching": false,
+                                        "ordering": true,
+                                        "info": false,
+                                        "autoWidth": false
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -341,15 +382,14 @@ if (empty($_SESSION["username"])) {
                         <div class="card-body">
                             <div class="table-responsive">
                                 <h4>Reserve ID: <?php echo $reserve_id; ?> (<?php echo $reserve_data["user_name"]; ?>)</h4>
-                                <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
+                                <table class="table " id="assetres<?php echo $reserve_id; ?>" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
-                                            <th>Brand</th>
-                                            <th>Asset Model</th>
-                                            <th>Asset Serial</th>
-                                            <th>Office</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
+                                            <th>Asset Type</th>
+                                            <th>Category</th>
+                                            <th>Model</th>
+                                            <th>Date Requested</th>
+                                            <th>Date Expected</th>
                                             <th>Request Status</th>
                                         </tr>
                                     </thead>
@@ -358,12 +398,11 @@ if (empty($_SESSION["username"])) {
                                     foreach ($reserve_data["reserve_data"] as $row) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $row["brand"]; ?></td>
+                                            <td style="width: 250px;"><?php echo $row["type"]; ?></td>
+                                            <td><?php echo $row["category"]; ?></td>
                                             <td><?php echo $row["model"]; ?></td>
-                                            <td><?php echo $row["serial"]; ?></td>
-                                            <td><?php echo $row["office"]; ?></td>
-                                            <td><?php echo $row["date_start"]; ?></td>
-                                            <td><?php echo $row["date_end"]; ?></td>
+                                            <td><?php echo $row["date_add"]; ?></td>
+                                            <td><?php echo $row["date_expected"]; ?></td>
                                             <td style="height: 40px;">
                                                 <?php
                                                 if ($row["req_status"] == "Incomplete") {
@@ -384,27 +423,23 @@ if (empty($_SESSION["username"])) {
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <?php
-                                            if ($row["req_status"] == 'Pending'){
-                                                $serials = array_column($order_data["order_data"], "serial");
-                                                ?>
-                                                <td colspan="9">
-                                                    <a class="btn btn-primary" style="color: #ffffff" href='approve_assetreq.php?order=<?php echo $order_id; ?>'>Approve</a>
-                                                    <a class="btn btn-danger" style="color: #ffffff" href='cancel_assetreq.php?order=<?php echo $order_id; ?>&serial=<?php echo json_encode($serials); ?>'>Cancel</a>
-                                                </td>
-                                                <?php
-                                            }
-                                            else if ($row["req_status"] == 'Incomplete') {
-                                                ?>
-                                                <td colspan="9">
-                                                    <a class="btn btn-primary" style="color: #ffffff" href='complete_assetreq.php?order=<?php echo $order_id; ?>'>Complete</a>
-                                                </td>
-                                                <?php
-                                            }
-                                            ?>
+                                            <td colspan="5">
+                                                <h5>Notes:</h5>
+                                                <p><?php echo $row["notes"]; ?></p>
+                                            </td>
                                         </tr>
                                     </tfoot>
                                 </table>
+                                <script>
+                                    new DataTable('#assetres<?php echo $reserve_id; ?>', {
+                                        "paging": false,
+                                        "lengthChange": true,
+                                        "searching": false,
+                                        "ordering": true,
+                                        "info": false,
+                                        "autoWidth": false
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>

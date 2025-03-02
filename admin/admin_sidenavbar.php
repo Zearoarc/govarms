@@ -30,7 +30,7 @@
                     if (strpos($url, 'user') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Users</a></li>
@@ -39,7 +39,7 @@
                     if (strpos($url, 'offices') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Offices</a></li>

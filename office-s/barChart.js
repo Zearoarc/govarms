@@ -61,6 +61,11 @@ function createBar(chartData, type) {
     ];
     console.log(dataValues);
 
+    const maxDataValue = Math.max(...dataValues);
+    const maxY = maxDataValue > 8 ? 2 + maxDataValue : 10;
+
+    console.log(maxY);
+
     // Check if all counts are zero
     if (dataValues.every((value) => value === 0)) {
         // Display "No Data Yet" message
@@ -100,7 +105,7 @@ function createBar(chartData, type) {
                         },
                         ticks: {
                             min: 0,
-                            max: 10,
+                            max: maxY,
                             maxTicksLimit: 5,
                         },
                     }

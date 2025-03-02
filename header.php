@@ -81,6 +81,15 @@ if (isset($_GET["action"])) {
 if (empty($_SESSION["username"])) {
     $_SESSION["ul"] = '';
 }
+if (!empty($_SESSION["username"])) {
+    if ($_SESSION['user_role'] == 'Office Supplier') {
+        header('Location: office-s/office_index.php');
+        exit;
+    } elseif ($_SESSION['user_role'] == 'Admin') {
+        header('Location: admin/admin_manageusers.php');
+        exit;
+    } 
+}
 
 ?>
 
@@ -104,7 +113,16 @@ if (empty($_SESSION["username"])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
+  <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/autofill/2.7.0/css/autoFill.dataTables.min.css">
+  <script src="https://cdn.datatables.net/autofill/2.7.0/js/dataTables.autoFill.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.2/css/buttons.dataTables.min.css">
+  <script src="https://cdn.datatables.net/buttons/3.2.2/js/dataTables.buttons.min.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>

@@ -1,6 +1,8 @@
 <?php
+session_start();
 // Include the database connection file
 include('conn.php');
+include('log.php');
 
 // Retrieve the request data from the $_POST array
 $assets = $_GET['assets'];
@@ -39,6 +41,7 @@ foreach ($decodedAssets as $asset) {
         $con->insert($sql, "Request submitted successfully");
     }
 }
+log_req($max_order_id, $user_id, $_SESSION["office_id"], 'Asset request', 'created');
 
 // Send a notification to the administrator
 // ...

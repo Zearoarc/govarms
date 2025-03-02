@@ -48,6 +48,18 @@
             </a>
         </li>
         <?php
+        if (strpos($url, 'feedbacks') !== false) {
+            echo '<li class="active">';
+        } else {
+            echo '<li>';
+        }
+        ?>
+            <a href="feedbacks.php">
+                <i class='bx bx-file' ></i>
+                <span>Feedbacks</span>
+            </a>
+        </li>
+        <?php
         if (strpos($url, 'req') !== false || strpos($url, 'res') !== false) {
             echo '<li class="active">';
         } else {
@@ -66,7 +78,7 @@
                     if (strpos($url, 'assetreq') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Asset Request</a></li>
@@ -75,7 +87,7 @@
                     if (strpos($url, 'assetres') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Asset Reservation</a></li>
@@ -84,7 +96,7 @@
                     if (strpos($url, 'supplyreq') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Supply Request</a></li>

@@ -73,14 +73,7 @@ class connec
     function delete($table_name,$id)
     { 
         $query="DELETE FROM $table_name WHERE id=$id";
-        if($this->conn->query($query)===TRUE)
-        {
-             echo '<script> alert("Data Removed Successfully");</script>' ;
-        }
-        else
-        {
-             echo '<script> alert("'.$this->conn->error.'");</script>' ;
-        }
+        $this->conn->query($query);
     }
 
     function delete_order($table, $order)
@@ -113,11 +106,11 @@ class connec
     { 
         if($this->conn->query($query)===TRUE)
         {
-                echo '<script> alert("'.$msg.'");</script>' ; 
+            echo '<script> Swal.fire({ title: "Success", text: "'.$msg.'", icon: "success", confirmButtonText: "OK" }); </script>' ; 
         }
         else
         {
-             echo '<script> alert("'.$this->conn->error.'");</script>' ;
+            echo '<script> Swal.fire({ title: "Error", text: "'.$this->conn->error.'", icon: "error", confirmButtonText: "OK" }); </script>' ;
         }
     }
 }   

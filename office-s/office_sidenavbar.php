@@ -24,27 +24,15 @@
             </a>
         </li>
         <?php
-        if (strpos($url, 'assets') !== false) {
+        if (strpos($url, 'inventory') !== false) {
             echo '<li class="active">';
         } else {
             echo '<li>';
         }
         ?>
-            <a href="office_assets.php">
-                <i class='bx bx-desktop'></i>
-                <span>Assets</span>
-            </a>
-        </li>
-        <?php
-        if (strpos($url, 'supplies') !== false) {
-            echo '<li class="active">';
-        } else {
-            echo '<li>';
-        }
-        ?>
-            <a href="office_supplies.php">
+            <a href="office_inventory.php">
                 <i class='bx bx-cart' ></i>
-                <span>Supplies</span>
+                <span>Inventory</span>
             </a>
         </li>
         <?php
@@ -78,7 +66,7 @@
                     if (strpos($url, 'assetreq') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Asset Requests</a></li>
@@ -87,7 +75,7 @@
                     if (strpos($url, 'assetres') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Asset Reservations</a></li>
@@ -96,7 +84,7 @@
                     if (strpos($url, 'supplyreq') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Supply Requests</a></li>
@@ -105,7 +93,7 @@
                     if (strpos($url, 'maintenancereq') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Maintenance</a></li>
@@ -114,7 +102,7 @@
                     if (strpos($url, 'completedreq') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Completed</a></li>
@@ -140,7 +128,7 @@
                     if (strpos($url, 'assettypes') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Assets</a></li>
@@ -149,7 +137,7 @@
                     if (strpos($url, 'supplytypes') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Supplies</a></li>
@@ -158,12 +146,24 @@
                     if (strpos($url, 'brandtypes') !== false) {
                         echo '';
                     } else {
-                        echo 'style="color: #ffffff"';
+                        echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
                     >Brands</a></li>
                 </div>
             </ul>
+        </li>
+        <?php
+        if (strpos($url, 'office_logs.php') !== false) {
+            echo '<li class="active">';
+        } else {
+            echo '<li>';
+        }
+        ?>
+            <a href="office_logs.php">
+                <i class='bx bx-file' ></i>
+                <span>View Logs</span>
+            </a>
         </li>
         <?php
         if (strpos($url, 'office_reports.php') !== false) {

@@ -1,36 +1,35 @@
 <?php
 session_start();
-
-$name_edit="";
-$email_edit="";
-$password_edit="";
-$office_edit="";
-$contact_edit="";
-$user_role_edit="";
-
-if(isset($_POST["btn_update"])){
+if (isset($_POST["btn_update"])) {
     include("../conn.php");
-    $name=$_POST["name_new"];
-    $email=$_POST["email_new"];
-    $office=$_POST["office_new"];
-    $contact=$_POST["contact_new"];
-    $user_role=$_POST["user_role_new"];
-
+    $name = $_POST["name_new"];
+    $email = $_POST["email_new"];
+    $password = $_POST["psw_new"];
+    $confirm_password = $_POST["confirm_psw_new"];
+    $office = $_POST["office_new"];
+    $contact = $_POST["contact_new"];
+    $user_role = $_POST["user_role_new"];
     $id=$_GET['id'];
     $con=new connec();
-    $sql="UPDATE users SET name='$name', email='$email', office_id='$office', contact='$contact', user_role='$user_role' WHERE id='$id'";
-    $con->update($sql, "Data Updated Successfully");
-    header("location:admin_manageusers.php");
+
+    if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/", $password)) {
+        $error = "Password must be at least 8 characters, contain at least one number, one uppercase and lowercase letter, and one special character";
+    } elseif ($password != $confirm_password) {
+        $error = "Passwords do not match";
+    } else {
+        $sql="UPDATE users SET name='$name', email='$email', office_id='$office', contact='$contact', user_role='$user_role', password='$password' WHERE id='$id'";
+        $con->update($sql, "Data Updated Successfully");
+        header("location:admin_manageusers.php");
+    }
 }
 
-if(empty($_SESSION["username"])){
+if (empty($_SESSION["username"])) {
     header("location:../login.php");
 }
 
-else{
+else {
     include("admin_header.php");
-    
-    
+
     if(isset($_GET['id'])){
         $id=$_GET['id'];
         $office_id=$_SESSION['office_id'];
@@ -71,8 +70,10 @@ else{
 						            <input type="email" name="email_new" id="email_new" class="form-control" value="<?php echo $email_edit ?>" required><br>
 
                                     <label for="psw_new"><b>Password</b></label>
-						            <input type="text" name="psw_new" id="psw_new" class="form-control" value="<?php echo $password_edit ?>" required><br>
-                                    <input type="hidden" name="psw_current" id="psw_current" class="form-control" value="<?php echo $password_current ?>" readonly required>
+						            <input type="password" name="psw_new" id="psw_new" class="form-control" value="<?php echo $password_edit ?>" required><br>
+
+                                    <label for="confirm_psw_new"><b>Confirm Password</b></label>
+						            <input type="password" name="confirm_psw_new" id="confirm_psw_new" class="form-control" required><br>
 
                                     <label for="office_new<?php echo $row["id"]; ?>"><b>Office</b></label>
                                     <select name="office_new" id="office_new" class="form-control" required>
@@ -97,9 +98,18 @@ else{
                                     <label for="user_role"><b>Role</b></label>
                                     <input type="text" name="user_role_new" id="user_role_new" class="form-control" value="Office Supplier" readonly required><br>
 
-
                                     <a href="admin_manageusers.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                                     <button type="submit" class="btn" name="btn_update" style="background-color:#3741c9; color:white">Update</button><br><br><br>
+
+                                    <?php if (isset($error)) { ?>
+                                        <script>
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Error',
+                                                text: '<?php echo $error; ?>',
+                                            });
+                                        </script>
+                                    <?php } ?>
 
                                 </div>
                             </form>

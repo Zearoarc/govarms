@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('../log.php');
 
 if (isset($_POST["btn_approve"])) {
     include("../conn.php");
@@ -18,8 +19,10 @@ if (isset($_POST["btn_approve"])) {
             $sql="UPDATE supp SET req_status = 'Incomplete' WHERE id='$id'";
             $con->update($sql, "Data Updated Successfully");
 
-            $sql="UPDATE supplies SET quantity = quantity - '$amount' WHERE type_id='$supply_type_id'";
+            $sql="UPDATE items SET amount = amount - '$amount' WHERE supply_type_id='$supply_type_id'";
             $con->update($sql, "Data Updated Successfully");
+
+            log_supplyreq($order, $row["user_id"], $_SESSION["office_id"], 'Supply request', 'approved', $amount, $supply_type_id);
         }
     }
     header("Location: office_supplyreq.php");
@@ -31,9 +34,14 @@ if (isset($_POST["btn_complete"])) {
     $order=$_POST['order'];
     $con=new connec();
 
+    $sql="SELECT * FROM supp WHERE order_id = '$order'";
+    $result=$con->select_by_query($sql);
+    $row = $result->fetch_assoc();
+
     $sql="UPDATE supp SET req_status = 'Complete' WHERE order_id='$order'";
     $con->update($sql, "Data Updated Successfully");
 
+    log_req($order, $row["user_id"], $_SESSION["office_id"], 'Supply request', 'completed');
     header("Location: office_supplyreq.php");
     exit;
 }
@@ -103,7 +111,7 @@ else {
                                 <form method="post">
                                 <h4>Order ID: <?php echo $order_id; ?> (<?php echo $order_data["user_name"]; ?>)</h4>
                                 <input type="hidden" name="order" value="<?php echo $order_id; ?>">
-                                <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
+                                <table class="table " id="supplyreq<?php echo $order_id; ?>" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
                                             <th>Supply Type</th>
@@ -163,6 +171,16 @@ else {
                                     </tfoot>
                                 </table>
                                 </form>
+                                <script>
+                                    new DataTable('#supplyreq<?php echo $order_id; ?>', {
+                                        "paging": false,
+                                        "lengthChange": true,
+                                        "searching": false,
+                                        "ordering": true,
+                                        "info": false,
+                                        "autoWidth": false
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>

@@ -2,13 +2,14 @@
 
 session_start();
 include("office_header.php");
+$office=$_SESSION['office_id'];
 
 $con = new connec();
-$sql_thresh = "SELECT s.id, t.type, t.category, s.quantity, s.threshold, o.office, s.price
-        FROM supplies s
-        INNER JOIN supply_type t ON s.type_id = t.id
-        INNER JOIN office o ON s.office_id = o.id
-        WHERE s.office_id = " . $_SESSION["office_id"] . " AND s.quantity < s.threshold";
+$sql_thresh = "SELECT i.id, t.type, t.category, i.amount, i.threshold, o.office, i.price
+        FROM items i
+        INNER JOIN supply_type t ON i.supply_type_id = t.id
+        INNER JOIN office o ON i.office_id = o.id
+        WHERE i.office_id = " . $_SESSION["office_id"] . " AND i.amount < i.threshold";
 $result_thresh = $con->select_by_query($sql_thresh);
 
 // Count the number of low stock supplies
@@ -29,10 +30,9 @@ $lowStockCount = $result_thresh->num_rows;
                                     COUNT(DISTINCT r.order_id) + 
                                     (SELECT COUNT(DISTINCT res.reserve_id) FROM res WHERE res.req_status = 'Complete') + 
                                     (SELECT COUNT(DISTINCT s.order_id) FROM supp s WHERE s.req_status = 'Complete') AS total_completed_requests 
-                                FROM 
-                                    req r 
-                                WHERE 
-                                    r.req_status = 'Complete';";
+                                FROM req r 
+                                JOIN users u ON r.user_id = u.id
+                                WHERE r.req_status = 'Complete' AND u.office_id = $office;";
                         $result = $con->select_by_query($sql);
                         $total_completed_requests = $result->fetch_assoc()["total_completed_requests"] ?? 0;
                         ?>
@@ -49,7 +49,6 @@ $lowStockCount = $result_thresh->num_rows;
                 <div class="card bg-warning text-white mb-4">
                     <div class="card-body">
                     <?php
-                    $office=$_SESSION['office_id'];
                     $sql = "SELECT u.name, COUNT(r.id) as total_requests
                             FROM users u
                             JOIN req r ON u.id = r.user_id
@@ -79,8 +78,9 @@ $lowStockCount = $result_thresh->num_rows;
                     <div class="card-body">
                         <?php
                         $sql = "SELECT COUNT(*) as total_pending_requests
-                                FROM req
-                                WHERE req_type = 'Asset' AND req_status = 'Pending'";
+                                FROM req r
+                                JOIN users u ON r.user_id = u.id
+                                WHERE req_type = 'Asset' AND req_status = 'Pending' AND u.office_id = $office";
                         $result = $con->select_by_query($sql);
                         $total_pending_requests = $result->fetch_assoc()["total_pending_requests"] ?? 0;
                         ?>
@@ -100,7 +100,7 @@ $lowStockCount = $result_thresh->num_rows;
                         <h2 class="text-white"><b><?php echo $lowStockCount ?? 0; ?></b></h2>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="office_supplies.php?view=low_stock">View Details</a>
+                        <a class="small text-white stretched-link" href="office_inventory.php?view=low_stock">View Details</a>
                         <div class="small text-white"><i class='bx bx-chevron-right' style='color:#ffffff'></i></div>
                     </div>
                 </div>

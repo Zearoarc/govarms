@@ -1,3 +1,6 @@
+    <footer style="background-color: #2f4f7f; color: white; padding: 1rem; text-align: center;">
+        <p>&copy; 2025 Office Supplier Asset Request and Reservation System</p>
+    </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js">

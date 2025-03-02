@@ -1,14 +1,16 @@
 <?php
 session_start();
-
+include('../log.php');
 if (isset($_POST["btn_delete"])) {
     include("../conn.php");
     $id=$_GET['id'];
-    $table="supplies";
+    $table="items";
     $con=new connec();
 
+    log_supplydelete($id, $_SESSION["employee_id"], $_SESSION["office_id"]);
+    error_log($_SESSION["employee_id"]);
     $con->delete($table,$id);
-    header("location:office_supplies.php");
+    header("location:office_inventory.php");
 }
 
 if (empty($_SESSION["username"])) {
@@ -22,11 +24,11 @@ else {
         $id=$_GET['id']; 
 
         $con=new connec();
-        $sql="SELECT s.id, t.type, t.category, s.quantity, s.threshold, o.office, s.price
-        FROM supplies s
-        INNER JOIN supply_type t ON s.type_id = t.id
-        INNER JOIN office o ON s.office_id = o.id
-        WHERE s.id = $id";
+        $sql="SELECT i.id, t.type, t.category, i.amount, i.threshold, o.office, i.price
+        FROM items i
+        INNER JOIN supply_type t ON i.supply_type_id = t.id
+        INNER JOIN office o ON i.office_id = o.id
+        WHERE i.id = $id";
         $result=$con->select_by_query($sql);
     }
 
@@ -43,11 +45,11 @@ else {
                             while ($row = $result->fetch_assoc()) {
                                 ?>
                                 <div class="container" style="padding-bottom: 50px">
-                                <label for="type_new"><b>Type</b></label>
-                                <input type="text" name="type_new" id="type_new" class="form-control" value="<?php echo $row["type"]; ?>" readonly required><br>
+                                    <label for="type_new"><b>Type</b></label>
+                                    <input type="text" name="type_new" id="type_new" class="form-control" value="<?php echo $row["type"]; ?>" readonly required><br>
 
                                     <label for="quantity_new"><b>Quantity</b></label>
-                                    <input type="number" name="quantity_new" id="quantity_new" class="form-control" value="<?php echo $row["quantity"]; ?>" readonly required><br>
+                                    <input type="number" name="quantity_new" id="quantity_new" class="form-control" value="<?php echo $row["amount"]; ?>" readonly required><br>
 
                                     <label for="threshold_new"><b>Threshold</b></label>
                                     <input type="number" name="threshold_new" id="threshold_new" class="form-control" value="<?php echo $row["threshold"]; ?>" readonly required><br>
@@ -59,7 +61,7 @@ else {
                                     <label for="price_new"><b>Price</b></label>
                                     <input type="number" name="price_new" id="price_new" class="form-control" value="<?php echo $row["price"]; ?>" readonly required><br>
 
-                                    <a href="office_supplies.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
+                                    <a href="office_inventory.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                                     <button type="submit" class="btn" name="btn_delete" style="background-color:#3741c9; color:white">Delete</button><br><br><br>
                                 </div>
                                 <?php

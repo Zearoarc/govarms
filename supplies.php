@@ -24,11 +24,11 @@ else {
 
     <main>
         <div class="container-fluid px-4">
-            <h2 class="mt-4">Completed Supply Requests</h2>
+            <h2 class="mt-4">Supplies</h2>
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
-                    <table class="table " id="dataTable" width="100%" cellspacing="0">
+                    <table class="table " id="supplies" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Type</th>
@@ -62,6 +62,16 @@ else {
                                         ?>
                                 </tbody>
                             </table>
+                            <script>
+                                new DataTable('#supplies', {
+                                    "paging": false,
+                                    "lengthChange": true,
+                                    "searching": true,
+                                    "ordering": true,
+                                    "info": false,
+                                    "autoWidth": false
+                                });
+                            </script>
                     </div>
                 </div>
             </div>

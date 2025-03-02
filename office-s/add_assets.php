@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('../log.php');
 if(isset($_POST["btn_insert"])){
     include("../conn.php");
     $type = $_POST["type_new"];
@@ -7,16 +8,20 @@ if(isset($_POST["btn_insert"])){
     $model = $_POST["model_new"];
     $office = $_POST["office_new"];
     $serial = $_POST["serial_new"];
-    $date = date('Y-m-d');
-    $cost = $_POST["cost_new"];
+    $price = $_POST["price_new"];
     // $req = $_POST["req_new"];
     // $res = $_POST["res_new"];
 
     
     $con=new connec();
-    $sql="INSERT INTO assets VALUES(0,'$type', '$brand', '$model', '$serial', '$office', '$date', '$cost', 'Available')";
+    $sql="INSERT INTO items (`id`, `type`, `office_id`, `asset_type_id`, `supply_type_id`, `brand_id`, `amount`, `threshold`, `model`, `serial`, `price`, `borrow_times`, `repair_times`, `date_add`, `date_update`, `status`) VALUES (0, 'Asset', '$office', '$type', NULL, '$brand', NULL, NULL, '$model', '$serial', '$price', 0, 0, current_timestamp(), current_timestamp(), 'Available')";
     $con->insert($sql, "Data Inserted Successfully");
-    header("location:office_assets.php");
+    $sql_type = "SELECT type FROM asset_type WHERE id = '$type'";
+    $result_type = $con->select_by_query($sql_type);
+    $row_type = $result_type->fetch_assoc();
+    $asset_type_name = $row_type['type'];
+    log_assetadd($office, $asset_type_name, $serial);
+    header("location:office_inventory.php");
 }
 
 if(empty($_SESSION["username"])){
@@ -96,11 +101,11 @@ else{
                                     <label for="serial_new"><b>Serial</b></label>
                                     <input type="text" name="serial_new" id="serial_new" class="form-control" required><br>
 
-                                    <label for="cost_new"><b>Unit Cost</b></label>
-                                    <input type="number" name="cost_new" id="cost_new" class="form-control" required><br>
+                                    <label for="price_new"><b>Unit Price</b></label>
+                                    <input type="number" name="price_new" id="price_new" class="form-control" required><br>
 
-                                    <a href="office_assets.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
-                                    <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Insert</button><br><br><br>
+                                    <a href="office_inventory.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
+                                    <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Add</button><br><br><br>
 
                                 </div>
                             </form>

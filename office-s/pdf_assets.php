@@ -14,7 +14,7 @@ function filterData(&$str){
 
 $office = $_SESSION["office_id"];
 
-$fields = array('ID', 'TYPE', 'BRAND', 'MODEL', 'SERIAL', 'OFFICE', 'DATE ADDED', 'COST', 'STATUS');
+$fields = array('ID', 'TYPE', 'BRAND', 'MODEL', 'SERIAL', 'OFFICE', 'DATE ADDED', 'PRICE', 'STATUS');
 
 require('fpdf/fpdf.php');
 
@@ -31,16 +31,16 @@ $pdf->Cell(40, 10, 'MODEL', 1, 0, 'C');
 $pdf->Cell(30, 10, 'SERIAL', 1, 0, 'C');
 $pdf->Cell(30, 10, 'OFFICE', 1, 0, 'C');
 $pdf->Cell(30, 10, 'DATE ADDED', 1, 0, 'C');
-$pdf->Cell(30, 10, 'COST', 1, 0, 'C');
+$pdf->Cell(30, 10, 'PRICE', 1, 0, 'C');
 $pdf->Cell(30, 10, 'STATUS', 1, 0, 'C');
 $pdf->Ln();
 
-$sql = "SELECT a.id, t.type, b.brand, a.model, a.serial, o.office, a.date_add, a.cost, a.status
-    FROM assets a
-    INNER JOIN asset_type t ON a.type_id = t.id
-    INNER JOIN brand b ON a.brand_id = b.id
-    INNER JOIN office o ON a.office_id = o.id
-    WHERE a.office_id = $office";
+$sql = "SELECT i.id, t.type, b.brand, i.model, i.serial, o.office, i.date_add, i.price, i.status
+    FROM items i
+    INNER JOIN asset_type t ON i.asset_type_id = t.id
+    INNER JOIN brand b ON i.brand_id = b.id
+    INNER JOIN office o ON i.office_id = o.id
+    WHERE i.office_id = $office";
 
 $result=$con->select_by_query($sql);
 
@@ -57,7 +57,7 @@ if($result->num_rows>0){
         $pdf->Cell(30, 10, $row['serial'], 1, 0, 'C');
         $pdf->Cell(30, 10, $row['office'], 1, 0, 'C');
         $pdf->Cell(30, 10, $row['date_add'], 1, 0, 'C');
-        $pdf->Cell(30, 10, $row['cost'], 1, 0, 'C');
+        $pdf->Cell(30, 10, $row['price'], 1, 0, 'C');
         $pdf->Cell(30, 10, $row['status'], 1, 0, 'C');
         $pdf->Ln();
     }

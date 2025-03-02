@@ -21,19 +21,9 @@ else {
         <div class="container-fluid px-4">
             <h2 class="mt-4">Asset Reservation</h2>
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <div class="input-group" style="width: 30%; float: right;">
-                        <input type="text" id="search-input" placeholder="Search assets..." class="form-control">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
+                        <table class="table " id="assetres" width="100%" cellspacing="0">
                             <thead class="table-blue">
                                 <tr>
                                     <th><input type="checkbox" id="selectAll" /></th>
@@ -42,7 +32,7 @@ else {
                                     <th>Unit of Issue</th>
                                     <th>Expected Delivery Date</th>
                                     <th>Start and End Date</th>
-                                    <th>Amount</th>
+                                    <th>Quantity</th>
                                 </tr>
                             </thead>
                             <tbody id="table-body">
@@ -70,7 +60,7 @@ else {
                                                 <td style="width: 150px;">
                                                     <input type="hidden" id="id-<?php echo $row["type"]; ?>" value="<?php echo $row["id"]; ?>">
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control form-control-sm" value="1" id="amount-<?php echo $row["type"]; ?>">
+                                                        <input type="number" class="form-control form-control-sm" value="1" id="amount-<?php echo $row["type"]; ?>" data-max-quantity="3" max="3">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -87,6 +77,22 @@ else {
                                 </tr>
                             </tfoot>
                         </table>
+                        <script>
+                            new DataTable('#assetres', {
+                                "paging": false,
+                                "lengthChange": true,
+                                "searching": true,
+                                "ordering": true,
+                                "info": false,
+                                "autoWidth": false,
+                                "columnDefs": [
+                                    {
+                                        "targets": 0, // specify the column index (0-based)
+                                        "orderable": false // disable ordering for this column
+                                    }
+                                ]
+                            });
+                        </script>
                     </div>
                 </div>
             </div>

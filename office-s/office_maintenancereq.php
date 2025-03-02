@@ -8,11 +8,11 @@ else {
     $office = $_SESSION["office_id"];
 
     $con=new connec();
-    $sql="SELECT r.req_type, r.order_id, u.name, a.model, a.serial, b.brand, a.date_add, a.cost, r.req_status, r.action
+    $sql="SELECT r.req_type, r.order_id, u.name, i.model, i.serial, b.brand, i.date_add, i.price, r.req_status, r.action, r.notes
     FROM req r
     JOIN users u ON r.user_id = u.id
-    JOIN assets a ON r.asset_id = a.id
-    JOIN brand b ON a.brand_id = b.id
+    JOIN items i ON r.asset_id = i.id
+    JOIN brand b ON i.brand_id = b.id
     WHERE req_type='Maintenance' AND r.req_status IN ('Incomplete', 'Pending') AND u.office_id = '$office';";
     $result=$con->select_by_query($sql);
 
@@ -32,9 +32,10 @@ else {
             "brand" => $row["brand"],
             "serial" => $row["serial"],
             "date_add" => $row["date_add"],
-            "cost" => $row["cost"],
+            "price" => $row["price"],
             "req_status" => $row["req_status"],
-            "action" => $row["action"]
+            "action" => $row["action"],
+            "notes" => $row["notes"]
         );
     }
     ?>
@@ -71,13 +72,13 @@ else {
                                     echo ' - For Disposal';
                                 }
                                 ?>)</h4>
-                                <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
+                                <table class="table " id="maintenancereq<?php echo $order_id; ?>" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
                                             <th>Brand</th>
                                             <th>Asset Model</th>
                                             <th>Asset Serial</th>
-                                            <th>Asset Cost</th>
+                                            <th>Asset Price</th>
                                             <th>Request Status</th>
                                         </tr>
                                     </thead>
@@ -93,7 +94,7 @@ else {
                                             <td><?php echo $row["brand"]; ?></td>
                                             <td><?php echo $row["model"]; ?></td>
                                             <td><?php echo $row["serial"]; ?></td>
-                                            <td>₱ <?php echo number_format($row["cost"]); ?></td>
+                                            <td>₱ <?php echo number_format($row["price"]); ?></td>
                                             <td style="height: 40px;">
                                             <?php
                                                 if ($row["req_status"] == "Incomplete") {
@@ -114,6 +115,13 @@ else {
                                     ?>
                                     </tbody>
                                     <tfoot>
+                                    <tr>
+                                        <td colspan="5">
+                                            <h5>Notes:</h5>
+                                            <p><?php echo $row["notes"]; ?></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <tr>
                                         <?php
                                             if ($row["req_status"] == 'Pending'){
@@ -137,6 +145,16 @@ else {
                                         </tr>
                                     </tfoot>
                                 </table>
+                                <script>
+                                    new DataTable('#maintenancereq<?php echo $order_id; ?>', {
+                                        "paging": false,
+                                        "lengthChange": true,
+                                        "searching": false,
+                                        "ordering": true,
+                                        "info": false,
+                                        "autoWidth": false
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>

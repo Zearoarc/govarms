@@ -2,11 +2,11 @@
 session_start();
 include("office_header.php");
 ?> 
-<head>
+    <head>
         <title>Generate Reports</title>
     </head>
-
-<div class="container-fluid px-4">
+<main>
+    <div class="container-fluid px-4">
     <h2 class="mt-4">Generate Reports</h2>
     <div class="row">
             <div class="col-xl-3 col-md-6">
@@ -40,6 +40,7 @@ include("office_header.php");
                 </div>
             </div>
 </div>
+</main>
 
 
 <?php

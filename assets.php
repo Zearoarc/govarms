@@ -8,25 +8,25 @@ if (empty($_SESSION["username"])) {
     header("location:login.php");
 } else {
     $id = $_SESSION["employee_id"];
-    $sql_req = "SELECT r.req_type, r.order_id, r.asset_id, u.name, a.model, a.serial, b.brand, t.type, o.office, r.req_status, r.action,
+    $sql_req = "SELECT r.req_type, r.order_id, r.asset_id, u.name, i.model, i.serial, b.brand, t.type, o.office, r.req_status, r.action,
     (SELECT COUNT(*) FROM req WHERE asset_id = r.asset_id AND req_type = 'Maintenance' AND req_status IN ('Incomplete', 'Pending')) AS maintenance_pending
     FROM req r
     JOIN users u ON r.user_id = u.id
-    JOIN assets a ON r.asset_id = a.id
-    JOIN brand b ON a.brand_id = b.id
-    JOIN asset_type t ON a.type_id = t.id
-    JOIN office o ON a.office_id = o.id
-    WHERE r.user_id = '$id' AND r.req_type = 'Asset' AND r.req_status = 'Complete'";
+    JOIN items i ON r.asset_id = i.id
+    JOIN brand b ON i.brand_id = b.id
+    JOIN asset_type t ON i.asset_type_id = t.id
+    JOIN office o ON i.office_id = o.id
+    WHERE r.user_id = '$id' AND r.req_type = 'Asset' AND r.req_status = 'Complete' AND i.status='Requested'";
     $result_req = $con->select_by_query($sql_req);
 
 
-    $sql_res="SELECT r.reserve_id, r.asset_id, u.name, a.model, a.serial, b.brand, t.type, o.office, r.date_start, r.date_end, r.req_status
+    $sql_res="SELECT r.reserve_id, r.asset_id, u.name, i.model, i.serial, b.brand, t.type, o.office, r.date_start, r.date_end, r.req_status
     FROM res r
     JOIN users u ON r.user_id = u.id
-    JOIN assets a ON r.asset_id = a.id
-    JOIN brand b ON a.brand_id = b.id
-    JOIN asset_type t ON a.type_id = t.id
-    JOIN office o ON a.office_id = o.id
+    JOIN items i ON r.asset_id = i.id
+    JOIN brand b ON i.brand_id = b.id
+    JOIN asset_type t ON i.asset_type_id = t.id
+    JOIN office o ON i.office_id = o.id
     WHERE r.req_status = 'Complete' AND r.action = 'none';";
     $result_res=$con->select_by_query($sql_res);
     ?>
@@ -41,7 +41,7 @@ if (empty($_SESSION["username"])) {
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
-                    <table class="table " id="dataTable" width="100%" cellspacing="0">
+                    <table class="table " id="assets" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Brand</th>
@@ -93,6 +93,16 @@ if (empty($_SESSION["username"])) {
                                         ?>
                                 </tbody>
                             </table>
+                            <script>
+                                new DataTable('#assets', {
+                                    "paging": false,
+                                    "lengthChange": true,
+                                    "searching": true,
+                                    "ordering": true,
+                                    "info": false,
+                                    "autoWidth": false
+                                });
+                            </script>
                     </div>
                 </div>
             </div>
@@ -102,7 +112,7 @@ if (empty($_SESSION["username"])) {
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table" id="reservations" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Brand</th>
@@ -162,6 +172,16 @@ if (empty($_SESSION["username"])) {
                             ?>
                         </tbody>
                         </table>
+                        <script>
+                            new DataTable('#reservations', {
+                                "paging": false,
+                                "lengthChange": true,
+                                "searching": true,
+                                "ordering": true,
+                                "info": false,
+                                "autoWidth": false
+                            });
+                        </script>
                     </div>
                 </div>
             </div>

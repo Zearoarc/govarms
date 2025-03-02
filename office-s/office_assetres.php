@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('../log.php');
 
 if (isset($_POST["btn_approve"])) {
     include("../conn.php");
@@ -17,7 +18,7 @@ if (isset($_POST["btn_approve"])) {
             $model=$_POST['model' . $id];
             $serial=$_POST['serial' . $id];
 
-            $sql_asset_id = "SELECT id FROM assets WHERE model = '$model' AND serial = '$serial'";
+            $sql_asset_id = "SELECT id FROM items WHERE model = '$model' AND serial = '$serial'";
             $result_asset_id = $con->select_by_query($sql_asset_id);
             $row_asset_id=$result_asset_id->fetch_assoc();
             $asset_id=$row_asset_id['id'];
@@ -25,8 +26,11 @@ if (isset($_POST["btn_approve"])) {
             $sql="UPDATE res SET asset_id = '$asset_id', req_status = 'Incomplete' WHERE id='$id'";
             $con->update($sql, "Data Updated Successfully");
 
-            $sql_assets="UPDATE assets SET status = 'Requested' WHERE model = '$model' AND serial = '$serial'";
+            $sql_assets="UPDATE items SET borrow_times = borrow_times + 1, status = 'Requested' WHERE model = '$model' AND serial = '$serial'";
             $con->update($sql_assets, "Data Updated Successfully");
+
+            // Call the log function
+            log_assetres($reserve, $row["user_id"], $_SESSION["office_id"], 'Asset reservation', 'approved', $asset_id);
         }
     }
     header("Location: office_assetres.php");
@@ -37,8 +41,14 @@ if (isset($_POST["btn_complete"])) {
     $reserve=$_POST['reserve'];
     $con=new connec();
 
-    $sql="UPDATE req SET req_status = 'Complete' WHERE reserve_id='$reserve'";
+    $sql="SELECT * FROM res WHERE reserve_id = '$reserve'";
+    $result=$con->select_by_query($sql);
+    $row = $result->fetch_assoc();
+
+    $sql="UPDATE res SET req_status = 'Complete' WHERE reserve_id='$reserve'";
     $con->update($sql, "Data Updated Successfully");
+
+    log_res($reserve, $row["user_id"], $_SESSION["office_id"], 'Asset reservation', 'completed');
 
     header("Location: office_assetres.php");
     exit;
@@ -52,7 +62,7 @@ else {
     $office=$_SESSION['office_id'];
 
     $con=new connec();
-    $sql="SELECT r.id, t.type, r.reserve_id, u.name, o.office, r.date_start, r.date_end, r.req_status
+    $sql="SELECT r.id, t.type, r.reserve_id, u.name, o.office, r.date_start, r.date_end, r.req_status, r.notes
     FROM res r
     JOIN asset_type t ON r.asset_type_id = t.id
     JOIN users u ON r.user_id = u.id
@@ -77,14 +87,15 @@ else {
             "date_start" => $row["date_start"],
             "date_end" => $row["date_end"],
             "req_status" => $row["req_status"],
-            "office" => $row["office"]
+            "office" => $row["office"],
+            "notes" => $row["notes"]
         );
     }
 
-    $sql_inc = "SELECT r.id, b.brand, a.model, a.serial, t.type, r.reserve_id, u.name, o.office, r.date_start, r.date_end, r.req_status
+    $sql_inc = "SELECT r.id, b.brand, i.model, i.serial, t.type, r.reserve_id, u.name, o.office, r.date_start, r.date_end, r.req_status
     FROM res r
-    JOIN assets a ON r.asset_id = a.id
-    JOIN brand b ON a.brand_id = b.id
+    JOIN items i ON r.asset_id = i.id
+    JOIN brand b ON i.brand_id = b.id
     JOIN asset_type t ON r.asset_type_id = t.id
     JOIN users u ON r.user_id = u.id
     JOIN office o ON u.office_id = o.id
@@ -121,7 +132,7 @@ else {
                                 <form method="post">
                                 <h4>Reservation ID: <?php echo $reserve_id; ?> (<?php echo $reserve_data["user_name"]; ?>)</h4>
                                 <input type="hidden" name="reserve" value="<?php echo $reserve_id; ?>">
-                                <table class="table " id="dataAssetTable" width="100%" cellspacing="0">
+                                <table class="table " id="assetres<?php echo $reserve_id; ?>" width="100%" cellspacing="0">
                                     <thead class="table-blue">
                                         <tr>
                                             <th>Type</th>
@@ -194,6 +205,12 @@ else {
                                     </tbody>
                                     <tfoot>
                                         <tr>
+                                            <td colspan="5">
+                                                <h5>Notes:</h5>
+                                                <p><?php echo $row["notes"]; ?></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <?php
                                             if ($row["req_status"] == 'Pending'){
                                                 $serials = array_column($reserve_data["reserve_data"], "serial");
@@ -207,7 +224,7 @@ else {
                                             else if ($row["req_status"] == 'Incomplete') {
                                                 ?>
                                                 <td colspan="9">
-                                                    <a class="btn btn-primary" style="color: #ffffff" href='complete_assetres.php?reserve=<?php echo $reserve_id; ?>'>Complete</a>
+                                                <button type="submit" class="btn btn-primary" name="btn_complete">Complete</button>
                                                 </td>
                                                 <?php
                                             }
@@ -216,6 +233,16 @@ else {
                                     </tfoot>
                                 </table>
                                 </form>
+                                <script>
+                                    new DataTable('#assetres<?php echo $reserve_id; ?>', {
+                                        "paging": false,
+                                        "lengthChange": true,
+                                        "searching": false,
+                                        "ordering": true,
+                                        "info": false,
+                                        "autoWidth": false
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -229,6 +256,127 @@ else {
     </main>
 </body>
 </html>
+
+<script>
+    // Store the selected serials in an array
+    var selectedSerials = [];
+
+    // Function to update the serial dropdowns
+    function updateSerialDropdowns() {
+        // Clear the selected serials array
+        selectedSerials = [];
+
+        // Get all serial dropdowns
+        var serialDropdowns = $('[id^="serial"]');
+
+        // Loop through each serial dropdown
+        serialDropdowns.each(function() {
+            // Get the current serial dropdown
+            var currentDropdown = $(this);
+
+            // Get the selected serial
+            var selectedSerial = currentDropdown.val();
+
+            // If a serial is already selected, add it to the array
+            if (selectedSerial !== '' && selectedSerial !== 'Select Serial') {
+                selectedSerials.push(selectedSerial);
+            }
+        });
+
+        // Loop through each serial dropdown again to disable the options
+        serialDropdowns.each(function() {
+            // Get the current serial dropdown
+            var currentDropdown = $(this);
+
+            // Loop through each option in the current serial dropdown
+            currentDropdown.find('option').each(function() {
+                // Get the current option
+                var currentOption = $(this);
+
+                // If the current option is not the selected serial and it's already in the array, disable it
+                if (currentOption.val() !== currentDropdown.val() && selectedSerials.includes(currentOption.val())) {
+                    currentOption.attr('disabled', 'disabled');
+                } else {
+                    currentOption.removeAttr('disabled');
+                }
+            });
+        });
+    }
+
+    // Call the function when the page loads
+    $(document).ready(function() {
+        // Disable the "Select Serial" option
+        $('[id^="serial"]').find('option[value=""]').attr('disabled', 'disabled');
+
+        // Update the serial dropdowns
+        updateSerialDropdowns();
+
+        // Update the serial dropdowns when a model is changed
+        $('[id^="model"]').on('change', function() {
+            var modelId = $(this).attr('id').replace('model', '');
+            var model = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: 'get_serials.php',
+                data: {model: model},
+                success: function(data) {
+                    $('#serial' + modelId).html(data);
+                    updateSerialDropdowns();
+                }
+            });
+        });
+
+        // Update the serial dropdowns when a serial is changed
+        $('[id^="serial"]').on('change', function() {
+            updateSerialDropdowns();
+        });
+
+        // Update the serial dropdowns when a serial is changed
+        $('[id^="serial"]').on('change', function() {
+            var currentDropdown = $(this);
+            var selectedSerial = currentDropdown.val();
+
+            // Clear the selected serials array
+            selectedSerials = [];
+
+            // Get all serial dropdowns
+            var serialDropdowns = $('[id^="serial"]');
+
+            // Loop through each serial dropdown
+            serialDropdowns.each(function() {
+                // Get the current serial dropdown
+                var dropdown = $(this);
+
+                // Get the selected serial
+                var serial = dropdown.val();
+
+                // If a serial is already selected, add it to the array
+                if (serial !== '' && serial !== 'Select Serial') {
+                    selectedSerials.push(serial);
+                }
+            });
+
+            // Loop through each serial dropdown again to disable the options
+            serialDropdowns.each(function() {
+                // Get the current serial dropdown
+                var dropdown = $(this);
+
+                // Loop through each option in the current serial dropdown
+                dropdown.find('option').each(function() {
+                    // Get the current option
+                    var option = $(this);
+
+                    // If the current option is not the selected serial and it's already in the array, disable it
+                    if (option.val() !== dropdown.val() && selectedSerials.includes(option.val())) {
+                        option.attr('disabled', 'disabled');
+                    } else {
+                        option.removeAttr('disabled');
+                    }
+                });
+            });
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {

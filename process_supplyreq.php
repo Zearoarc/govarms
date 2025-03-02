@@ -1,6 +1,8 @@
 <?php
+session_start();
 // Include the database connection file
 include('conn.php');
+include('log.php');
 
 // Retrieve the request data from the $_POST array
 $assets = $_GET['assets'];
@@ -27,11 +29,12 @@ foreach ($decodedAssets as $asset) {
     $assets_id = $asset["id"];
     $assets_amount = $asset["amount"];
     $assets_date = $asset["date_expected"];
-
-        $sql = "INSERT INTO supp (supply_type_id, date_add, date_expected, order_id, amount, user_id, req_status, notes)
-                        VALUES('$assets_id', CURDATE(), DATE_ADD(CURDATE(), INTERVAL $assets_date DAY), '$max_order_id', '$assets_amount', '$user_id', 'Pending', '$notes')";
-        $con->insert($sql, "Request submitted successfully");
+    $sql = "INSERT INTO supp (supply_type_id, date_add, date_expected, order_id, amount, user_id, req_status, notes)
+    VALUES('$assets_id', CURDATE(), DATE_ADD(CURDATE(), INTERVAL $assets_date DAY), '$max_order_id', '$assets_amount', '$user_id', 'Pending', '$notes')";
+    $con->insert($sql, "Request submitted successfully");
+    log_supplyreq($max_order_id, $user_id, $_SESSION["office_id"], 'Supply request', 'created', $assets_amount, $assets_id);
 }
+
 
 // Send a notification to the administrator
 // ...

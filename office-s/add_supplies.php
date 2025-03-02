@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('../log.php');
 if(isset($_POST["btn_insert"])){
     include("../conn.php");
     $type = $_POST["type_new"];
@@ -7,15 +8,19 @@ if(isset($_POST["btn_insert"])){
     $threshold = $_POST["threshold_new"];
     $office = $_POST["office_new"];
     $price = $_POST["price_new"];
-    $date = date('Y-m-d H:i:s');
     // $req = $_POST["req_new"];
     // $res = $_POST["res_new"];
 
     
     $con=new connec();
-    $sql="INSERT INTO supplies VALUES(0,'$type', '$quantity', '$threshold' , '$office', '$price', '$date', '$date')";
+    $sql="INSERT INTO items (`id`, `type`, `office_id`, `asset_type_id`, `supply_type_id`, `brand_id`, `amount`, `threshold`, `model`, `serial`, `price`, `borrow_times`, `repair_times`, `date_add`, `date_update`, `status`) VALUES (0, 'Supply', '$office', NULL, '$type', NULL, '$quantity', '$threshold', NULL, NULL, '$price', NULL, NULL, current_timestamp(), current_timestamp(), NULL)";
     $con->insert($sql, "Data Inserted Successfully");
-    header("location:office_supplies.php");
+    $sql_type = "SELECT type FROM supply_type WHERE id = '$type'";
+    $result_type = $con->select_by_query($sql_type);
+    $row_type = $result_type->fetch_assoc();
+    $supply_type_name = $row_type['type'];
+    log_supplyadd($office, $quantity, $supply_type_name);
+    header("location:office_inventory.php");
 }
 
 if(empty($_SESSION["username"])){
@@ -59,12 +64,12 @@ else{
                                             $sql_type = "SELECT id, type FROM supply_type";
                                             $result_type = $con->select_by_query($sql_type);
 
-                                            // Retrieve existing supply types from the supplies table
-                                            $sql_supplies = "SELECT type_id FROM supplies WHERE office_id = '$office_id'";
+                                            // Retrieve existing supply types from the items table
+                                            $sql_supplies = "SELECT supply_type_id FROM items WHERE office_id = '$office_id'";
                                             $result_supplies = $con->select_by_query($sql_supplies);
                                             $existing_types = array();
                                             while($row_supplies = $result_supplies->fetch_assoc()){
-                                                $existing_types[] = $row_supplies["type_id"];
+                                                $existing_types[] = $row_supplies["supply_type_id"];
                                             }
                                             
                                             if($result_type->num_rows > 0){
@@ -92,8 +97,8 @@ else{
                                     <label for="price_new"><b>Price</b></label>
                                     <input type="number" name="price_new" id="price_new" class="form-control" required><br>
 
-                                    <a href="office_supplies.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
-                                    <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Insert</button><br><br><br>
+                                    <a href="office_inventory.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
+                                    <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Add</button><br><br><br>
 
                                 </div>
                             </form>

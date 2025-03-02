@@ -13,16 +13,16 @@ function filterData(&$str){
 }
 $office = $_SESSION["office_id"];
 
-$fields = array('ID', 'TYPE', 'BRAND', 'MODEL', 'SERIAL', 'OFFICE', 'DATE ADDED', 'COST', 'STATUS');
+$fields = array('ID', 'TYPE', 'BRAND', 'MODEL', 'SERIAL', 'OFFICE', 'DATE ADDED', 'PRICE', 'STATUS');
 
 $excelData = implode("\t", array_values($fields)) . "\n";
 
-$sql = "SELECT a.id, t.type, b.brand, a.model, a.serial, o.office, a.date_add, a.cost, a.status
-    FROM assets a
-    INNER JOIN asset_type t ON a.type_id = t.id
-    INNER JOIN brand b ON a.brand_id = b.id
-    INNER JOIN office o ON a.office_id = o.id
-    WHERE a.office_id = $office";
+$sql = "SELECT i.id, t.type, b.brand, i.model, i.serial, o.office, i.date_add, i.price, i.status
+    FROM items i
+    INNER JOIN asset_type t ON i.asset_type_id = t.id
+    INNER JOIN brand b ON i.brand_id = b.id
+    INNER JOIN office o ON i.office_id = o.id
+    WHERE i.office_id = $office";
     $result=$con->select_by_query($sql);
 if($result->num_rows>0){
     $officeName = '';
@@ -30,7 +30,7 @@ if($result->num_rows>0){
         if (empty($officeName)) {
             $officeName = $row['office'];
         }
-        $lineData = array($row['id'], $row['type'], $row['brand'], $row['model'], $row['serial'], $row['office'], $row['date_add'], $row['cost'], $row['status'],);
+        $lineData = array($row['id'], $row['type'], $row['brand'], $row['model'], $row['serial'], $row['office'], $row['date_add'], $row['price'], $row['status'],);
         $excelData .= implode("\t", array_values($lineData)) . "\n";
     }
     $fileName = "assets-data_" . strtolower($officeName) . "_" . date('Y-m-d') . ".xls";

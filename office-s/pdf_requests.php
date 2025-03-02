@@ -32,12 +32,12 @@ $pdf->Cell(30, 10, 'TYPE', 1, 0, 'C');
 $pdf->Cell(30, 10, 'STATUS', 1, 0, 'C');
 $pdf->Ln();
 
-$sql = "SELECT r.order_id, r.req_type, u.name, a.model, a.serial, t.type, r.req_status, o.office
+$sql = "SELECT r.order_id, r.req_type, u.name, i.model, i.serial, t.type, r.req_status, o.office
     FROM req r
     JOIN users u ON r.user_id = u.id
     JOIN office o ON u.office_id = o.id
     JOIN asset_type t ON r.asset_type_id = t.id
-    LEFT JOIN assets a ON r.asset_id = a.id
+    LEFT JOIN items i ON r.asset_id = i.id
     WHERE u.office_id = $office
     ORDER BY r.order_id ASC";
 $result=$con->select_by_query($sql);

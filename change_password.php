@@ -46,16 +46,17 @@ if (empty($_SESSION["username"])) {
         error_log($row["password"]);
 
         if ($current_password == $row["password"]) {
-            if ($new_password == $confirm_password) {
+            if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/", $new_password)) {
+                echo '<script> Swal.fire({ title: "Error", text: "Password must be at least 8 characters, contain at least one number, one uppercase and lowercase letter", icon: "error", confirmButtonText: "OK" }).then((result) => { if (result.isConfirmed) { window.location.href="change_password.php"; } }); </script>';
+            } elseif ($new_password != $confirm_password) {
+                echo '<script> Swal.fire({ title: "Error", text: "New password and confirm password do not match!", icon: "error", confirmButtonText: "OK" }).then((result) => { if (result.isConfirmed) { window.location.href="change_password.php"; } }); </script>';
+            } else {
                 $sql = "UPDATE users SET password = '$new_password' WHERE id = '$id'";
                 $con->update($sql, "Data Updated Successfully");
-                echo "<script>alert('Password changed successfully!');</script>";
-                echo "<script>window.location.href='index.php';</script>";
-            } else {
-                echo "<script>alert('New password and confirm password do not match!');</script>";
+                echo '<script> Swal.fire({ title: "Success", text: "Password updated successfully!", icon: "success", confirmButtonText: "OK" }).then((result) => { if (result.isConfirmed) { window.location.href="index.php"; } }); </script>';
             }
         } else {
-            echo "<script>alert('Current password is incorrect!');</script>";
+            echo '<script> Swal.fire({ title: "Error", text: "Current password is incorrect!", icon: "error", confirmButtonText: "OK" }).then((result) => { if (result.isConfirmed) { window.location.href="change_password.php"; } }); </script>';
         }
     }
     ?>

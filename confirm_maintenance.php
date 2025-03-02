@@ -3,12 +3,12 @@ include("conn.php");
 $asset_id = $_GET['asset_id'];
 
 $con=new connec();
-$sql = "SELECT t.type, u.name, b.brand, a.model, a.serial
+$sql = "SELECT t.type, u.name, b.brand, i.model, i.serial
 FROM req r 
-JOIN assets a ON r.asset_id = a.id
+JOIN items i ON r.asset_id = i.id
 JOIN asset_type t ON r.asset_type_id = t.id
 JOIN users u ON r.user_id = u.id
-JOIN brand b ON a.brand_id = b.id
+JOIN brand b ON i.brand_id = b.id
 WHERE r.asset_id = '$asset_id'";
 $result=$con->select_by_query($sql);
 $row = $result->fetch_assoc();
