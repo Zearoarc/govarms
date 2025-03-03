@@ -23,7 +23,7 @@ if (isset($_POST["btn_approve"])) {
             $row_asset_id=$result_asset_id->fetch_assoc();
             $asset_id=$row_asset_id['id'];
 
-            $sql="UPDATE res SET asset_id = '$asset_id', req_status = 'Incomplete' WHERE id='$id'";
+            $sql="UPDATE res SET asset_id = '$asset_id', req_status = 'In Transit' WHERE id='$id'";
             $con->update($sql, "Data Updated Successfully");
 
             $sql_assets="UPDATE items SET borrow_times = borrow_times + 1, status = 'Requested' WHERE model = '$model' AND serial = '$serial'";
@@ -45,10 +45,10 @@ if (isset($_POST["btn_complete"])) {
     $result=$con->select_by_query($sql);
     $row = $result->fetch_assoc();
 
-    $sql="UPDATE res SET req_status = 'Complete' WHERE reserve_id='$reserve'";
+    $sql="UPDATE res SET req_status = 'Incomplete' WHERE reserve_id='$reserve'";
     $con->update($sql, "Data Updated Successfully");
 
-    log_res($reserve, $row["user_id"], $_SESSION["office_id"], 'Asset reservation', 'completed');
+    log_res($reserve, $row["user_id"], $_SESSION["office_id"], 'Asset reservation', 'waiting to be received');
 
     header("Location: office_assetres.php");
     exit;
@@ -67,7 +67,7 @@ else {
     JOIN asset_type t ON r.asset_type_id = t.id
     JOIN users u ON r.user_id = u.id
     JOIN office o ON u.office_id = o.id
-    WHERE r.req_status IN ('Incomplete', 'Pending')
+    WHERE r.req_status IN ('Incomplete', 'In Transit', 'Pending')
     AND u.office_id=$office;";
     $result=$con->select_by_query($sql);
 
@@ -99,7 +99,7 @@ else {
     JOIN asset_type t ON r.asset_type_id = t.id
     JOIN users u ON r.user_id = u.id
     JOIN office o ON u.office_id = o.id
-    WHERE r.req_status IN ('Incomplete')";
+    WHERE r.req_status IN ('Incomplete', 'In Transit')";
     $result_inc = $con->select_by_query($sql_inc);
     $row_inc = $result_inc->fetch_assoc();
     ?>
@@ -190,8 +190,11 @@ else {
                                                     ?>
                                                     <i class='bx bxs-info-circle large-icon' style='color:#ffa83e;' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
-                                                }
-                                                else if ($row["req_status"] == "Pending") {
+                                                } elseif ($row["req_status"] == "In Transit") {
+                                                    ?>
+                                                    <i class='bx bxs-truck large-icon' style='color:#007BFF' title="<?php echo $row["req_status"]; ?>"></i>
+                                                    <?php
+                                                } elseif ($row["req_status"] == "Pending") {
                                                     ?>
                                                     <i class='bx bxs-time-five large-icon' style='color:#00b2f1' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
@@ -221,10 +224,10 @@ else {
                                                 </td>
                                                 <?php
                                             }
-                                            else if ($row["req_status"] == 'Incomplete') {
+                                            else if ($row["req_status"] == 'In Transit') {
                                                 ?>
                                                 <td colspan="9">
-                                                <button type="submit" class="btn btn-primary" name="btn_complete">Complete</button>
+                                                <button type="submit" class="btn btn-primary" name="btn_complete">Delivered</button>
                                                 </td>
                                                 <?php
                                             }

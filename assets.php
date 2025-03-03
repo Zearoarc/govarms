@@ -9,7 +9,8 @@ if (empty($_SESSION["username"])) {
 } else {
     $id = $_SESSION["employee_id"];
     $sql_req = "SELECT r.req_type, r.order_id, r.asset_id, u.name, i.model, i.serial, b.brand, t.type, o.office, r.req_status, r.action,
-    (SELECT COUNT(*) FROM req WHERE asset_id = r.asset_id AND req_type = 'Maintenance' AND req_status IN ('Incomplete', 'Pending')) AS maintenance_pending
+    (SELECT COUNT(*) FROM req WHERE asset_id = r.asset_id AND req_type = 'Maintenance' AND req_status IN ('In Transit', 'Pending')) AS maintenance_pending,
+    (SELECT COUNT(*) FROM req WHERE asset_id = r.asset_id AND req_type = 'Maintenance' AND req_status IN ('Incomplete')) AS maintenance_incomplete
     FROM req r
     JOIN users u ON r.user_id = u.id
     JOIN items i ON r.asset_id = i.id
@@ -74,17 +75,21 @@ if (empty($_SESSION["username"])) {
                                                         ?>
                                                     </td>
                                                     <td>
-                                                    <?php
-                                                    if ($row["maintenance_pending"] == 0) {
-                                                        ?>
-                                                        <a href="confirm_maintenance.php?asset_id=<?php echo $row["asset_id"]; ?>" class="btn btn-primary btn-sm">Maintenance</a>
                                                         <?php
-                                                    } else {
+                                                        if ($row["maintenance_pending"] > 0) {
+                                                            ?>
+                                                            In Maintenance
+                                                            <?php
+                                                        } elseif ($row["maintenance_incomplete"] > 0) {
+                                                            ?>
+                                                            <a href="receive_asset.php?asset_id=<?php echo $row["asset_id"]; ?>" class="btn btn-primary btn-sm">Receive</a>
+                                                            <?php
+                                                        } else {
+                                                            ?>
+                                                            <a href="confirm_maintenance.php?asset_id=<?php echo $row["asset_id"]; ?>" class="btn btn-primary btn-sm">Maintenance</a>
+                                                            <?php
+                                                        }
                                                         ?>
-                                                        In Maintenance
-                                                        <?php
-                                                    }
-                                                    ?>
                                                     </td>
                                                 </tr>
                                                 <?php

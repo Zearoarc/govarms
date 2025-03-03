@@ -73,33 +73,27 @@
             </button>
             <ul class="sub-menu">
                 <div>
-                    <li><a href="assetreq.php"
-                    <?php
+                    <li><a href="assetreq.php"><span <?php
                     if (strpos($url, 'assetreq') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
-                    ?>
-                    >Asset Request</a></li>
-                    <li><a href="assetres.php"
-                    <?php
+                    ?>>Asset Request</span></a></li>
+                    <li><a href="assetres.php"><span <?php
                     if (strpos($url, 'assetres') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
-                    ?>
-                    >Asset Reservation</a></li>
-                    <li><a href="supplyreq.php"
-                    <?php
+                    ?>>Asset Reservation</span></a></li>
+                    <li><a href="supplyreq.php"><span <?php
                     if (strpos($url, 'supplyreq') !== false) {
                         echo '';
                     } else {
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
-                    ?>
-                    >Supply Request</a></li>
+                    ?>>Supply Request</span></a></li>
                 </div>
             </ul>
         </li>

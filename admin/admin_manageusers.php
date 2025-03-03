@@ -14,12 +14,12 @@ else {
     $result=$con->select_by_query($sql);
     ?>
     <head>
-        <title>Admin Manage</title>
+        <title>Manage Office Suppliers</title>
     </head>
 
     <main>
         <div class="container-fluid px-4">
-            <h2 class="mt-4">Manage Employees</h2>
+            <h2 class="mt-4">Manage Office Suppliers</h2>
             <div class="card shadow mb-4">
                 <div class="card-body">
                         <div class="table-responsive">
@@ -28,6 +28,7 @@ else {
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
+                                        <th>Office</th>
                                         <th>Contact</th>
                                         <th>Email</th>
                                         <th>Date Added</th>
@@ -42,6 +43,7 @@ else {
                                                 <tr>
                                                     <td><?php echo $row["id"]; ?></td>
                                                     <td><?php echo $row["name"]; ?></td>
+                                                    <td><?php echo $row["office"]; ?></td>
                                                     <td><?php echo $row["contact"]; ?></td>
                                                     <td><?php echo $row["email"]; ?></td>
                                                     <td><?php echo $row["date_add"]; ?></td>

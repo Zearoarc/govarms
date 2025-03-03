@@ -16,7 +16,7 @@ $result_thresh = $con->select_by_query($sql_thresh);
 $lowStockCount = $result_thresh->num_rows;
 ?>
 <head>
-    <title>Admin Dashboard</title>
+    <title>Office Dashboard</title>
 </head>
 <main>
     <div class="container-fluid px-4">
@@ -28,8 +28,8 @@ $lowStockCount = $result_thresh->num_rows;
                         <?php
                         $sql = "SELECT 
                                     COUNT(DISTINCT r.order_id) + 
-                                    (SELECT COUNT(DISTINCT res.reserve_id) FROM res WHERE res.req_status = 'Complete') + 
-                                    (SELECT COUNT(DISTINCT s.order_id) FROM supp s WHERE s.req_status = 'Complete') AS total_completed_requests 
+                                    (SELECT COUNT(DISTINCT res.reserve_id) FROM res JOIN users u ON r.user_id = u.id WHERE res.req_status = 'Complete' AND u.office_id = $office) + 
+                                    (SELECT COUNT(DISTINCT s.order_id) FROM supp s JOIN users u ON r.user_id = u.id WHERE s.req_status = 'Complete' AND u.office_id = $office) AS total_completed_requests 
                                 FROM req r 
                                 JOIN users u ON r.user_id = u.id
                                 WHERE r.req_status = 'Complete' AND u.office_id = $office;";
@@ -48,27 +48,24 @@ $lowStockCount = $result_thresh->num_rows;
             <div class="col-xl-3 col-md-6">
                 <div class="card bg-warning text-white mb-4">
                     <div class="card-body">
-                    <?php
-                    $sql = "SELECT u.name, COUNT(r.id) as total_requests
-                            FROM users u
-                            JOIN req r ON u.id = r.user_id
-                            WHERE u.office_id = $office
-                            GROUP BY u.id
-                            ORDER BY total_requests DESC
-                            LIMIT 1";
-                    $result = $con->select_by_query($sql);
-                    $row = $result->fetch_assoc();
-                    ?>
-                    <?php if ($row) : ?>
-                        <p class="text-white">Highest Requests by a User</p>
-                        <h2 class="text-white"><b><?php echo $row["total_requests"] ?? 0; ?></b></h2>
-                    <?php else : ?>
-                        <p class="text-white">No Highest Requests</p>
-                        <h2 class="text-white">0</b></h2>
-                    <?php endif; ?>
+                        <?php
+                        $sql = "SELECT COUNT(*) as total_employees
+                                FROM users u
+                                JOIN office o ON u.office_id = o.id
+                                WHERE u.user_role='Employee' AND u.office_id = $office";
+                        $result = $con->select_by_query($sql);
+                        $row = $result->fetch_assoc();
+                        $sql_office = "SELECT office
+                        FROM office
+                        WHERE id = $office";
+                        $result_office = $con->select_by_query($sql_office);
+                        $row_office = $result_office->fetch_assoc();
+                        ?>
+                        <p class="text-white">Number of Employees in <?php echo $row_office["office"]; ?></p>
+                        <h2 class="text-white"><b><?php echo $row["total_employees"] ?? 0; ?></b></h2>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="office_manage.php?<?php echo ($row) ? 'view=highest' : ''; ?>">View Details</a>
+                        <a class="small text-white stretched-link" href="office_manage.php">View Details</a>
                         <div class="small text-white"><i class='bx bx-chevron-right' style='color:#ffffff'></i></div>
                     </div>
                 </div>

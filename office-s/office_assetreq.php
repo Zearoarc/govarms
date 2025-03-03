@@ -23,7 +23,7 @@ if (isset($_POST["btn_approve"])) {
             $row_asset_id=$result_asset_id->fetch_assoc();
             $asset_id=$row_asset_id['id'];
 
-            $sql="UPDATE req SET asset_id = '$asset_id', req_status = 'Incomplete' WHERE id='$id'";
+            $sql="UPDATE req SET asset_id = '$asset_id', req_status = 'In Transit' WHERE id='$id'";
             $con->update($sql, "Data Updated Successfully");
 
             $sql_assets="UPDATE items SET status = 'Requested' WHERE model = '$model' AND serial = '$serial'";
@@ -46,10 +46,10 @@ if (isset($_POST["btn_complete"])) {
     $result=$con->select_by_query($sql);
     $row = $result->fetch_assoc();
 
-    $sql="UPDATE req SET req_status = 'Complete' WHERE order_id='$order'";
+    $sql="UPDATE req SET req_status = 'Incomplete' WHERE order_id='$order'";
     $con->update($sql, "Data Updated Successfully");
 
-    log_req($order, $row["user_id"], $_SESSION["office_id"], 'Asset request', 'completed');
+    log_req($order, $row["user_id"], $_SESSION["office_id"], 'Asset request', 'waiting to be received');
 
     header("Location: office_assetreq.php");
     exit;
@@ -78,7 +78,7 @@ else {
                 JOIN asset_type t ON r.asset_type_id = t.id
                 JOIN users u ON r.user_id = u.id
                 JOIN office o ON u.office_id = o.id
-                WHERE req_type='Asset' AND r.req_status IN ('Incomplete', 'Pending') AND u.office_id = '$office';";
+                WHERE req_type='Asset' AND r.req_status IN ('Incomplete', 'In Transit', 'Pending') AND u.office_id = '$office';";
     }
     $result=$con->select_by_query($sql);
 
@@ -112,7 +112,7 @@ else {
             JOIN asset_type t ON r.asset_type_id = t.id
             JOIN users u ON r.user_id = u.id
             JOIN office o ON u.office_id = o.id
-            WHERE r.id = '$req_id' AND r.req_status IN ('Incomplete')";
+            WHERE r.id = '$req_id' AND r.req_status IN ('In Transit', 'Incomplete')";
             $result_inc = $con->select_by_query($sql_inc);
             $row_inc = $result_inc->fetch_assoc();
             $brand[$req_id] = $row_inc["brand"] ?? null;
@@ -203,7 +203,7 @@ else {
                                                         <option value="" selected disabled>Select Serial</option>
                                                     </select>
                                                 </td>
-                                            <?php } else if ($row["req_status"] == "Incomplete") { ?>
+                                            <?php } else if ($row["req_status"] == "In Transit" || $row["req_status"] == "Incomplete") { ?>
                                                 <td><?php echo $brand[$row["id"]]; ?></td>
                                                 <td><?php echo $model[$row["id"]]; ?></td>
                                                 <td><?php echo $serial[$row["id"]]; ?></td>
@@ -215,8 +215,11 @@ else {
                                                     ?>
                                                     <i class='bx bxs-info-circle large-icon' style='color:#ffa83e;' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
-                                                }
-                                                else if ($row["req_status"] == "Pending") {
+                                                } elseif ($row["req_status"] == "In Transit") {
+                                                    ?>
+                                                    <i class='bx bxs-truck large-icon' style='color:#007BFF' title="<?php echo $row["req_status"]; ?>"></i>
+                                                    <?php
+                                                } elseif ($row["req_status"] == "Pending") {
                                                     ?>
                                                     <i class='bx bxs-time-five large-icon' style='color:#00b2f1' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
@@ -246,10 +249,10 @@ else {
                                                 </td>
                                                 <?php
                                             }
-                                            else if ($row["req_status"] == 'Incomplete') {
+                                            else if ($row["req_status"] == 'In Transit') {
                                                 ?>
                                                 <td colspan="9">
-                                                    <button type="submit" class="btn btn-primary" name="btn_complete">Complete</button>
+                                                    <button type="submit" class="btn btn-primary" name="btn_complete">Delivered</button>
                                                 </td>
                                                 <?php
                                             }

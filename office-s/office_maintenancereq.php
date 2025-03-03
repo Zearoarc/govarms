@@ -13,7 +13,7 @@ else {
     JOIN users u ON r.user_id = u.id
     JOIN items i ON r.asset_id = i.id
     JOIN brand b ON i.brand_id = b.id
-    WHERE req_type='Maintenance' AND r.req_status IN ('Incomplete', 'Pending') AND u.office_id = '$office';";
+    WHERE req_type='Maintenance' AND r.req_status IN ('Incomplete', 'In Transit', 'Pending') AND u.office_id = '$office';";
     $result=$con->select_by_query($sql);
 
     // Group orders by order ID
@@ -101,8 +101,11 @@ else {
                                                     ?>
                                                     <i class='bx bxs-info-circle large-icon' style='color:#ffa83e;' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
-                                                }
-                                                else if ($row["req_status"] == "Pending") {
+                                                } elseif ($row["req_status"] == "In Transit") {
+                                                    ?>
+                                                    <i class='bx bxs-truck large-icon' style='color:#007BFF' title="<?php echo $row["req_status"]; ?>"></i>
+                                                    <?php
+                                                } elseif ($row["req_status"] == "Pending") {
                                                     ?>
                                                     <i class='bx bxs-time-five large-icon' style='color:#00b2f1' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
@@ -134,10 +137,10 @@ else {
                                                 </td>
                                                 <?php
                                             }
-                                            else if ($row["req_status"] == 'Incomplete') {
+                                            else if ($row["req_status"] == 'In Transit') {
                                                 ?>
                                                 <td colspan="9">
-                                                    <a class="btn btn-primary" style="color: #ffffff" href='complete_maintenancereq.php?order=<?php echo $order_id; ?>'>Complete</a>
+                                                    <a class="btn btn-primary" style="color: #ffffff" href='complete_maintenancereq.php?order=<?php echo $order_id; ?>'>Delivered</a>
                                                 </td>
                                                 <?php
                                             }

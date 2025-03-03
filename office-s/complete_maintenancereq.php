@@ -23,11 +23,11 @@ if (isset($_POST['submit_feedback'])) {
     $con->insert($sql, "Feedback saved successfully");
     if ($action == 'repair') {
         // Update row
-        $sql = "UPDATE req SET req_status = 'Complete' WHERE order_id='$order'";
+        $sql = "UPDATE req SET req_status = 'Incomplete' WHERE order_id='$order'";
         $con->update($sql, "Data Updated Successfully");
         $sql="UPDATE items SET repair_times = repair_times + 1 WHERE id='$asset_id'";
         $con->update($sql, "Data Updated Successfully");
-        log_req($order, $row["user_id"], $_SESSION["office_id"], 'Maintenance request', 'repaired');
+        log_req($order, $row["user_id"], $_SESSION["office_id"], 'Maintenance request', 'repaired and waiting to be received');
     } elseif ($action == 'dispose') {
         $sql = "UPDATE req SET req_status = 'Complete' WHERE order_id='$order'";
         $con->update($sql, "Data Updated Successfully");

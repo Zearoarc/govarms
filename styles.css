@@ -228,12 +228,24 @@ footer {
 
 #sidebar ul li.active a, #sidebar ul li.active button {
   color: #00CFFF;
-  text-decoration: underline;
 
   i {
     color: #00CFFF;
     text-decoration: none;
   }
+}
+
+#sidebar ul li a span, #sidebar ul li button span {
+  text-decoration: none;
+  transition: text-decoration 0.2s ease-in-out;
+}
+
+#sidebar ul li a:hover span, #sidebar ul li button:hover span {
+  text-decoration: underline;
+}
+
+#sidebar ul li.active a span, #sidebar ul li.active button span {
+  text-decoration: underline;
 }
 
 #sidebar ul li.active .sub-menu {

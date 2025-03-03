@@ -1,4 +1,7 @@
 <?php
+if (!isset($_SESSION)) {
+    session_start();
+}
 $mysqli = new mysqli("localhost", "root", "", "arms_db");
 if ($mysqli->connect_errno != 0) {
     die($mysqli->connect_error);
@@ -6,10 +9,12 @@ if ($mysqli->connect_errno != 0) {
 
 $month = date('m');
 $year = date('Y');
+$office = $_SESSION["office_id"];
 
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM req
-WHERE MONTH(date_add) = '$month' AND YEAR(date_add) = '$year'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM req r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$month' AND YEAR(r.date_add) = '$year' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 $data = [];
 if (empty($data)) {
@@ -18,9 +23,18 @@ if (empty($data)) {
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
 }
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM res
-WHERE MONTH(date_add) = '$month' AND YEAR(date_add) = '$year'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM res r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$month' AND YEAR(r.date_add) = '$year' AND u.office_id = '$office'";
+$result = $mysqli->query($sql);
+while ($row = $result->fetch_assoc()) {
+    array_push($data, $row);
+}
+$sql = "SELECT DATE_FORMAT(s.date_add, '%Y-%m') AS date
+FROM supp s
+JOIN users u ON s.user_id = u.id
+WHERE MONTH(s.date_add) = '$month' AND YEAR(s.date_add) = '$year' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
@@ -29,16 +43,26 @@ while ($row = $result->fetch_assoc()) {
 
 $onemonth = date('m', strtotime('-1 month'));
 $oneyear = date('Y', strtotime('-1 month'));
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM req
-WHERE MONTH(date_add) = '$onemonth' AND YEAR(date_add) = '$oneyear'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM req r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$onemonth' AND YEAR(r.date_add) = '$oneyear' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
 }
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM res
-WHERE MONTH(date_add) = '$onemonth' AND YEAR(date_add) = '$oneyear'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM res r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$onemonth' AND YEAR(r.date_add) = '$oneyear' AND u.office_id = '$office'";
+$result = $mysqli->query($sql);
+while ($row = $result->fetch_assoc()) {
+    array_push($data, $row);
+}
+$sql = "SELECT DATE_FORMAT(s.date_add, '%Y-%m') AS date
+FROM supp s
+JOIN users u ON s.user_id = u.id
+WHERE MONTH(s.date_add) = '$onemonth' AND YEAR(s.date_add) = '$oneyear' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
@@ -47,16 +71,26 @@ while ($row = $result->fetch_assoc()) {
 
 $twomonth = date('m', strtotime('-2 months'));
 $twoyear = date('Y', strtotime('-2 months'));
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM req
-WHERE MONTH(date_add) = '$twomonth' AND YEAR(date_add) = '$twoyear'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM req r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$twomonth' AND YEAR(r.date_add) = '$twoyear' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
 }
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM res
-WHERE MONTH(date_add) = '$twomonth' AND YEAR(date_add) = '$twoyear'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM res r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$twomonth' AND YEAR(r.date_add) = '$twoyear' AND u.office_id = '$office'";
+$result = $mysqli->query($sql);
+while ($row = $result->fetch_assoc()) {
+    array_push($data, $row);
+}
+$sql = "SELECT DATE_FORMAT(s.date_add, '%Y-%m') AS date
+FROM supp s
+JOIN users u ON s.user_id = u.id
+WHERE MONTH(s.date_add) = '$twomonth' AND YEAR(s.date_add) = '$twoyear' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
@@ -64,16 +98,26 @@ while ($row = $result->fetch_assoc()) {
 
 $threemonth = date('m', strtotime('-3 months'));
 $threeyear = date('Y', strtotime('-3 months'));
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM req
-WHERE MONTH(date_add) = '$threemonth' AND YEAR(date_add) = '$threeyear'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM req r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$threemonth' AND YEAR(r.date_add) = '$threeyear' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
 }
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM res
-WHERE MONTH(date_add) = '$threemonth' AND YEAR(date_add) = '$threeyear'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM res r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$threemonth' AND YEAR(r.date_add) = '$threeyear' AND u.office_id = '$office'";
+$result = $mysqli->query($sql);
+while ($row = $result->fetch_assoc()) {
+    array_push($data, $row);
+}
+$sql = "SELECT DATE_FORMAT(s.date_add, '%Y-%m') AS date
+FROM supp s
+JOIN users u ON s.user_id = u.id
+WHERE MONTH(s.date_add) = '$threemonth' AND YEAR(s.date_add) = '$threeyear' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
@@ -81,16 +125,26 @@ while ($row = $result->fetch_assoc()) {
 
 $fourmonth = date('m', strtotime('-4 months'));
 $fouryear = date('Y', strtotime('-4 months'));
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM req
-WHERE MONTH(date_add) = '$fourmonth' AND YEAR(date_add) = '$fouryear'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM req r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$fourmonth' AND YEAR(r.date_add) = '$fouryear' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
 }
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM res
-WHERE MONTH(date_add) = '$fourmonth' AND YEAR(date_add) = '$fouryear'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM res r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$fourmonth' AND YEAR(r.date_add) = '$fouryear' AND u.office_id = '$office'";
+$result = $mysqli->query($sql);
+while ($row = $result->fetch_assoc()) {
+    array_push($data, $row);
+}
+$sql = "SELECT DATE_FORMAT(s.date_add, '%Y-%m') AS date
+FROM supp s
+JOIN users u ON s.user_id = u.id
+WHERE MONTH(s.date_add) = '$fourmonth' AND YEAR(s.date_add) = '$fouryear' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
@@ -98,16 +152,26 @@ while ($row = $result->fetch_assoc()) {
 
 $fivemonth = date('m', strtotime('-5 months'));
 $fiveyear = date('Y', strtotime('-5 months'));
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM req
-WHERE MONTH(date_add) = '$fivemonth' AND YEAR(date_add) = '$fiveyear'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM req r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$fivemonth' AND YEAR(r.date_add) = '$fiveyear' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
 }
-$sql = "SELECT DATE_FORMAT(date_add, '%Y-%m') AS date
-FROM res
-WHERE MONTH(date_add) = '$fivemonth' AND YEAR(date_add) = '$fiveyear'";
+$sql = "SELECT DATE_FORMAT(r.date_add, '%Y-%m') AS date
+FROM res r
+JOIN users u ON r.user_id = u.id
+WHERE MONTH(r.date_add) = '$fivemonth' AND YEAR(r.date_add) = '$fiveyear' AND u.office_id = '$office'";
+$result = $mysqli->query($sql);
+while ($row = $result->fetch_assoc()) {
+    array_push($data, $row);
+}
+$sql = "SELECT DATE_FORMAT(s.date_add, '%Y-%m') AS date
+FROM supp s
+JOIN users u ON s.user_id = u.id
+WHERE MONTH(s.date_add) = '$fivemonth' AND YEAR(s.date_add) = '$fiveyear' AND u.office_id = '$office'";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);

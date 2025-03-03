@@ -61,7 +61,7 @@
             </button>
             <ul class="sub-menu">
                 <div>
-                    <li><a href="office_assetreq.php"
+                    <li><a href="office_assetreq.php"><span
                     <?php
                     if (strpos($url, 'assetreq') !== false) {
                         echo '';
@@ -69,8 +69,8 @@
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
-                    >Asset Requests</a></li>
-                    <li><a href="office_assetres.php"
+                    >Asset Requests</span></a></li>
+                    <li><a href="office_assetres.php"><span
                     <?php
                     if (strpos($url, 'assetres') !== false) {
                         echo '';
@@ -78,8 +78,8 @@
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
-                    >Asset Reservations</a></li>
-                    <li><a href="office_supplyreq.php"
+                    >Asset Reservations</span></a></li>
+                    <li><a href="office_supplyreq.php"><span
                     <?php
                     if (strpos($url, 'supplyreq') !== false) {
                         echo '';
@@ -87,8 +87,8 @@
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
-                    >Supply Requests</a></li>
-                    <li><a href="office_maintenancereq.php"
+                    >Supply Requests</span></a></li>
+                    <li><a href="office_maintenancereq.php"><span
                     <?php
                     if (strpos($url, 'maintenancereq') !== false) {
                         echo '';
@@ -96,8 +96,8 @@
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
-                    >Maintenance</a></li>
-                    <li><a href="office_completedreq.php"
+                    >Maintenance</span></a></li>
+                    <li><a href="office_completedreq.php"><span
                     <?php
                     if (strpos($url, 'completedreq') !== false) {
                         echo '';
@@ -105,7 +105,7 @@
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
-                    >Completed</a></li>
+                    >Completed</span></a></li>
                 </div>
             </ul>
         </li>
@@ -123,7 +123,7 @@
             </button>
             <ul class="sub-menu">
                 <div>
-                    <li><a href="office_assettypes.php"
+                    <li><a href="office_assettypes.php"><span
                     <?php
                     if (strpos($url, 'assettypes') !== false) {
                         echo '';
@@ -131,8 +131,8 @@
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
-                    >Assets</a></li>
-                    <li><a href="office_supplytypes.php"
+                    >Assets</span></a></li>
+                    <li><a href="office_supplytypes.php"><span
                     <?php
                     if (strpos($url, 'supplytypes') !== false) {
                         echo '';
@@ -140,8 +140,8 @@
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
-                    >Supplies</a></li>
-                    <li><a href="office_brandtypes.php"
+                    >Supplies</span></a></li>
+                    <li><a href="office_brandtypes.php"><span
                     <?php
                     if (strpos($url, 'brandtypes') !== false) {
                         echo '';
@@ -149,7 +149,7 @@
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
-                    >Brands</a></li>
+                    >Brands</span></a></li>
                 </div>
             </ul>
         </li>

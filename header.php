@@ -51,7 +51,7 @@ if (isset($_POST["btn_login"])) {
                 </ul>
             </nav>';
             if ($_SESSION["user_role"] === 'Admin') {
-                header("Location: admin/admin_manageusers.php");
+                header("Location: admin/admin_index.php");
             } else if ($_SESSION["user_role"] === 'Office Supplier') {
                 header("Location: office-s/office_index.php");
             } else {
@@ -86,7 +86,7 @@ if (!empty($_SESSION["username"])) {
         header('Location: office-s/office_index.php');
         exit;
     } elseif ($_SESSION['user_role'] == 'Admin') {
-        header('Location: admin/admin_manageusers.php');
+        header('Location: admin/admin_index.php');
         exit;
     } 
 }

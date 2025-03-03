@@ -54,13 +54,13 @@ if ($_SESSION['user_role'] == 'Office Supplier') {
   <nav class="govblue">
     <ul class="side">
       <li onclick=toggleNavSidebar()><a href="#"><i class='bx bx-x' style='color:#ffffff; font-size: 1.75rem'></i></a></li>
-      <li><a href="admin_manageusers.php">Asset Request and Reservation System</a></li>
-      <li><a href="admin_manageusers.php">Admin</a></li>
+      <li><a href="admin_index.php">Asset Request and Reservation System</a></li>
+      <li><a href="admin_index.php">Admin</a></li>
       <li><a href="../login.php?action=logout">Logout</a></li>
     </ul>
     <ul>
-      <li><a href="admin_manageusers.php"><img src="..//images/logocity.webp" alt="GovLogo" style="width:50px; margin:5px; margin-right:15px;"><span class="hideOnMobile">Asset Request and Reservation System</span></a></li>
-      <li class="hideOnMobile"><a href="admin_manageusers.php">Admin</a></li>
+      <li><a href="admin_index.php"><img src="..//images/logocity.webp" alt="GovLogo" style="width:50px; margin:5px; margin-right:15px;"><span class="hideOnMobile">Asset Request and Reservation System</span></a></li>
+      <li class="hideOnMobile"><a href="admin_index.php">Admin</a></li>
       <li class="hideOnMobile"><a href="../login.php?action=logout">Logout</a></li>
       <li class="menu-button" onclick=toggleNavSidebar()><a href="#"><i class='bx bx-menu' style='color:#ffffff; font-size: 1.75rem'></i></a></li>
     </ul>

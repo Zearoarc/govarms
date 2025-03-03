@@ -1,4 +1,4 @@
-const stats = ["Complete", "Incomplete", "Pending"];
+const stats = ["Complete", "Incomplete", "In Transit", "Pending"];
 
 fetch("scriptPie.php")
   .then((response) => {
@@ -17,6 +17,7 @@ function createPie(chartData, type) {
   const counts = {
     Complete: 0,
     Incomplete: 0,
+    'In Transit': 0,
     Pending: 0,
   };
 
@@ -26,6 +27,7 @@ function createPie(chartData, type) {
   const dataValues = [
     counts["Complete"],
     counts["Incomplete"],
+    counts["In Transit"],
     counts["Pending"],
   ];
   console.log(dataValues);
@@ -46,7 +48,7 @@ function createPie(chartData, type) {
       datasets: [
         {
           data: dataValues,
-          backgroundColor: ["#93b858", "#ffa83e", "#00b2f1"],
+          backgroundColor: ["#93b858", "#ffa83e", "#007BFF", "#00b2f1"],
         },
       ],
     },

@@ -16,7 +16,7 @@ if (isset($_POST["btn_approve"])) {
             $amount=$_POST['amount' . $id];
             $supply_type_id = $row["supply_type_id"];
 
-            $sql="UPDATE supp SET req_status = 'Incomplete' WHERE id='$id'";
+            $sql="UPDATE supp SET req_status = 'In Transit' WHERE id='$id'";
             $con->update($sql, "Data Updated Successfully");
 
             $sql="UPDATE items SET amount = amount - '$amount' WHERE supply_type_id='$supply_type_id'";
@@ -38,10 +38,10 @@ if (isset($_POST["btn_complete"])) {
     $result=$con->select_by_query($sql);
     $row = $result->fetch_assoc();
 
-    $sql="UPDATE supp SET req_status = 'Complete' WHERE order_id='$order'";
+    $sql="UPDATE supp SET req_status = 'Incomplete' WHERE order_id='$order'";
     $con->update($sql, "Data Updated Successfully");
 
-    log_req($order, $row["user_id"], $_SESSION["office_id"], 'Supply request', 'completed');
+    log_req($order, $row["user_id"], $_SESSION["office_id"], 'Supply request', 'waiting to be received');
     header("Location: office_supplyreq.php");
     exit;
 }
@@ -59,7 +59,7 @@ else {
     JOIN supply_type t ON s.supply_type_id = t.id
     JOIN users u ON s.user_id = u.id
     JOIN office o ON u.office_id = o.id
-    WHERE s.req_status IN ('Incomplete', 'Pending') AND u.office_id = '$office';";
+    WHERE s.req_status IN ('Incomplete', 'In Transit', 'Pending') AND u.office_id = '$office';";
     $result=$con->select_by_query($sql);
 
     // Group orders by order ID
@@ -135,8 +135,11 @@ else {
                                                     ?>
                                                     <i class='bx bxs-info-circle large-icon' style='color:#ffa83e;' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
-                                                }
-                                                else if ($row["req_status"] == "Pending") {
+                                                } elseif ($row["req_status"] == "In Transit") {
+                                                    ?>
+                                                    <i class='bx bxs-truck large-icon' style='color:#007BFF' title="<?php echo $row["req_status"]; ?>"></i>
+                                                    <?php
+                                                } elseif ($row["req_status"] == "Pending") {
                                                     ?>
                                                     <i class='bx bxs-time-five large-icon' style='color:#00b2f1' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
@@ -159,10 +162,10 @@ else {
                                                 </td>
                                                 <?php
                                             }
-                                            else if ($row["req_status"] == 'Incomplete') {
+                                            else if ($row["req_status"] == 'In Transit') {
                                                 ?>
                                                 <td colspan="9">
-                                                    <button type="submit" class="btn btn-primary" name="btn_complete">Complete</button>
+                                                    <button type="submit" class="btn btn-primary" name="btn_complete">Delivered</button>
                                                 </td>
                                                 <?php
                                             }

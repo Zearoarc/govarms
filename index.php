@@ -209,6 +209,10 @@ if (empty($_SESSION["username"])) {
                                                     ?>
                                                     <i class='bx bxs-info-circle large-icon' style='color:#ffa83e;' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
+                                                } elseif ($row["req_status"] == "In Transit") {
+                                                    ?>
+                                                    <i class='bx bxs-truck large-icon' style='color:#007BFF' title="<?php echo $row["req_status"]; ?>"></i>
+                                                    <?php
                                                 } elseif ($row["req_status"] == "Pending") {
                                                     ?>
                                                     <i class='bx bxs-time-five large-icon' style='color:#00b2f1' title="<?php echo $row["req_status"]; ?>"></i>
@@ -318,6 +322,10 @@ if (empty($_SESSION["username"])) {
                                                     ?>
                                                     <i class='bx bxs-info-circle large-icon' style='color:#ffa83e;' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
+                                                } elseif ($row["req_status"] == "In Transit") {
+                                                    ?>
+                                                    <i class='bx bxs-truck large-icon' style='color:#007BFF' title="<?php echo $row["req_status"]; ?>"></i>
+                                                    <?php
                                                 } elseif ($row["req_status"] == "Pending") {
                                                     ?>
                                                     <i class='bx bxs-time-five large-icon' style='color:#00b2f1' title="<?php echo $row["req_status"]; ?>"></i>
@@ -336,6 +344,17 @@ if (empty($_SESSION["username"])) {
                                                 <h5>Notes:</h5>
                                                 <p><?php echo $row["notes"]; ?></p>
                                             </td>
+                                            <tr>
+                                                <?php
+                                                if ($row["req_status"] == 'Incomplete') {
+                                                    ?>
+                                                    <td colspan="9">
+                                                        <a class="btn btn-primary" style="color: #ffffff" href='complete_supplyreq.php?order=<?php echo $order_id; ?>'>Received All</a>
+                                                    </td>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </tr>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -391,6 +410,7 @@ if (empty($_SESSION["username"])) {
                                             <th>Date Requested</th>
                                             <th>Date Expected</th>
                                             <th>Request Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -409,9 +429,22 @@ if (empty($_SESSION["username"])) {
                                                     ?>
                                                     <i class='bx bxs-info-circle large-icon' style='color:#ffa83e;' title="<?php echo $row["req_status"]; ?>"></i>
                                                     <?php
+                                                } elseif ($row["req_status"] == "In Transit") {
+                                                    ?>
+                                                    <i class='bx bxs-truck large-icon' style='color:#007BFF' title="<?php echo $row["req_status"]; ?>"></i>
+                                                    <?php
                                                 } elseif ($row["req_status"] == "Pending") {
                                                     ?>
                                                     <i class='bx bxs-time-five large-icon' style='color:#00b2f1' title="<?php echo $row["req_status"]; ?>"></i>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </td>
+                                            <td style="width: 120px;">
+                                            <?php
+                                                if ($row["req_status"] == 'Incomplete' && $row["action"] == 'none') {
+                                                    ?>
+                                                    <a class='btn btn-primary btn-sm' href='complete_assetres_one.php?reserve=<?php echo $reserve_id; ?>&asset_id=<?php echo $row["asset_id"]; ?>'>Received</a>
                                                     <?php
                                                 }
                                                 ?>
@@ -427,6 +460,17 @@ if (empty($_SESSION["username"])) {
                                                 <h5>Notes:</h5>
                                                 <p><?php echo $row["notes"]; ?></p>
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <?php
+                                            if ($row["req_status"] == 'Incomplete' && $row["action"] == 'none') {
+                                                ?>
+                                                <td colspan="9">
+                                                    <a class="btn btn-primary" style="color: #ffffff" href='complete_assetres.php?reserve=<?php echo $reserve_id; ?>'>Received All</a>
+                                                </td>
+                                                <?php
+                                            }
+                                            ?>
                                         </tr>
                                     </tfoot>
                                 </table>

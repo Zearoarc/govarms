@@ -11,7 +11,7 @@ if (empty($_SESSION["username"])) {
 }
 
 if ($_SESSION['user_role'] == 'Admin') {
-  header('Location: ../admin/admin_manageusers.php');
+  header('Location: ../admin/index.php');
   exit;
 } elseif ($_SESSION['user_role'] == 'Employee') {
   header('Location: ../index.php');

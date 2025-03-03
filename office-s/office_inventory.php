@@ -31,7 +31,7 @@ else {
     INNER JOIN asset_type t ON i.asset_type_id = t.id
     INNER JOIN brand b ON i.brand_id = b.id
     INNER JOIN office o ON i.office_id = o.id
-    WHERE i.type='Asset' AND i.status='Available'";
+    WHERE i.type='Asset' AND i.status='Available' AND i.office_id = $office";
     $result_assets=$con->select_by_query($sql_assets);
     $assets = array();
     while ($row = $result_assets->fetch_assoc()) {

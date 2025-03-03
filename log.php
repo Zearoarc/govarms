@@ -200,7 +200,7 @@ function log_deleteuser($user_id, $office_id, $name) {
 
 function log_assetreturn($asset_id, $user_id, $office_id) {
     $con = new connec();
-    $sql = "SELECT u.name, i.serial, t.type
+    $sql = "SELECT u.name, i.serial, t.type, r.date_end
     FROM res r
     JOIN users u ON r.user_id = u.id
     JOIN items i ON r.asset_id = i.id
@@ -211,7 +211,23 @@ function log_assetreturn($asset_id, $user_id, $office_id) {
     $name = $row['name'];
     $serial = $row['serial'];
     $type = $row['type'];
-    $combined_notes = "Returned asset: $type ($serial) by $name";
+    $date_end = $row['date_end'];
+    $status = '';
+    $days_diff = '';
+    $date_diff = date_diff(date_create($date_end), date_create(date("Y-m-d")));
+    if ($date_end < date("Y-m-d")) {
+        $status = 'overdue';
+        $days_diff = $date_diff->days;
+        $days_diff = " by $days_diff days";
+    } elseif (date("Y-m-d") < $date_end) {
+        $status = 'returned early';
+        $days_diff = $date_diff->days;
+        $days_diff = " by $days_diff days";
+    } else {
+        $status = 'on time';
+        $days_diff = '';
+    }
+    $combined_notes = "Returned asset: $type ($serial) by $name - $status$days_diff";
     $sql = "INSERT INTO logs (office_id, notes, log_date) VALUES ($office_id, '$combined_notes', NOW())";
     $con->insert($sql, "Log submitted successfully");
 }

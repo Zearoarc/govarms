@@ -33,4 +33,14 @@ $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
     array_push($data, $row);
 }
+
+$sql = "SELECT s.req_status, u.office_id
+FROM supp s
+JOIN users u ON s.user_id = u.id
+WHERE MONTH(s.date_add) = '$month' AND YEAR(s.date_add) = '$year' AND u.office_id = '$office'";
+$result = $mysqli->query($sql);
+while ($row = $result->fetch_assoc()) {
+    array_push($data, $row);
+}
+
 echo json_encode($data);
