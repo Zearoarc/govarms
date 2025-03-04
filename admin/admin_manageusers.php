@@ -26,7 +26,6 @@ else {
                             <table class="display" id="users" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Name</th>
                                         <th>Office</th>
                                         <th>Contact</th>
@@ -41,7 +40,6 @@ else {
                                             while($row=$result->fetch_assoc()){
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $row["id"]; ?></td>
                                                     <td><?php echo $row["name"]; ?></td>
                                                     <td><?php echo $row["office"]; ?></td>
                                                     <td><?php echo $row["contact"]; ?></td>

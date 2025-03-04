@@ -94,8 +94,7 @@ else{
                                     <label for="model_new"><b>Model</b></label>
                                     <input type="text" name="model_new" id="model_new" class="form-control" required><br>
 
-                                    <label for="office_display"><b>Office</b></label>
-                                    <input type="text" name="office_display" class="form-control" value="<?php echo $office_name ?>" readonly required><br>
+                                    <input type="hidden" name="office_display" class="form-control" value="<?php echo $office_name ?>" readonly required>
                                     <input type="hidden" name="office_new" id="office_new" value="<?php echo $office_id; ?>">
 
                                     <label for="serial_new"><b>Serial</b></label>

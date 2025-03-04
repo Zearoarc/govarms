@@ -161,8 +161,20 @@
         }
         ?>
             <a href="office_logs.php">
+                <i class='bx bxs-file-doc'></i>
+                <span>Logs</span>
+            </a>
+        </li>
+        <?php
+        if (strpos($url, 'feedbacks') !== false) {
+            echo '<li class="active">';
+        } else {
+            echo '<li>';
+        }
+        ?>
+            <a href="office_feedbacks.php">
                 <i class='bx bx-file' ></i>
-                <span>View Logs</span>
+                <span>Feedbacks</span>
             </a>
         </li>
         <?php

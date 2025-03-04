@@ -8,7 +8,7 @@ else {
     $office = $_SESSION["office_id"];
 
     $con=new connec();
-    $sql="SELECT i.id, t.type, t.category, u.unit_name, t.date_expected, i.amount, i.price, i.date_update
+    $sql="SELECT i.supply_type_id AS id, t.type, t.category, u.unit_name, t.date_expected, i.amount, i.price, i.date_update
     FROM items i
     JOIN supply_type t ON i.supply_type_id = t.id
     JOIN office o ON i.office_id = o.id

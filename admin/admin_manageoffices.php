@@ -24,7 +24,6 @@ else {
                             <table class="display" id="offices" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Office Name</th>
                                         <th>Action</th>
                                     </tr>
@@ -35,7 +34,6 @@ else {
                                             while($row=$result->fetch_assoc()){
                                                 ?>
                                                 <tr>
-                                                    <td style="width: 100px;"><?php echo $row["id"]; ?></td>
                                                     <td><?php echo $row["office"]; ?></td>
                                                     <td style="width: 150px;">
                                                         <a class='btn btn-primary btn-sm' href='edit_office.php?id=<?php echo $row["id"]; ?>'>Edit</a>

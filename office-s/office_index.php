@@ -28,8 +28,8 @@ $lowStockCount = $result_thresh->num_rows;
                         <?php
                         $sql = "SELECT 
                                     COUNT(DISTINCT r.order_id) + 
-                                    (SELECT COUNT(DISTINCT res.reserve_id) FROM res JOIN users u ON r.user_id = u.id WHERE res.req_status = 'Complete' AND u.office_id = $office) + 
-                                    (SELECT COUNT(DISTINCT s.order_id) FROM supp s JOIN users u ON r.user_id = u.id WHERE s.req_status = 'Complete' AND u.office_id = $office) AS total_completed_requests 
+                                    (SELECT COUNT(DISTINCT res.reserve_id) FROM res JOIN users u ON res.user_id = u.id WHERE res.req_status = 'Complete' AND u.office_id = $office) + 
+                                    (SELECT COUNT(DISTINCT s.order_id) FROM supp s JOIN users u ON s.user_id = u.id WHERE s.req_status = 'Complete' AND u.office_id = $office) AS total_completed_requests 
                                 FROM req r 
                                 JOIN users u ON r.user_id = u.id
                                 WHERE r.req_status = 'Complete' AND u.office_id = $office;";

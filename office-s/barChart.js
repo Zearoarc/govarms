@@ -62,7 +62,7 @@ function createBar(chartData, type) {
     console.log(dataValues);
 
     const maxDataValue = Math.max(...dataValues);
-    const maxY = maxDataValue > 8 ? 2 + maxDataValue : 10;
+    const maxY = maxDataValue > 8 ? 5 + maxDataValue : 10;
 
     console.log(maxY);
 

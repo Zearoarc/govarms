@@ -52,7 +52,7 @@ else {
                                 ?>
                             </select><br>
 
-                            <label for="date_expected_new"><b>Expected Time of Delivery</b></label>
+                            <label for="date_expected_new"><b>Expected Days for Delivery</b></label>
                             <input type="text" name="date_expected_new" id="date_expected_new" class="form-control" required><br>
 
                             <a href="office_assettypes.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>

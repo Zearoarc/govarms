@@ -122,9 +122,8 @@ if (empty($_SESSION["username"])) {
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <h5>User Information</h5>
                         <div class="user-profile-info">
-                            <p><b>Name:</b> <?php echo $row["name"]; ?></p>
+                            <h2> <?php echo $row["name"]; ?></h2><br>
                             <p><b>Email:</b> <?php echo $row["email"]; ?></p>
                             <p><b>Contact:</b> <?php echo $row["contact"]; ?></p>
                             <p><b>Office:</b> <?php echo $row["office"]; ?></p>

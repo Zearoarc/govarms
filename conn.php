@@ -105,13 +105,24 @@ class connec
     function update($query,$msg)
     { 
         if($this->conn->query($query)===TRUE)
-        {
-            echo '<script> Swal.fire({ title: "Success", text: "'.$msg.'", icon: "success", confirmButtonText: "OK" }); </script>' ; 
-        }
-        else
-        {
-            echo '<script> Swal.fire({ title: "Error", text: "'.$this->conn->error.'", icon: "error", confirmButtonText: "OK" }); </script>' ;
-        }
+    {
+        echo '<script> 
+            Swal.fire({ 
+                title: "Success", 
+                text: "'.$msg.'", 
+                icon: "success", 
+                confirmButtonText: "OK" 
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "index.php";
+                }
+            });
+        </script>' ; 
+    }
+    else
+    {
+        echo '<script> Swal.fire({ title: "Error", text: "'.$this->conn->error.'", icon: "error", confirmButtonText: "OK" }); </script>' ;
+    }
     }
 }   
 ?>

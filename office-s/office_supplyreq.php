@@ -54,7 +54,7 @@ else {
     $office = $_SESSION["office_id"];
 
     $con=new connec();
-    $sql="SELECT s.id, s.supply_type_id, t.type, s.amount, s.order_id, u.name, o.office, s.req_status
+    $sql="SELECT s.id, s.supply_type_id, t.type, s.amount, s.order_id, u.name, o.office, s.req_status, s.notes
     FROM supp s
     JOIN supply_type t ON s.supply_type_id = t.id
     JOIN users u ON s.user_id = u.id
@@ -78,7 +78,8 @@ else {
             "type" => $row["type"],
             "amount" => $row["amount"],
             "office" => $row["office"],
-            "req_status" => $row["req_status"]
+            "req_status" => $row["req_status"],
+            "notes" => $row["notes"]
         );
     }
     ?>
@@ -153,6 +154,12 @@ else {
                                     </tbody>
                                     <tfoot>
                                         <tr>
+                                            <td colspan="5">
+                                                <h5>Notes:</h5>
+                                                <p><?php echo $row["notes"]; ?></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <?php
                                             if ($row["req_status"] == 'Pending'){
                                                 ?>
@@ -165,7 +172,7 @@ else {
                                             else if ($row["req_status"] == 'In Transit') {
                                                 ?>
                                                 <td colspan="9">
-                                                    <button type="submit" class="btn btn-primary" name="btn_complete">Delivered</button>
+                                                    <button type="submit" class="btn btn-primary" name="btn_complete">For Release</button>
                                                 </td>
                                                 <?php
                                             }

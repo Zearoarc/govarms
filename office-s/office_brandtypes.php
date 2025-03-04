@@ -24,7 +24,6 @@ else {
                             <table class="table " id="brandTypeTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Brand Name</th>
                                         <th>Action</th>
                                     </tr>
@@ -35,7 +34,6 @@ else {
                                             while($row=$result->fetch_assoc()){
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $row["id"]; ?></td>
                                                     <td><?php echo $row["brand"]; ?></td>
                                                     <td>
                                                         <a class='btn btn-primary btn-sm' href='edit_brandtypes.php?id=<?php echo $row["id"]; ?>'>Edit</a>

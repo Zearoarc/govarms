@@ -92,7 +92,7 @@ else{
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-10">
-                            <h5 class="text-center mt-2">Edit User Info</h5>
+                            <h5 class="text-center mt-2">Edit Employee Info</h5>
 
                             <form method="post">
                                 <div class="container">
@@ -109,15 +109,15 @@ else{
                                     <label for="confirm_psw_new"><b>Confirm Password</b></label>
 						            <input type="password" name="confirm_psw_new" id="confirm_psw_new" class="form-control" required><br>
 
-                                    <label for="office_display"><b>Office</b></label>
-                                    <input type="text" name="office_display" id="office_display" class="form-control" value="<?php echo $office_edit ?>" readonly required><br>
+                                    <!-- <label for="office_display"><b>Office</b></label> -->
+                                    <input type="hidden" name="office_display" id="office_display" class="form-control" value="<?php echo $office_edit ?>" readonly required>
                                     <input type="hidden" name="office_new" id="office_new" class="form-control" value="<?php echo $office_id_edit ?>" readonly required>
 
                                     <label for="contact_new"><b>Contact</b></label>
                                     <input type="text" name="contact_new" id="contact_new" class="form-control" value="<?php echo $contact_edit ?>" required><br>
 
-                                    <label for="user_role"><b>Role</b></label>
-                                    <input type="text" name="user_role_new" id="user_role_new" class="form-control" value="Employee" readonly required><br>
+                                    <!-- <label for="user_role"><b>Role</b></label> -->
+                                    <input type="hidden" name="user_role_new" id="user_role_new" class="form-control" value="Employee" readonly required>
 
                                     <a href="office_manage.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                                     <button type="submit" class="btn" name="btn_update" style="background-color:#3741c9; color:white">Update</button><br><br><br>

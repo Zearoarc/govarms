@@ -62,7 +62,7 @@ else {
     $office=$_SESSION['office_id'];
 
     $con=new connec();
-    $sql="SELECT r.id, t.type, r.reserve_id, u.name, o.office, r.date_start, r.date_end, r.req_status, r.notes
+    $sql="SELECT r.id, r.asset_type_id, t.type, r.reserve_id, u.name, o.office, r.date_start, r.date_end, r.req_status, r.notes
     FROM res r
     JOIN asset_type t ON r.asset_type_id = t.id
     JOIN users u ON r.user_id = u.id
@@ -83,6 +83,7 @@ else {
         }
         $reserves[$reserve_id]["reserve_data"][] = array(
             "id" => $row["id"],
+            "asset_type_id" => $row["asset_type_id"],
             "type" => $row["type"],
             "date_start" => $row["date_start"],
             "date_end" => $row["date_end"],
@@ -156,7 +157,11 @@ else {
                                                     <select id="brand<?php echo $row["id"]; ?>" name="brand<?php echo $row["id"]; ?>" required>
                                                         <option value="" selected disabled>Select Brand</option>
                                                         <?php
-                                                        $brand_sql = "SELECT id, brand FROM brand";
+                                                        $asset_type_id = $row["asset_type_id"];
+                                                        $brand_sql = "SELECT b.id, b.brand, i.model, i.serial FROM items i
+                                                                    JOIN brand b ON i.brand_id = b.id
+                                                                    WHERE i.asset_type_id=$asset_type_id AND i.status='Available'
+                                                                    GROUP BY b.brand";
                                                         $brand_result = $con->select_by_query($brand_sql);
                                                         while ($brand_row = $brand_result->fetch_assoc()) {
                                                             ?>
@@ -227,7 +232,7 @@ else {
                                             else if ($row["req_status"] == 'In Transit') {
                                                 ?>
                                                 <td colspan="9">
-                                                <button type="submit" class="btn btn-primary" name="btn_complete">Delivered</button>
+                                                <button type="submit" class="btn btn-primary" name="btn_complete">For Release</button>
                                                 </td>
                                                 <?php
                                             }

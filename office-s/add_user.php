@@ -54,7 +54,7 @@ else {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-10">
-                    <h5 class="text-center mt-2">Add New User</h5>
+                    <h5 class="text-center mt-2">Add Employee</h5>
 
                     <form method="post">
                         <div class="container">
@@ -71,15 +71,15 @@ else {
                             <label for="confirm_psw_new"><b>Confirm Password</b></label>
                             <input type="password" name="confirm_psw_new" id="confirm_psw_new" class="form-control" required><br>
 
-                            <label for="office_display"><b>Office</b></label>
-                            <input type="text" name="office_display" class="form-control" value="<?php echo $office_name ?>" readonly required><br>
+                            <!-- <label for="office_display"><b>Office</b></label> -->
+                            <input type="hidden" name="office_display" class="form-control" value="<?php echo $office_name ?>" readonly required>
                             <input type="hidden" name="office_new" id="office_new" value="<?php echo $office_id; ?>">
 
                             <label for="contact_new"><b>Contact</b></label>
                             <input type="text" name="contact_new" id="contact_new" class="form-control" required value="<?php echo (isset($_POST["contact_new"])) ? $_POST["contact_new"] : ""; ?>"><br>
 
-                            <label for="user_role"><b>Role</b></label>
-                            <input type="text" name="user_role_new" id="user_role_new" class="form-control" value="Employee" readonly required><br>
+                            <!-- <label for="user_role"><b>Role</b></label> -->
+                            <input type="hidden" name="user_role_new" id="user_role_new" class="form-control" value="Employee" readonly required>
 
                             <a href="office_manage.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                             <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Insert</button><br><br><br>

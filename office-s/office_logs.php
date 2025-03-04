@@ -14,6 +14,12 @@ WHERE office_id = $office_id
 ORDER BY log_date DESC";
 $result = $con->select_by_query($sql);
 
+$sql_return="SELECT i.model, i.serial, f.repair, f.feedback, f.created_at
+    FROM feedback f
+    JOIN items i ON f.asset_id = i.id
+    WHERE f.action = 'return'";
+    $result_return=$con->select_by_query($sql_return);
+
 // Display the logs
 ?>
     <head>

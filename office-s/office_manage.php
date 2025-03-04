@@ -40,7 +40,6 @@ else {
                             <table class="table " id="office_manage" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Name</th>
                                         <th>Contact</th>
                                         <th>Email</th>
@@ -55,7 +54,6 @@ else {
                                             while($row=$result->fetch_assoc()){
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $row["id"]; ?></td>
                                                     <td><?php echo $row["name"]; ?></td>
                                                     <td><?php echo $row["contact"]; ?></td>
                                                     <td><?php echo $row["email"]; ?></td>

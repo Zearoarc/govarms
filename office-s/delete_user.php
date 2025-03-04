@@ -58,7 +58,7 @@ else{
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-10">
-                            <h5 class="text-center mt-2">Delete User Info</h5>
+                            <h5 class="text-center mt-2">Delete Employee Info</h5>
 
                             <form method="post">
                                 <div class="container">
@@ -69,14 +69,14 @@ else{
                                     <label for="email_new"><b>Email</b></label>
 						            <input type="email" name="email_new" id="email_new" class="form-control" value="<?php echo $email_edit ?>" readonly required><br>
 
-                                    <label for="office_new"><b>Office</b></label>
-                                    <input type="text" name="office_new" id="office_new" class="form-control" value="<?php echo $office_edit ?>" readonly required><br>
+                                    <!-- <label for="office_new"><b>Office</b></label> -->
+                                    <input type="hidden" name="office_new" id="office_new" class="form-control" value="<?php echo $office_edit ?>" readonly required>
 
                                     <label for="contact_new"><b>Contact</b></label>
                                     <input type="text" name="contact_new" id="contact_new" class="form-control" value="<?php echo $contact_edit ?>" readonly required><br>
 
-                                    <label for="user_role"><b>Role</b></label>
-                                    <input type="text" name="user_role_new" id="user_role_new" class="form-control" value="<?php echo $user_role_edit ?>" readonly required><br>
+                                    <!-- <label for="user_role"><b>Role</b></label> -->
+                                    <input type="hidden" name="user_role_new" id="user_role_new" class="form-control" value="<?php echo $user_role_edit ?>" readonly required>
 
                                     <input type="hidden" name="delete_clicked" value="0">
                                     <a href="office_manage.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>

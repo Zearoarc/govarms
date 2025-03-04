@@ -40,7 +40,7 @@ else {
     FROM supp s
     JOIN supply_type t ON s.supply_type_id = t.id
     JOIN users u ON s.user_id = u.id
-    WHERE s.req_status = 'Complete'";
+    WHERE s.req_status = 'Complete' AND u.office_id = '$office'";
     $result_supp = $con->select_by_query($sql_supp);
 
     // Group supply requests by order ID

@@ -56,14 +56,6 @@ else {
             $assets[$key]["amount"]++;
         }
     }
-    $office_id = $_SESSION["office_id"];
-
-    $sql_return="SELECT i.model, i.serial, f.repair, f.feedback, f.created_at
-    FROM feedback f
-    JOIN items i ON f.asset_id = i.id
-    JOIN users u ON f.user_id = u.id
-    WHERE u.office_id = $office_id AND f.action = 'return'";
-    $result_return=$con->select_by_query($sql_return);
     ?>
 
     <head>
@@ -83,7 +75,7 @@ else {
                                         <th>Supply Type</th>
                                         <th>Supply Category</th>
                                         <th>Price</th>
-                                        <th>Amount</th>
+                                        <th>Quantity</th>
                                         <th>Threshold</th>
                                         <th>Action</th>
                                     </tr>
@@ -148,7 +140,7 @@ else {
                                                 <th>Type</th>
                                                 <th>Category</th>
                                                 <th>Price</th>
-                                                <th>Amount</th>
+                                                <th>Quantity</th>
                                                 <th>Threshold</th>
                                                 <th>Action</th>
                                             </tr>
@@ -166,7 +158,7 @@ else {
                                                             <td><?php echo $row["threshold"]; ?></td>
                                                             <td style="width: 150px;">
                                                             <a class='btn btn-primary btn-sm' href='edit_supplies.php?id=<?php echo $row["id"]; ?>'>Edit</a>
-                                                            <a class='btn btn-sm btn-danger' href='delete_supplies.php?id=<?php echo $row["id"]; ?>'>Delete</a>
+                                                            <!-- <a class='btn btn-sm btn-danger' href='delete_supplies.php?id=<?php echo $row["id"]; ?>'>Delete</a> -->
                                                             </td>
                                                         </tr>
                                                         <?php
@@ -186,9 +178,8 @@ else {
                                                 <th>Type</th>
                                                 <th>Brand</th>
                                                 <th>Model</th>
-                                                <th>Office</th>
                                                 <th>Price</th>
-                                                <th>Amount</th>
+                                                <th>Quantity</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -200,7 +191,6 @@ else {
                                                     <td><?php echo $asset["type"]; ?></td>
                                                     <td><?php echo $asset["brand"]; ?></td>
                                                     <td><?php echo $asset["model"]; ?></td>
-                                                    <td><?php echo $asset["office"]; ?></td>
                                                     <td>₱ <?php echo number_format($asset["price"]); ?></td>
                                                     <td><?php echo $asset["amount"]; ?></td>
                                                     <td>
@@ -273,52 +263,7 @@ else {
         </div>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <div class="container-fluid px-4">
-            <h2 class="mt-4">Returned Feedbacks</h2>
-            <div class="card shadow mb-4">
-                <div class="card-body">
-                    <div class="table-responsive">
-                    <table class="table " id="return_feedback" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Date Created</th>
-                                <th>Model</th>
-                                <th>Serial</th>
-                                <th>Feedback</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                if($result_return->num_rows>0){
-                                    while($row_return=$result_return->fetch_assoc()){
-                                        ?>
-                                        <tr>
-                                            <td style = "width: 200px"><?php echo $row_return['created_at']; ?></td>
-                                            <td style = "width: 200px"><?php echo $row_return["model"]; ?></td>
-                                            <td style = "width: 200px"><?php echo $row_return["serial"]; ?></td>
-                                            <td><?php echo $row_return["feedback"]; ?></td>
-                                        </tr>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                        </tbody>
-                    </table>
-                    <script>
-                        new DataTable('#return_feedback', {
-                            "paging": true,
-                            "lengthChange": true,
-                            "searching": true,
-                            "ordering": true,
-                            "info": false,
-                            "autoWidth": false,
-                            "order": [[ 0, "desc" ]]
-                        });
-                    </script>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <?php } ?>
     </main>
 

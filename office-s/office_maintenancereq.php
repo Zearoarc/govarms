@@ -140,7 +140,7 @@ else {
                                             else if ($row["req_status"] == 'In Transit') {
                                                 ?>
                                                 <td colspan="9">
-                                                    <a class="btn btn-primary" style="color: #ffffff" href='complete_maintenancereq.php?order=<?php echo $order_id; ?>'>Delivered</a>
+                                                    <a class="btn btn-primary" style="color: #ffffff" href='complete_maintenancereq.php?order=<?php echo $order_id; ?>'>For Release</a>
                                                 </td>
                                                 <?php
                                             }

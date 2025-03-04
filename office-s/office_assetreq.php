@@ -66,19 +66,21 @@ else {
 
     $con=new connec();
     if (isset($_GET["view"]) && $_GET["view"] == "pending") {
-        $sql = "SELECT r.id, r.req_type, t.type, r.order_id, u.name, o.office, r.req_status, r.notes
+        $sql = "SELECT r.id, r.req_type, r.asset_type_id, t.type, r.order_id, u.name, o.office, r.req_status, r.notes
                 FROM req r
                 JOIN asset_type t ON r.asset_type_id = t.id
                 JOIN users u ON r.user_id = u.id
                 JOIN office o ON u.office_id = o.id
-                WHERE req_type = 'Asset' AND req_status = 'Pending' AND u.office_id = '$office';";
+                WHERE req_type = 'Asset' AND req_status = 'Pending' AND u.office_id = '$office'
+                ORDER BY r.order_id;";
     } else {
-        $sql="SELECT r.id, r.req_type, t.type, r.order_id, u.name, o.office, r.req_status, r.notes
+        $sql="SELECT r.id, r.req_type, r.asset_type_id, t.type, r.order_id, u.name, o.office, r.req_status, r.notes
                 FROM req r
                 JOIN asset_type t ON r.asset_type_id = t.id
                 JOIN users u ON r.user_id = u.id
                 JOIN office o ON u.office_id = o.id
-                WHERE req_type='Asset' AND r.req_status IN ('Incomplete', 'In Transit', 'Pending') AND u.office_id = '$office';";
+                WHERE req_type='Asset' AND r.req_status IN ('Incomplete', 'In Transit', 'Pending') AND u.office_id = '$office'
+                ORDER BY r.order_id;";
     }
     $result=$con->select_by_query($sql);
 
@@ -95,6 +97,7 @@ else {
         $orders[$order_id]["order_data"][] = array(
             "id" => $row["id"],
             "req_type" => $row["req_type"],
+            "asset_type_id" => $row["asset_type_id"],
             "type" => $row["type"],
             "office" => $row["office"],
             "req_status" => $row["req_status"],
@@ -183,7 +186,11 @@ else {
                                                     <select id="brand<?php echo $row["id"]; ?>" name="brand<?php echo $row["id"]; ?>" required>
                                                         <option value="" selected disabled>Select Brand</option>
                                                         <?php
-                                                        $brand_sql = "SELECT id, brand FROM brand";
+                                                        $asset_type_id = $row["asset_type_id"];
+                                                        $brand_sql = "SELECT b.id, b.brand, i.model, i.serial FROM items i
+                                                                    JOIN brand b ON i.brand_id = b.id
+                                                                    WHERE i.asset_type_id=$asset_type_id AND i.status='Available'
+                                                                    GROUP BY b.brand";
                                                         $brand_result = $con->select_by_query($brand_sql);
                                                         while ($brand_row = $brand_result->fetch_assoc()) {
                                                             ?>
@@ -252,7 +259,7 @@ else {
                                             else if ($row["req_status"] == 'In Transit') {
                                                 ?>
                                                 <td colspan="9">
-                                                    <button type="submit" class="btn btn-primary" name="btn_complete">Delivered</button>
+                                                    <button type="submit" class="btn btn-primary" name="btn_complete">For Release</button>
                                                 </td>
                                                 <?php
                                             }

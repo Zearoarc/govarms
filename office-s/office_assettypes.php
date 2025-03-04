@@ -26,7 +26,6 @@ else {
                             <table class="table " id="assetTypeTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Asset Type</th>
                                         <th>Category</th>
                                         <th>Unit of Issue</th>
@@ -41,7 +40,6 @@ else {
                                             while($row=$result->fetch_assoc()){
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $row["id"]; ?></td>
                                                     <td><?php echo $row["type"]; ?></td>
                                                     <td style="width: 100px;"><?php echo $row["category"]; ?></td>
                                                     <td style="width: 150px;"><?php echo $row["unit_name"]; ?></td>

@@ -90,8 +90,7 @@ else{
                                     <label for="threshold_new"><b>Threshold</b></label>
                                     <input type="number" name="threshold_new" id="threshold_new" class="form-control" required><br>
 
-                                    <label for="office_display"><b>Office</b></label>
-                                    <input type="text" name="office_display" class="form-control" value="<?php echo $office_name ?>" readonly required><br>
+                                    <input type="hidden" name="office_display" class="form-control" value="<?php echo $office_name ?>" readonly required>
                                     <input type="hidden" name="office_new" id="office_new" value="<?php echo $office_id; ?>">
 
                                     <label for="price_new"><b>Price</b></label>
