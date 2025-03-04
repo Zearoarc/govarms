@@ -45,7 +45,7 @@
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
-                    >Office Suppliers</span></a></li>
+                    >Users</span></a></li>
                     <li><a href="admin_manageoffices.php"><span
                     <?php
                     if (strpos($url, 'offices') !== false) {

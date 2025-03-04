@@ -31,7 +31,8 @@ else {
                                     <th>Asset Category</th>
                                     <th>Unit of Issue</th>
                                     <th>Expected Delivery Date</th>
-                                    <th>Start and End Date</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
                                     <th>Quantity</th>
                                 </tr>
                             </thead>
@@ -53,6 +54,8 @@ else {
                                                     <div class="input-group">
                                                         <input type="date" class="form-control form-control-sm" id="start-date-<?php echo $row["type"]; ?>" min="<?php echo date('Y-m-d', strtotime('+' . $row["date_expected"] . ' days')); ?>">
                                                     </div>
+                                                </td>
+                                                <td>
                                                     <div class="input-group">
                                                         <input type="date" class="form-control form-control-sm" id="end-date-<?php echo $row["type"]; ?>" min="<?php echo date('Y-m-d', strtotime('+' . ($row["date_expected"] + 7) . ' days')); ?>">
                                                     </div>

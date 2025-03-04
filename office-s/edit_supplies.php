@@ -21,7 +21,7 @@ if(isset($_POST["btn_update"])){
     $old_price = $row["price"];
     $changes = "";
     if($old_amount != $amount) {
-        $changes .= "Amount changed from $old_amount to $amount, ";
+        $changes .= "Quantity changed from $old_amount to $amount, ";
     }
     if($old_threshold != $threshold) {
         $changes .= "Threshold changed from $old_threshold to $threshold, ";
@@ -72,7 +72,7 @@ else{
                                     <label for="type_new"><b>Type</b></label>
                                     <input type="text" name="type_new" id="type_new" class="form-control" value="<?php echo $row["type"]; ?>" readonly><br>
 
-                                    <label for="amount_new"><b>Amount</b></label>
+                                    <label for="amount_new"><b>Quantity</b></label>
                                     <input type="number" name="amount_new" id="amount_new" class="form-control" value="<?php echo $row["amount"]; ?>" required><br>
 
                                     <label for="threshold_new"><b>Threshold</b></label>

@@ -10,7 +10,7 @@ else {
     $sql="SELECT u.id, u.name, u.email, u.contact, u.date_add, o.office, u.user_role
     FROM users u
     JOIN office o ON u.office_id = o.id
-    WHERE u.user_role = 'Office Supplier'";
+    WHERE u.user_role IN ('Office Supplier', 'Admin')";
     $result=$con->select_by_query($sql);
     ?>
     <head>

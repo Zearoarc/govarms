@@ -8,7 +8,6 @@ if (isset($_POST["btn_update"])) {
     $confirm_password = $_POST["confirm_psw_new"];
     $office = $_POST["office_new"];
     $contact = $_POST["contact_new"];
-    $user_role = $_POST["user_role_new"];
     $id=$_GET['id'];
     $con=new connec();
 
@@ -17,7 +16,7 @@ if (isset($_POST["btn_update"])) {
     } elseif ($password != $confirm_password) {
         $error = "Passwords do not match";
     } else {
-        $sql="UPDATE users SET name='$name', email='$email', office_id='$office', contact='$contact', user_role='$user_role', password='$password' WHERE id='$id'";
+        $sql="UPDATE users SET name='$name', email='$email', office_id='$office', contact='$contact', password='$password' WHERE id='$id'";
         $con->update($sql, "Data Updated Successfully");
         header("location:admin_manageusers.php");
     }
@@ -94,9 +93,6 @@ else {
 
                                     <label for="contact_new"><b>Contact</b></label>
                                     <input type="text" name="contact_new" id="contact_new" class="form-control" value="<?php echo $contact_edit ?>" required><br>
-
-                                    <label for="user_role"><b>Role</b></label>
-                                    <input type="text" name="user_role_new" id="user_role_new" class="form-control" value="Office Supplier" readonly required><br>
 
                                     <a href="admin_manageusers.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                                     <button type="submit" class="btn" name="btn_update" style="background-color:#3741c9; color:white">Update</button><br><br><br>

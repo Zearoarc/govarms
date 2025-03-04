@@ -9,7 +9,7 @@ else {
     $con=new connec();
     $office_id = $_SESSION["office_id"];
 
-    $sql_return="SELECT i.model, i.serial, f.repair, f.feedback, f.created_at
+    $sql_return="SELECT i.model, i.serial, u.name, f.repair, f.feedback, f.created_at
     FROM feedback f
     JOIN items i ON f.asset_id = i.id
     JOIN users u ON f.user_id = u.id
@@ -25,7 +25,8 @@ else {
                     <table class="table " id="return_feedback" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Date Created</th>
+                                <th>Date</th>
+                                <th>Name</th>
                                 <th>Model</th>
                                 <th>Serial</th>
                                 <th>Feedback</th>
@@ -38,6 +39,7 @@ else {
                                         ?>
                                         <tr>
                                             <td style = "width: 200px"><?php echo $row_return['created_at']; ?></td>
+                                            <td style = "width: 200px"><?php echo $row_return["name"]; ?> </td>
                                             <td style = "width: 200px"><?php echo $row_return["model"]; ?></td>
                                             <td style = "width: 200px"><?php echo $row_return["serial"]; ?></td>
                                             <td><?php echo $row_return["feedback"]; ?></td>

@@ -116,7 +116,7 @@ else {
                                     <thead class="table-blue">
                                         <tr>
                                             <th>Supply Type</th>
-                                            <th>Amount</th>
+                                            <th>Quantity</th>
                                             <th>Office</th>
                                             <th>Request Status</th>
                                         </tr>

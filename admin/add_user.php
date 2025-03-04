@@ -89,7 +89,23 @@ else {
                             <input type="text" name="contact_new" id="contact_new" class="form-control" required value="<?php echo (isset($_POST["contact_new"])) ? $_POST["contact_new"] : ""; ?>"><br>
 
                             <label for="user_role"><b>Role</b></label>
-                            <input type="text" name="user_role_new" id="user_role_new" class="form-control" value="Office Supplier" readonly required><br>
+                            <select name="user_role_new" id="user_role_new" class="form-control" required>
+                                <option value="" disabled selected>Select Type</option>
+                                <option value="Office Supplier">Office Supplier</option>
+                                <option value="Admin">Admin</option>
+                            </select><br>
+
+                            <script>
+                                document.getElementById('user_role_new').addEventListener('change', function() {
+                                    var officeSelect = document.getElementById('office_new');
+                                    if (this.value === 'Admin') {
+                                        officeSelect.value = 1;
+                                        officeSelect.disabled = true;
+                                    } else {
+                                        officeSelect.disabled = false;
+                                    }
+                                });
+                            </script>
 
                             <a href="admin_manageusers.php" class="btn" name="btn_cancel" style="background-color:#3741c9; color:white">Cancel</a>
                             <button type="submit" class="btn" name="btn_insert" style="background-color:#3741c9; color:white">Insert</button><br><br><br>

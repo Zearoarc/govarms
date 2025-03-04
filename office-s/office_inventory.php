@@ -11,26 +11,29 @@ else {
 
     // Office Supplies Section
     if (isset($_GET["view"]) && $_GET["view"] == "low_stock") {
-        $sql_supplies = "SELECT i.id, t.type, t.category, i.amount, i.threshold, o.office, i.price
+        $sql_supplies = "SELECT i.id, t.type, t.category, i.amount, i.threshold, o.office, i.price, u.unit_name
                 FROM items i
                 INNER JOIN supply_type t ON i.supply_type_id = t.id
                 INNER JOIN office o ON i.office_id = o.id
+                INNER JOIN unit u ON t.unit_id = u.id
                 WHERE i.office_id = $office AND i.amount < i.threshold";
     } else {
-        $sql_supplies = "SELECT i.id, t.type, t.category, i.amount, i.threshold, o.office, i.price
+        $sql_supplies = "SELECT i.id, t.type, t.category, i.amount, i.threshold, o.office, i.price, u.unit_name
                 FROM items i
                 INNER JOIN supply_type t ON i.supply_type_id = t.id
                 INNER JOIN office o ON i.office_id = o.id
+                INNER JOIN unit u ON t.unit_id = u.id
                 WHERE i.office_id = $office";
     }
     $result_supplies=$con->select_by_query($sql_supplies);
 
     // Office Assets Section
-    $sql_assets="SELECT t.type, b.brand, i.model, i.price, i.status, o.office
+    $sql_assets="SELECT t.type, b.brand, i.model, i.price, i.status, o.office, u.unit_name
     FROM items i
     INNER JOIN asset_type t ON i.asset_type_id = t.id
     INNER JOIN brand b ON i.brand_id = b.id
     INNER JOIN office o ON i.office_id = o.id
+    INNER JOIN unit u ON t.unit_id = u.id
     WHERE i.type='Asset' AND i.status='Available' AND i.office_id = $office";
     $result_assets=$con->select_by_query($sql_assets);
     $assets = array();
@@ -41,6 +44,7 @@ else {
         $brand = $row["brand"];
         $status = $row["status"];
         $office = $row["office"];
+        $unit = $row["unit_name"];
         $key = $model . "_" . $type . "_" . $brand . "_" . $office;
         if (!isset($assets[$key])) {
             $assets[$key] = array(
@@ -50,7 +54,8 @@ else {
                 "type" => $type,
                 "brand" => $brand,
                 "status" => $status,
-                "office" => $office
+                "office" => $office,
+                "unit" => $unit
             );
         } else {
             $assets[$key]["amount"]++;
@@ -77,6 +82,7 @@ else {
                                         <th>Price</th>
                                         <th>Quantity</th>
                                         <th>Threshold</th>
+                                        <th>Unit</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -91,6 +97,7 @@ else {
                                                     <td>₱ <?php echo number_format($row["price"]); ?></td>
                                                     <td><?php echo $row["amount"]; ?></td>
                                                     <td><?php echo $row["threshold"]; ?></td>
+                                                    <td><?php echo $row["unit_name"]; ?></td>
                                                     <td style="width: 150px;">
                                                     <a class='btn btn-primary btn-sm' href='edit_supplies.php?id=<?php echo $row["id"]; ?>'>Edit</a>
                                                     <a class='btn btn-sm btn-danger' href='delete_supplies.php?id=<?php echo $row["id"]; ?>'>Delete</a>
@@ -142,6 +149,7 @@ else {
                                                 <th>Price</th>
                                                 <th>Quantity</th>
                                                 <th>Threshold</th>
+                                                <th>Unit</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -156,6 +164,7 @@ else {
                                                             <td>₱ <?php echo number_format($row["price"]); ?></td>
                                                             <td><?php echo $row["amount"]; ?></td>
                                                             <td><?php echo $row["threshold"]; ?></td>
+                                                            <td><?php echo $row["unit_name"]; ?></td>
                                                             <td style="width: 150px;">
                                                             <a class='btn btn-primary btn-sm' href='edit_supplies.php?id=<?php echo $row["id"]; ?>'>Edit</a>
                                                             <!-- <a class='btn btn-sm btn-danger' href='delete_supplies.php?id=<?php echo $row["id"]; ?>'>Delete</a> -->
@@ -180,6 +189,7 @@ else {
                                                 <th>Model</th>
                                                 <th>Price</th>
                                                 <th>Quantity</th>
+                                                <th>Unit</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -193,6 +203,7 @@ else {
                                                     <td><?php echo $asset["model"]; ?></td>
                                                     <td>₱ <?php echo number_format($asset["price"]); ?></td>
                                                     <td><?php echo $asset["amount"]; ?></td>
+                                                    <td><?php echo $asset["unit"]; ?></td>
                                                     <td>
                                                     <a class='btn btn-primary btn-sm' href='edit_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&brand=<?php echo $asset["brand"]; ?>&office=<?php echo $asset["office"]; ?>'>Edit</a>
                                                     <a class='btn btn-sm btn-danger' href='delete_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&brand=<?php echo $asset["brand"]; ?>&office=<?php echo $asset["office"]; ?>'>Delete</a>

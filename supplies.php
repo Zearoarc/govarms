@@ -33,7 +33,7 @@ else {
                                     <tr>
                                         <th>Type</th>
                                         <th>Category</th>
-                                        <th>Amount</th>
+                                        <th>Quantity</th>
                                         <th>Request Status</th>
                                     </tr>
                                 </thead>

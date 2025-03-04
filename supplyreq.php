@@ -34,8 +34,8 @@ else {
                                     <th>Supply Type</th>
                                     <th>Supply Category</th>
                                     <th>Unit of Issue</th>
-                                    <th>Price</th>
-                                    <th>Amount</th>
+                                    <!-- <th>Price</th> -->
+                                    <th>Quantity Left</th>
                                     <th>Last Updated</th>
                                     <th>Expected Delivery Date</th>
                                     <th>Quantity</th>
@@ -52,7 +52,7 @@ else {
                                                 <td><?php echo $row["type"]; ?></td>
                                                 <td><?php echo $row["category"]; ?></td>
                                                 <td><?php echo $row["unit_name"]; ?></td>
-                                                <td>₱ <?php echo $row["price"]; ?></td>
+                                                <!-- <td>₱ <?php echo $row["price"]; ?></td> -->
                                                 <td><?php echo $row["amount"]; ?></td>
                                                 <td><?php echo $row["date_update"]; ?></td>
                                                 <td>

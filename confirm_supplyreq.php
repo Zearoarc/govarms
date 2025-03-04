@@ -34,7 +34,7 @@ $result=$con->select_by_query($sql);
                 <thead>
                     <tr>
                         <th>Type</th>
-                        <th>Amount</th>
+                        <th>Quantity</th>
                         <th>Expected Delivery Date</th>
                     </tr>
                 </thead>
