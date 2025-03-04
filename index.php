@@ -142,9 +142,9 @@ if (empty($_SESSION["username"])) {
                         <div class="user-request-count">
                             <p><b>Total Requests:</b> <?php echo $row["request_count"]; ?></p>
                         </div>
-                        <h5>Reservation Count</h5>
+                        <h5>Borrow Count</h5>
                         <div class="user-reservation-count">
-                            <p><b>Total Reservations:</b> <?php echo $row["reservation_count"]; ?></p>
+                            <p><b>Total Borrows:</b> <?php echo $row["reservation_count"]; ?></p>
                         </div>
                     </div>
                 </div>
@@ -381,10 +381,10 @@ if (empty($_SESSION["username"])) {
         if (empty($reserves)) {
             ?>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Reservations</h2>
+                <h2 class="mt-4">Borrowing</h2>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <p>No reservations found.</p>
+                        <p>No borrowing found.</p>
                     </div>
                 </div>
             </div>
@@ -392,7 +392,7 @@ if (empty($_SESSION["username"])) {
         } else {
             ?>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Reservations</h2>
+                <h2 class="mt-4">Borrowing</h2>
                 <?php
                 foreach ($reserves as $reserve_id => $reserve_data) {
                     ?>

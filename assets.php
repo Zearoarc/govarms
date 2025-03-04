@@ -113,7 +113,7 @@ if (empty($_SESSION["username"])) {
             </div>
         </div>
         <div class="container-fluid px-4">
-            <h2 class="mt-4">Reservations</h2>
+            <h2 class="mt-4">Borrowing</h2>
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -128,7 +128,7 @@ if (empty($_SESSION["username"])) {
                                 <th>Date Start</th>
                                 <th>Date End</th>
                                 <th>Request Status</th>
-                                <th>Reservation Status</th>
+                                <th>Borrowing Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

@@ -78,7 +78,7 @@
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
                     ?>
-                    >Asset Reservations</span></a></li>
+                    >Asset Borrowing</span></a></li>
                     <li><a href="office_supplyreq.php"><span
                     <?php
                     if (strpos($url, 'supplyreq') !== false) {

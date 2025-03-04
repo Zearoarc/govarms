@@ -86,7 +86,7 @@
                     } else {
                         echo 'style="color: #ffffff; text-decoration: none;"';
                     }
-                    ?>>Asset Reservation</span></a></li>
+                    ?>>Asset Borrowing</span></a></li>
                     <li><a href="supplyreq.php"><span <?php
                     if (strpos($url, 'supplyreq') !== false) {
                         echo '';

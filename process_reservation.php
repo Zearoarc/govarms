@@ -40,7 +40,7 @@ foreach ($decodedAssets as $asset) {
     for ($i = 0; $i < $assets_amount; $i++) {
         $sql = "INSERT INTO res (asset_type_id, date_add, date_expected, reserve_id, user_id, date_start, date_end, req_status, notes)
                         VALUES('$assets_id', CURDATE(), DATE_ADD(CURDATE(), INTERVAL $assets_date DAY), '$max_order_id', '$user_id', '$assets_start', '$assets_end', 'Pending', '$notes')";
-        $con->insert($sql, "Reservation submitted successfully");
+        $con->insert($sql, "Borrowing submitted successfully");
     }
 }
 log_res($max_order_id, $user_id, $_SESSION["office_id"], 'Asset reservation', 'created');

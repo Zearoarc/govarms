@@ -18,14 +18,14 @@ $result=$con->select_by_query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirm Asset Reservation</title>
+    <title>Confirm Asset Borrowing</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Confirm Asset Reservation (<?php while ($row = $result->fetch_assoc()) {
+        <h1>Confirm Asset Borrowing (<?php while ($row = $result->fetch_assoc()) {
                 echo $row["name"];
             }  ?>)</h1>
         <form action="process_reservation.php?assets=<?php echo $encodedAssets; ?>" method="post">
@@ -57,7 +57,7 @@ $result=$con->select_by_query($sql);
                 <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
             </div>
             <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
-            <button type="submit" class="btn btn-primary">Confirm Reservation</button>
+            <button type="submit" class="btn btn-primary">Confirm Borrowing</button>
         </form>
     </div>
 </body>

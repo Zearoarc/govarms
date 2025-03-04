@@ -1,5 +1,5 @@
     <footer style="background-color: #2f4f7f; color: white; padding: 1rem; text-align: center;">
-        <p>&copy; 2025 Office Supplier Asset Request and Reservation System</p>
+        <p>&copy; 2025 Office Supplier Asset Request and Borrowing System</p>
     </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

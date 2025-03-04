@@ -105,17 +105,17 @@ else {
     $row_inc = $result_inc->fetch_assoc();
     ?>
     <head>
-        <title>Asset Reservation Requests</title>
+        <title>Asset Borrowing Requests</title>
     </head>
     <main>
         <?php
         if (empty($reserves)) {
             ?>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Asset Reservation Requests</h2>
+                <h2 class="mt-4">Asset Borrowing Requests</h2>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <p>No asset reservation requests found.</p>
+                        <p>No asset borrowing requests found.</p>
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@ else {
         } else {
             ?>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Asset Reservation Requests</h2>
+                <h2 class="mt-4">Asset Borrowing Requests</h2>
                 <?php
                 foreach ($reserves as $reserve_id => $reserve_data) {
                     ?>
@@ -131,7 +131,7 @@ else {
                         <div class="card-body">
                             <div class="table-responsive">
                                 <form method="post">
-                                <h4>Reservation ID: <?php echo $reserve_id; ?> (<?php echo $reserve_data["user_name"]; ?>)</h4>
+                                <h4>Borrowing ID: <?php echo $reserve_id; ?> (<?php echo $reserve_data["user_name"]; ?>)</h4>
                                 <input type="hidden" name="reserve" value="<?php echo $reserve_id; ?>">
                                 <table class="table " id="assetres<?php echo $reserve_id; ?>" width="100%" cellspacing="0">
                                     <thead class="table-blue">

@@ -177,7 +177,7 @@ else {
                 ?>
             </div>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">Completed Reservations</h2>
+                <h2 class="mt-4">Completed Borrows</h2>
                 <?php
                 foreach ($reserves as $reserve_id => $reserve_data) {
                     ?>
