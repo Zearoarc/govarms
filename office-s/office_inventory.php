@@ -100,7 +100,7 @@ else {
                                                     <td><?php echo $row["unit_name"]; ?></td>
                                                     <td style="width: 150px;">
                                                     <a class='btn btn-primary btn-sm' href='edit_supplies.php?id=<?php echo $row["id"]; ?>'>Edit</a>
-                                                    <a class='btn btn-sm btn-danger' href='delete_supplies.php?id=<?php echo $row["id"]; ?>'>Delete</a>
+                                                    <!-- <a class='btn btn-sm btn-danger' href='delete_supplies.php?id=<?php echo $row["id"]; ?>'>Delete</a> -->
                                                     </td>
                                                 </tr>
                                                 <?php
@@ -165,7 +165,7 @@ else {
                                                             <td><?php echo $row["amount"]; ?></td>
                                                             <td><?php echo $row["threshold"]; ?></td>
                                                             <td><?php echo $row["unit_name"]; ?></td>
-                                                            <td style="width: 150px;">
+                                                            <td>
                                                             <a class='btn btn-primary btn-sm' href='edit_supplies.php?id=<?php echo $row["id"]; ?>'>Edit</a>
                                                             <!-- <a class='btn btn-sm btn-danger' href='delete_supplies.php?id=<?php echo $row["id"]; ?>'>Delete</a> -->
                                                             </td>
