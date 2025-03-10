@@ -100,9 +100,13 @@ else {
                                     var officeSelect = document.getElementById('office_new');
                                     if (this.value === 'Admin') {
                                         officeSelect.value = 1;
-                                        officeSelect.disabled = true;
+                                        officeSelect.setAttribute('readonly', 'readonly');
+                                        officeSelect.style.pointerEvents = 'none';
+                                        officeSelect.style.opacity = '0.5';
                                     } else {
-                                        officeSelect.disabled = false;
+                                        officeSelect.removeAttribute('readonly');
+                                        officeSelect.style.pointerEvents = 'auto';
+                                        officeSelect.style.opacity = '1';
                                     }
                                 });
                             </script>

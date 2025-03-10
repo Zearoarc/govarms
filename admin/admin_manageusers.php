@@ -14,12 +14,12 @@ else {
     $result=$con->select_by_query($sql);
     ?>
     <head>
-        <title>Manage Office Suppliers</title>
+        <title>Manage Users</title>
     </head>
 
     <main>
         <div class="container-fluid px-4">
-            <h2 class="mt-4">Manage Office Suppliers</h2>
+            <h2 class="mt-4">Manage Users</h2>
             <div class="card shadow mb-4">
                 <div class="card-body">
                         <div class="table-responsive">

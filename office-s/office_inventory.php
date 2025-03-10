@@ -82,7 +82,6 @@ else {
                                         <th>Price</th>
                                         <th>Quantity</th>
                                         <th>Threshold</th>
-                                        <th>Unit</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -97,7 +96,6 @@ else {
                                                     <td>₱ <?php echo number_format($row["price"]); ?></td>
                                                     <td><?php echo $row["amount"]; ?></td>
                                                     <td><?php echo $row["threshold"]; ?></td>
-                                                    <td><?php echo $row["unit_name"]; ?></td>
                                                     <td style="width: 150px;">
                                                     <a class='btn btn-primary btn-sm' href='edit_supplies.php?id=<?php echo $row["id"]; ?>'>Edit</a>
                                                     <!-- <a class='btn btn-sm btn-danger' href='delete_supplies.php?id=<?php echo $row["id"]; ?>'>Delete</a> -->
@@ -138,7 +136,7 @@ else {
                         </div>
                     <?php } else { ?>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div>
                                 <h3>Office Supplies</h3>
                                 <div class="table-responsive">
                                     <table class="table " id="officeSuppliesTable" width="100%" cellspacing="0">
@@ -149,7 +147,6 @@ else {
                                                 <th>Price</th>
                                                 <th>Quantity</th>
                                                 <th>Threshold</th>
-                                                <th>Unit</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -164,7 +161,6 @@ else {
                                                             <td>₱ <?php echo number_format($row["price"]); ?></td>
                                                             <td><?php echo $row["amount"]; ?></td>
                                                             <td><?php echo $row["threshold"]; ?></td>
-                                                            <td><?php echo $row["unit_name"]; ?></td>
                                                             <td>
                                                             <a class='btn btn-primary btn-sm' href='edit_supplies.php?id=<?php echo $row["id"]; ?>'>Edit</a>
                                                             <!-- <a class='btn btn-sm btn-danger' href='delete_supplies.php?id=<?php echo $row["id"]; ?>'>Delete</a> -->
@@ -178,7 +174,7 @@ else {
                                     </table>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div>
                                 <h3>Office Assets</h3>
                                 <div class="table-responsive">
                                     <table class="table " id="officeAssetsTable" width="100%" cellspacing="0">
@@ -189,7 +185,6 @@ else {
                                                 <th>Model</th>
                                                 <th>Price</th>
                                                 <th>Quantity</th>
-                                                <th>Unit</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -203,7 +198,6 @@ else {
                                                     <td><?php echo $asset["model"]; ?></td>
                                                     <td>₱ <?php echo number_format($asset["price"]); ?></td>
                                                     <td><?php echo $asset["amount"]; ?></td>
-                                                    <td><?php echo $asset["unit"]; ?></td>
                                                     <td>
                                                     <a class='btn btn-primary btn-sm' href='edit_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&brand=<?php echo $asset["brand"]; ?>&office=<?php echo $asset["office"]; ?>'>Edit</a>
                                                     <a class='btn btn-sm btn-danger' href='delete_assets.php?model=<?php echo $asset["model"]; ?>&type=<?php echo $asset["type"]; ?>&brand=<?php echo $asset["brand"]; ?>&office=<?php echo $asset["office"]; ?>'>Delete</a>
